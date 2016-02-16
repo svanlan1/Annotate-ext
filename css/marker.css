@@ -20,7 +20,6 @@ div.body {
 #marker_body_wrap {
 	position: absolute;
 	right: 0;
-	width: 80%;
 }
 
 /* Content/ <iframe /> styles */
@@ -49,12 +48,13 @@ h2 {
 
 #marker_iframe {
 	position: fixed;
-	width: 20%;
+	width: 300px;
 	height: 100%;
 	left: 0;
 	top: 0;
 	border-right: 2px solid #aaa;
 	border-top: 0;
+	font-family: 'Raleway', sans-serif;	
 }
 
 #marker_options {
@@ -71,4 +71,62 @@ h2 {
 
 .marker_option:focus, .marker_option:hover {
 	outline: 1px dotted #000;
+}
+
+a.marker_page_marker {
+	color: #000;
+	text-decoration: none;
+	z-index: 2147483647;
+}
+
+.marker_page_marker:after {
+	display: inline;
+	height: 15px;
+	padding: 3px;
+	content: attr(data-marker-count);
+	border: 1px solid #000;
+	background-color: #fff;
+	color: #000;
+	font-family: 'Raleway', sans-serif;
+	text-decoration: none;
+
+}
+
+.marker_side_text_container {
+	border-top: 1px solid #aaa;
+}
+
+.marker_side_text_selection {
+	border-bottom: 1px solid #aaa;
+	padding: 3px;
+}
+
+.marker_side_text_selection h3 {
+	font-weight: normal;
+	font-size: 12px;
+}
+
+.marker_side_text_selection select {
+	display: inline-block;
+    height: 28px;
+    line-height: 28px;
+    border: 1px solid #aaa;
+    padding: 4px;
+    color: #555;
+}
+
+.marker_side_text_selection .instruction {
+	color: #666;
+	font-size: 12px;
+	font-family: 'Raleway', sans-serif;
+}
+
+.screen-reader-only {
+	position: absolute;
+	clip: rect(1px, 1px, 1px, 1px);
+	padding: 0;
+	border: 0;
+	height: 1px;
+	width: 1px;
+	overflow:hidden;
 }

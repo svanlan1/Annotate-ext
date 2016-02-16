@@ -1,0 +1,128 @@
+[
+	{
+		"Value": "",
+		"QuickName": "",
+		"Description": "",
+		"Recommendation": ""
+	},	
+	{
+		"Value": "html",
+		"QuickName": "HTML"
+	},
+	{
+		"Value": "title",
+		"QuickName": "Title"
+	},
+	{
+		"Value": "meta",
+		"QuickName": "Meta"
+	},
+	{
+		"Value": "anchor",
+		"QuickName": "Anchor"
+	},
+	{
+		"Value": "imageDecorative",
+		"QuickName": "Decorative Image"
+	},
+	{
+		"Value": "imageBackground",
+		"QuickName": "Background Image"
+	},
+	{
+		"Value": "imageInfo",
+		"QuickName": "Informational Image"
+	},
+	{
+		"Value": "h1",
+		"QuickName": "Heading Level 1 (h1)"
+	},
+	{
+		"Value": "h2",
+		"QuickName": "Heading Level 2 (h2)"
+	},
+	{
+		"Value": "h3",
+		"QuickName": "Heading Level 3 (h3)"
+	},
+	{
+		"Value": "h4",
+		"QuickName": "Heading Level 4 (h4)"
+	},
+	{
+		"Value": "h5",
+		"QuickName": "Heading Level 5 (h5)"
+	},
+	{
+		"Value": "h6",
+		"QuickName": "Heading Level 6 (h6)"
+	},
+	{
+		"Value": "menu",
+		"QuickName": "Menu"
+	},
+	{
+		"Value": "tabset",
+		"QuickName": "Tabset"
+	},
+	{
+		"Value": "modalDialog",
+		"QuickName": "Dialog (Modal)"
+	},
+	{
+		"Value": "nonModalDialog",
+		"QuickName": "Dialog (Non-Modal)"
+	},
+	{
+		"Value": "chart",
+		"QuickName": "Chart"
+	},
+	{
+		"Value": "Graph",
+		"QuickName": "Graph"
+	},
+	{
+		"Value": "dataTable",
+		"QuickName": "Data Table"
+	},
+	{
+		"Value": "layoutTable",
+		"QuickName": "Layout Table"
+	},
+	{
+		"Value": "orderedList",
+		"QuickName": "Ordered List"
+	},
+	{
+		"Value": "unorderedList",
+		"QuickName": "Unordered List"
+	},
+	{
+		"Value": "definitionList",
+		"QuickName": "Definition List"
+	},
+	{
+		"Value": "inputText",
+		"QuickName": "Input[type=text] "
+	},
+	{
+		"Value": "inputButton",
+		"QuickName": "Input[type=button]"
+	},
+	{
+		"Value": "inputCheckbox",
+		"QuickName": "Input[type=checkbox]"
+	},
+	{
+		"Value": "radioGroup",
+		"QuickName": "Radio Group"
+	},
+	{
+		"Value": "button",
+		"QuickName": "Button"
+	},
+	{
+		"Value": "select",
+		"QuickName": "Select"
+	}
+]

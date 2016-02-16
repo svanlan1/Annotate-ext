@@ -31,6 +31,9 @@
     "images/marker_32.png",
     "images/marker_64.png",
     "images/flag_24.png",
-    "images/select_32.png"
+    "images/flag_24_inactive.png",
+    "images/select_32.png",
+    "js/options.json",
+    "js/types.json"
     ]
 }
