@@ -1,0 +1,36 @@
+{
+  "name": "Marker",
+  "version": "0.1",
+  "manifest_version": 2,
+  "author": "Shea VanLaningham",
+  "options_page": "index.html",
+  "description": "An extension for marking up pages with accessibility recommendations",
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/marker.js", "js/jquery.js", "js/jquery-ui.js"],
+      "css": ["css/marker.css", "css/jquery-ui.min.css", "css/jquery-ui.structure.min.css", "css/jquery-ui.theme.min.css"],
+      "run_at" : "document_start"
+    }
+  ],
+  "icons":{"16":"images/marker_16_inactive.png", "128":"images/marker_128.png"},
+  "browser_action": {
+    "default_icon": "images/marker_16_inactive.png"
+  },
+  "permissions": [
+    "tabs", "<all_urls>", "http://*/*", "https://*/*"
+  ],
+   "web_accessible_resources": [
+    "js/marker.js",
+    "css/marker.css",
+    "images/paint_32.png",
+    "images/marker_32.png",
+    "images/marker_64.png",
+    "images/flag_24.png",
+    "images/select_32.png"
+    ]
+}
