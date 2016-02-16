@@ -25,16 +25,20 @@
     "tabs", "<all_urls>", "http://*/*", "https://*/*"
   ],
    "web_accessible_resources": [
+    "index.html",
+    "marker.html",
     "js/marker.js",
     "css/marker.css",
     "js/options.json",
     "js/types.json",
+    "images/close.png",
     "images/flag_24.png",
     "images/flag_24_inactive.png",
     "images/marker_32.png",
     "images/marker_64.png",
     "images/paint_32.png",
     "images/save_24.png",
+    "images/select_24.png",
     "images/select_32.png"
     ]
 }

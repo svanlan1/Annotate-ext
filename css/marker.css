@@ -16,15 +16,22 @@ div.body {
 	padding: 0;
 }
 
+
 /* Original Page Style Manipulation */
 .marker_body_wrap {
 	position: absolute;
 	right: 0;
 }
 
+.shim {
+	height: 100%;
+	width: 100%;
+	position:absolute;
+}
+
 /* Content/ <iframe /> styles */
 .marker {
-	font-family: 'Raleway', sans-serif;	
+	font-family: 'Raleway', sans-serif !important;	
 }
 
 .instruction {
@@ -35,15 +42,33 @@ div.body {
 	display:block;
 }
 
+.welcome {
+	font-size: 13px;
+	padding: 5px;
+	color: #000;
+	display: block;
+}
+
 h1 {
 	padding: 2px;
 	border-bottom: 1px solid #666;
 	text-align: center;
+	-webkit-margin-after: 0;
 }
 
 h2 {
 	padding: 2px;
 	font-weight: normal;
+}
+
+label {
+	font-family: 'Raleway', sans-serif !important;	
+	font-size: 13px !important;
+}
+
+button {
+	margin-top: 0 !important;
+	vertical-align: initial;
 }
 
 #marker_div_container {
@@ -52,22 +77,25 @@ h2 {
 }
 
 #marker_iframe {
-	position: fixed;
-	width: 300px;
-	height: 100%;
-	left: 0;
-	top: 0;
-	border-right: 2px solid #aaa;
-	border-top: 0;
+	width: 270px;
+    height: 100%;
+    float: left;
+    position: fixed;
+    border-top: none;
+    border-right: 2px solid #aaa;
+    z-index: 2147483646;
+    top: 0px;
+    left: 0px;
 	font-family: 'Raleway', sans-serif;	
 	background-color: #fff;
 }
 
 #marker_options {
-	width: 95%;
+	width: 264px;
 	display:block;
 	margin-top: 5px;
 	padding: 3px;
+	border-top: 2px solid #aaa;
 }
 
 .marker_option {
@@ -100,11 +128,10 @@ a.marker_page_marker:hover {
 	color: #000;
 	font-family: 'Raleway', sans-serif;
 	text-decoration: none;
-
 }
 
 .marker_side_text_container {
-	border-top: 1px solid #aaa;
+	border-top: 2px solid #aaa;
 }
 
 .marker_side_text_selection {
@@ -135,6 +162,40 @@ a.marker_page_marker:hover {
 	border-bottom: 0;
 }
 
+.marker_context_menu {
+	width: 200px;
+	height: 225px;
+	position: absolute;
+	border: 2px solid #aaa;
+	background-color: #fff;
+	padding: 5px;
+	z-index: 2147483645;
+}
+
+.marker_context_close {
+	float:right;
+}
+
+.marker_note {
+	resize: none;
+	height: 174px;
+	width: 194px;
+}
+
+.marker_user_note_side {
+	display: block;
+	font-size: 12px;
+}
+
+.marker_fun_btn {
+  background: #fff;
+  border: 2px solid #c00;
+  font-family: 'Raleway', sans-serif;
+  width: 200px;
+  text-align: center;
+  color: #c00;
+}
+
 .screen-reader-only {
 	position: absolute;
 	clip: rect(1px, 1px, 1px, 1px);
@@ -144,3 +205,4 @@ a.marker_page_marker:hover {
 	width: 1px;
 	overflow:hidden;
 }
+
