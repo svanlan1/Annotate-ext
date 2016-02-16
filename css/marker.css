@@ -17,7 +17,7 @@ div.body {
 }
 
 /* Original Page Style Manipulation */
-#marker_body_wrap {
+.marker_body_wrap {
 	position: absolute;
 	right: 0;
 }
@@ -46,6 +46,11 @@ h2 {
 	font-weight: normal;
 }
 
+#marker_div_container {
+	z-index: 2147483647;
+
+}
+
 #marker_iframe {
 	position: fixed;
 	width: 300px;
@@ -55,6 +60,7 @@ h2 {
 	border-right: 2px solid #aaa;
 	border-top: 0;
 	font-family: 'Raleway', sans-serif;	
+	background-color: #fff;
 }
 
 #marker_options {
@@ -76,7 +82,12 @@ h2 {
 a.marker_page_marker {
 	color: #000;
 	text-decoration: none;
-	z-index: 2147483647;
+	z-index: 2147483645;
+	transition: all .2s ease-in-out;
+}
+
+a.marker_page_marker:hover {
+	transform: scale(1.1);
 }
 
 .marker_page_marker:after {
@@ -84,7 +95,7 @@ a.marker_page_marker {
 	height: 15px;
 	padding: 3px;
 	content: attr(data-marker-count);
-	border: 1px solid #000;
+	border: 2px solid #666;
 	background-color: #fff;
 	color: #000;
 	font-family: 'Raleway', sans-serif;
@@ -102,8 +113,10 @@ a.marker_page_marker {
 }
 
 .marker_side_text_selection h3 {
-	font-weight: normal;
+	font-weight: bold;
 	font-size: 12px;
+	font-family: 'Raleway', sans-serif;
+	line-height: 1px;
 }
 
 .marker_side_text_selection select {
@@ -119,6 +132,7 @@ a.marker_page_marker {
 	color: #666;
 	font-size: 12px;
 	font-family: 'Raleway', sans-serif;
+	border-bottom: 0;
 }
 
 .screen-reader-only {

@@ -6,10 +6,10 @@ function run_marker() {
 		greeting: 'start'
 	});
 	localStorage.setItem('marker_place_flag', 'false');
-	$('body').wrap('<div id="marker_body_wrap" />').css({
+	$('body').wrap('<div class="marker_body_wrap" />').css({
 		'width': $(window).width() - 300 + 'px'
 	});
-	var marker_div_container = $('<div />').attr('id', 'marker_div_container').appendTo('body');
+	var marker_div_container = $('<div />').attr('id', 'marker_div_container').prependTo('body');
 	$('<iframe />').attr({
 		'id': 'marker_iframe',
 		'class': 'marker'
@@ -54,23 +54,30 @@ function run_marker() {
 
 	}).appendTo(marker_options_div);
 
-	$('<a />').attr({
+	/*$('<a />').attr({
 		'href': 'javascript:void(0);',
 		'id': 'marker_draws',
 		'class': 'marker_option'
 	}).html('<img src="' + chrome.extension.getURL('images/select_32.png') + '" alt="Click to select a section of the page" />').appendTo(marker_options_div);	
+*/
+	$('<a />').attr({
+		'href': 'javascript:void(0);',
+		'id': 'marker_saves',
+		'class': 'marker_option'
+	}).html('<img src="' + chrome.extension.getURL('images/save_24.png') + '" alt="Save markings" />').appendTo(marker_options_div);	
+	
 
 	$('<div />').attr('class', 'marker_side_text_container').attr('role', 'list').appendTo(mifBody);
 
 
-
+	$('<div />').addClass('screen-reader-only').html('<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>').appendTo(mifBody);
 	$('<div />').attr('class', 'screen-reader-only').html('<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>').appendTo(mifBody);
-
+	$('<div />').addClass('screen-reader-only').html('<div>Icons made by <a href="http://www.flaticon.com/authors/nice-and-serious" title="Nice and Serious">Nice and Serious</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>').appendTo(mifBody);
 }
 
 function place_marker() {
-	$('#marker_body_wrap').css('cursor', 'default');
-	$('#marker_body_wrap, #marker_body_wrap a, #marker_body_wrap button').bind('click', function(e) {
+	$('.marker_body_wrap').css('cursor', 'pointer');
+	$('.marker_body_wrap, .marker_body_wrap a, .marker_body_wrap button').bind('click', function(e) {
 		var x = e.pageX - 310,
 			y = e.pageY - 15;
 
@@ -101,7 +108,7 @@ function place_marker() {
 }
 
 function unplace_marker() {
-	$('#marker_body_wrap').unbind();
+	$('.marker_body_wrap, .marker_body_wrap a, .marker_body_wrap button').unbind('click');
 }
 
 function add_marker_text() {
