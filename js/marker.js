@@ -106,13 +106,28 @@ function getStarted() {
 		'href': 'javascript:void(0);',
 		'id': 'marker_draws',
 		'class': 'marker_option'
-	}).html('<img src="' + chrome.extension.getURL('images/select_24.png') + '" alt="Click to select a section of the page" />').appendTo(marker_options_div);	
+	}).html('<img src="' + chrome.extension.getURL('images/select_24.png') + '" alt="Click to select a section of the page" />').appendTo(marker_options_div).click(function(e) {
+		alert('Select area of page functionality coming soon');
+	});	
+
+	$('<a />').attr({
+		'href': 'javascript:void(0);',
+		'id': 'marker_clear',
+		'class': 'marker_option'
+	}).html('<img src="' + chrome.extension.getURL('images/clear.png') + '" alt="Start Over" />').appendTo(marker_options_div).click(function(e) {
+		$('.marker_page_marker, .marker_context_menu').remove();
+		$(mifBody).find('.marker_side_text_selection').remove();
+		mCount = 1;
+
+	});
 
 	$('<a />').attr({
 		'href': 'javascript:void(0);',
 		'id': 'marker_saves',
 		'class': 'marker_option'
-	}).html('<img src="' + chrome.extension.getURL('images/save_24.png') + '" alt="Save markings" />').appendTo(marker_options_div);	
+	}).html('<img src="' + chrome.extension.getURL('images/save_24.png') + '" alt="Save markings" />').appendTo(marker_options_div).click(function(e) {
+		alert('Save to PDF functionality coming');
+	});	
 	
 
 	$('<div />').attr('class', 'marker_side_text_container').attr('role', 'list').appendTo(mifBody);
@@ -121,6 +136,7 @@ function getStarted() {
 	$('<div />').addClass('screen-reader-only').html('<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>').appendTo(mifBody);
 	$('<div />').attr('class', 'screen-reader-only').html('<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>').appendTo(mifBody);
 	$('<div />').addClass('screen-reader-only').html('<div>Icons made by <a href="http://www.flaticon.com/authors/nice-and-serious" title="Nice and Serious">Nice and Serious</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>').appendTo(mifBody);
+	$('<div />').addClass('screen-reader-only').html('<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>').appendTo(mifBody);
 	$('<div />').addClass('screen-reader-only').html('<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>').appendTo(mifBody);
 	$('<div />').addClass('screen-reader-only').html('<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>').appendTo(mifBody);
 }
@@ -145,7 +161,7 @@ function place_marker() {
 			e.preventDefault();
 			$(mifBody).find('#marker_select_box_' + $(this).attr('data-marker-count')).focus();
 			return false;
-		}).appendTo('body').draggable();
+		}).appendTo('body').draggable({ helper: "original" });
 		var m = $('<img />').attr({
 			'src': chrome.extension.getURL('images/flag_24.png'),
 			'class': 'marker_page_marker',
@@ -182,14 +198,20 @@ function createContextMenu(el, e) {
 
 		$('<label />').addClass('marker').attr('for', 'marker_textarea_' + $(el).attr('data-marker-count')).text('Add notes').appendTo(menu);
 		$('<textarea />').addClass('marker marker_note').attr('id', 'marker_textarea_' + $(el).attr('data-marker-count')).appendTo(menu);
-		$('<button />').addClass('marker marker_fun_btn').attr('value', 'Save').text('Save').click(function(e) {
-			var text = $('#marker_textarea_' + $(el).attr('data-marker-count')).val(),
+		$('<button />').addClass('marker marker_fun_btn marker_save_note_btn').attr('value', 'Save').text('Save').click(function(e) {
+			var text = $('#marker_textarea_' + $(el).attr('data-marker-count')).val().replace('<', '&lt;').replace('<', '&gt;'),
 				side_box = $(mifBody).find('#marker_select_box_' + $(el).attr('data-marker-count')).parent();
 			if($(side_box).find('.marker_user_note_side').length > 0) {
 				$(side_box).find('.marker_user_note_side').remove();
 			}
 			$(side_box).append('<div class="marker marker_user_note_side"><strong>User note:</strong><br />' + text + '</div>');
 
+		}).appendTo(menu);
+		$('<button />').addClass('marker marker_fun_btn').attr('value', 'Delete').text('Delete this flag').click(function(e) {
+			$(el).remove();
+			$(mifBody).find('.marker_side_text_selection').eq($(mifBody).find('.marker_side_text_selection').length-1).remove();
+			$(menu).remove();
+			mCount--;
 		}).appendTo(menu);
 	} else {
 		showMenu(id);
@@ -213,7 +235,7 @@ function add_marker_text() {
 	}).appendTo($(mifBody).find('.marker_side_text_container'));
 
 	$('<h3 />').text(mCount + ':').appendTo(divItem);
-	$('<label />').attr('for', 'marker_select_box_' + mCount).addClass('instruction').text('Type of element?').appendTo(divItem);
+	$('<label />').attr('for', 'marker_select_box_' + mCount).addClass('instruction marker_required').text('Type of element?').appendTo(divItem);
 	add_marker_select_options(divItem);
 }
 
@@ -234,6 +256,7 @@ function add_marker_select_options(divItem) {
 	$(options).each(function(i,v) {
 		$('<option />').attr('value', v.Value).text(v.QuickName).appendTo(sel);
 	});
+	var d = $('<div />').addClass('marker marker_recommendation').attr('id', 'marker_select_text_div_' + mCount).html('<strong>Recommendations:</strong>').appendTo(divItem);
 }
 
 function displayContextMenu() {
