@@ -29,6 +29,7 @@
     "marker.html",
     "js/marker.js",
     "css/marker.css",
+    "css/railway.css",
     "js/options.json",
     "js/types.json",
     "images/clear.png",

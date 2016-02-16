@@ -7,122 +7,152 @@
 	},	
 	{
 		"Value": "html",
-		"QuickName": "HTML"
+		"QuickName": "HTML",
+		"Rec": "Ensure that the &lt;html&gt; element has a valid 'lang' attribute."
 	},
 	{
 		"Value": "title",
-		"QuickName": "Title"
+		"QuickName": "Title",
+		"Rec": ""
 	},
 	{
 		"Value": "meta",
-		"QuickName": "Meta"
+		"QuickName": "Meta",
+		"Rec": ""
 	},
 	{
 		"Value": "anchor",
-		"QuickName": "Anchor"
+		"QuickName": "Anchor",
+		"Rec": ""
 	},
 	{
 		"Value": "imageDecorative",
-		"QuickName": "Decorative Image"
+		"QuickName": "Decorative Image",
+		"Rec": ""
 	},
 	{
 		"Value": "imageBackground",
-		"QuickName": "Background Image"
+		"QuickName": "Background Image",
+		"Rec": ""
 	},
 	{
 		"Value": "imageInfo",
-		"QuickName": "Informational Image"
+		"QuickName": "Informational Image",
+		"Rec": ""
 	},
 	{
 		"Value": "h1",
-		"QuickName": "Heading Level 1 (h1)"
+		"QuickName": "Heading Level 1 (h1)",
+		"Rec": ""
 	},
 	{
 		"Value": "h2",
-		"QuickName": "Heading Level 2 (h2)"
+		"QuickName": "Heading Level 2 (h2)",
+		"Rec": ""
 	},
 	{
 		"Value": "h3",
-		"QuickName": "Heading Level 3 (h3)"
+		"QuickName": "Heading Level 3 (h3)",
+		"Rec": ""
 	},
 	{
 		"Value": "h4",
-		"QuickName": "Heading Level 4 (h4)"
+		"QuickName": "Heading Level 4 (h4)",
+		"Rec": ""
 	},
 	{
 		"Value": "h5",
-		"QuickName": "Heading Level 5 (h5)"
+		"QuickName": "Heading Level 5 (h5)",
+		"Rec": ""
 	},
 	{
 		"Value": "h6",
-		"QuickName": "Heading Level 6 (h6)"
+		"QuickName": "Heading Level 6 (h6)",
+		"Rec": ""
 	},
 	{
 		"Value": "menu",
-		"QuickName": "Menu"
+		"QuickName": "Menu",
+		"Rec": ""
 	},
 	{
 		"Value": "tabset",
-		"QuickName": "Tabset"
+		"QuickName": "Tabset",
+		"Rec": ""
 	},
 	{
 		"Value": "modalDialog",
-		"QuickName": "Dialog (Modal)"
+		"QuickName": "Dialog (Modal)",
+		"Rec": ""
 	},
 	{
 		"Value": "nonModalDialog",
-		"QuickName": "Dialog (Non-Modal)"
+		"QuickName": "Dialog (Non-Modal)",
+		"Rec": ""
 	},
 	{
 		"Value": "chart",
-		"QuickName": "Chart"
+		"QuickName": "Chart",
+		"Rec": ""
 	},
 	{
 		"Value": "Graph",
-		"QuickName": "Graph"
+		"QuickName": "Graph",
+		"Rec": ""
 	},
 	{
 		"Value": "dataTable",
-		"QuickName": "Data Table"
+		"QuickName": "Data Table",
+		"Rec": ""
 	},
 	{
 		"Value": "layoutTable",
-		"QuickName": "Layout Table"
+		"QuickName": "Layout Table",
+		"Rec": ""
 	},
 	{
 		"Value": "orderedList",
-		"QuickName": "Ordered List"
+		"QuickName": "Ordered List",
+		"Rec": ""
 	},
 	{
 		"Value": "unorderedList",
-		"QuickName": "Unordered List"
+		"QuickName": "Unordered List",
+		"Rec": ""
 	},
 	{
 		"Value": "definitionList",
-		"QuickName": "Definition List"
+		"QuickName": "Definition List",
+		"Rec": ""
 	},
 	{
 		"Value": "inputText",
-		"QuickName": "Input[type=text] "
+		"QuickName": "Input[type=text] ",
+		"Rec": ""
 	},
 	{
 		"Value": "inputButton",
-		"QuickName": "Input[type=button]"
+		"QuickName": "Input[type=button]",
+		"Rec": ""
 	},
 	{
 		"Value": "inputCheckbox",
-		"QuickName": "Input[type=checkbox]"
+		"QuickName": "Input[type=checkbox]",
+		"Rec": ""
 	},
 	{
 		"Value": "radioGroup",
-		"QuickName": "Radio Group"
+		"QuickName": "Radio Group",
+		"Rec": ""
 	},
 	{
 		"Value": "button",
-		"QuickName": "Button"
+		"QuickName": "Button",
+		"Rec": ""
 	},
 	{
 		"Value": "select",
-		"QuickName": "Select"
+		"QuickName": "Select",
+		"Rec": ""
 	}
 ]

@@ -25,7 +25,7 @@ function run_marker() {
 	//Wrap the original body element in a <DIV> and set the width appropriately
 	var width = $(window).width() - 300 + 'px';
 	$('body').wrapInner('<div class="marker_body_wrap" style="width:'+width+'" />');
-	$('body').prepend('<div class="shim"></div>')
+	$('body').prepend('<div class="shim"></div>');
 
 	//var marker_div_container = $('<div />').attr('id', 'marker_div_container').before('body');
 	//Create the MARKER iframe and append it to the <HTML> element
@@ -48,13 +48,13 @@ function run_marker() {
 	$('<link />').attr({
 		'rel': 'stylesheet',
 		'type': 'text/css',
-		'href': 'https://fonts.googleapis.com/css?family=Raleway'
+		'href': chrome.extension.getURL('css/railway.css')
 	}).appendTo($(mif).find('head'));
 
 	$('<link />').attr({
 		'rel': 'stylesheet',
 		'type': 'text/css',
-		'href': 'https://fonts.googleapis.com/css?family=Raleway'
+		'href':  chrome.extension.getURL('css/railway.css')
 	}).appendTo('head');	
 
 	$('<h1 />').attr('class', 'marker').html('Marker <img src="' + chrome.extension.getURL('images/marker_32.png') + '" alt="" />').appendTo(mifBody);
@@ -70,7 +70,7 @@ function run_marker() {
 
 	$('<div />').attr({
 		'class': 'marker welcome'
-	}).text('To add notes to a flag, simply right click on it.').appendTo(mifBody);	
+	}).text('To add notes to or remove a flag, simply right click on it and choose your desired action').appendTo(mifBody);	
 
 	//getStarted() will draw the rest of the contents in the <iframe>.  Separating them to keep functions small and light.
 	getStarted();
@@ -253,10 +253,21 @@ function add_marker_select_options(divItem) {
 	});
 
 	var sel = $('<select />').attr('id', 'marker_select_box_' + mCount).attr('aria-required', 'true').appendTo(divItem);
-	$(options).each(function(i,v) {
-		$('<option />').attr('value', v.Value).text(v.QuickName).appendTo(sel);
-	});
 	var d = $('<div />').addClass('marker marker_recommendation').attr('id', 'marker_select_text_div_' + mCount).html('<strong>Recommendations:</strong>').appendTo(divItem);
+	$(options).each(function(i,v) {
+		$('<option />').attr('value', v.Value).attr('data-marker-rec', v.Rec).text(v.QuickName).appendTo(sel);
+	});
+
+	$(sel).change(function() {
+		var val = $(this).val();
+		$(this).find('option').each(function(i,v) {
+			if(val === $(v).attr('value')) {
+				var recDiv = $('<div />').addClass('marker').html($(v).attr('data-marker-rec'));
+				$(this).parent().parent().find('.marker_recommendation').append(recDiv);
+				return false;
+			}
+		});
+	});
 }
 
 function displayContextMenu() {
@@ -265,8 +276,8 @@ function displayContextMenu() {
 
 function stop_marker() {
 	console.log('stop marker!');
-	$('body').unwrap();
-	$('#marker_iframe').remove();
+	$('*').removeClass('marker_body_wrap')
+	$('#marker_iframe, .marker_context_menu, .marker_page_marker').remove();
 	chrome.runtime.sendMessage({
 		greeting: 'stop'
 	});	
