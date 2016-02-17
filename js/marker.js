@@ -18,6 +18,7 @@ function run_marker() {
 	chrome.runtime.sendMessage({
 		greeting: 'start'
 	});
+	mCount = 1;
 
 	//Variable controls whether or not clicking in the page should place a flag.  Default = false
 	localStorage.setItem('marker_place_flag', 'false');
@@ -88,7 +89,8 @@ function getStarted() {
 	$('<a />').attr({
 		'href': 'javascript:void(0);',
 		'id': 'place_marker',
-		'class': 'marker_option'
+		'class': 'marker_option',
+		'title': 'Place markers on page'
 	}).html('<img src="' + chrome.extension.getURL('images/flag_24_inactive.png') + '" alt="Click to place marker on page" />').click(function() {
 		if(localStorage.getItem('marker_place_flag') == 'false') {
 			$(this).find('img').attr('src', chrome.extension.getURL('images/flag_24.png'));
@@ -105,7 +107,8 @@ function getStarted() {
 	$('<a />').attr({
 		'href': 'javascript:void(0);',
 		'id': 'marker_draws',
-		'class': 'marker_option'
+		'class': 'marker_option',
+		'title': 'Select area of page'
 	}).html('<img src="' + chrome.extension.getURL('images/select_24.png') + '" alt="Click to select a section of the page" />').appendTo(marker_options_div).click(function(e) {
 		alert('Select area of page functionality coming soon');
 	});	
@@ -113,7 +116,8 @@ function getStarted() {
 	$('<a />').attr({
 		'href': 'javascript:void(0);',
 		'id': 'marker_clear',
-		'class': 'marker_option'
+		'class': 'marker_option',
+		'title': 'Clear and start over'
 	}).html('<img src="' + chrome.extension.getURL('images/clear.png') + '" alt="Start Over" />').appendTo(marker_options_div).click(function(e) {
 		$('.marker_page_marker, .marker_context_menu').remove();
 		$(mifBody).find('.marker_side_text_selection').remove();
@@ -124,7 +128,8 @@ function getStarted() {
 	$('<a />').attr({
 		'href': 'javascript:void(0);',
 		'id': 'marker_saves',
-		'class': 'marker_option'
+		'class': 'marker_option',
+		'title': 'Save to PDF'
 	}).html('<img src="' + chrome.extension.getURL('images/save_24.png') + '" alt="Save markings" />').appendTo(marker_options_div).click(function(e) {
 		alert('Save to PDF functionality coming');
 	});	
@@ -132,7 +137,8 @@ function getStarted() {
 	$('<a />').attr({
 		'href': 'javascript:void(0);',
 		'id': 'marker_expand',
-		'class': 'marker_option'
+		'class': 'marker_option',
+		'title': 'Collapse All'
 	}).html('<img src="' + chrome.extension.getURL('images/expand_collapse_24.png') + '" alt="Expand/Collapse All" />').appendTo(marker_options_div).click(function(e) {
 		$(mifBody).find('.marker_info').slideUp();
 		$(mifBody).find('.collapse').text('Expand');
