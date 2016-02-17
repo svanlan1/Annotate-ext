@@ -13,7 +13,7 @@
 	{
 		"Value": "title",
 		"QuickName": "Title",
-		"Rec": ""
+		"Rec": "Ensure that this page has a descriptive title.  Screen readers read out the title of the page before anything else, so this is very important."
 	},
 	{
 		"Value": "meta",
@@ -23,57 +23,62 @@
 	{
 		"Value": "anchor",
 		"QuickName": "Anchor",
-		"Rec": ""
+		"Rec": "All anchors require a valid href attribute and link text.  If an image is the sole piece of content inside of the anchor, ensure that the image has descriptive alt text."
+	},
+	{
+		"Value": "anchorNewWindow",
+		"QuickName": "Anchor (Opening in a new window)",
+		"Rec": "If an anchor is opening in a new window, the user must be alerted.  Methods for this include adding 'screen-reader-only' text, or adding an icon with alt text alerting the user.  The most common text for either of these methods is 'Opens in a new window'"
 	},
 	{
 		"Value": "imageDecorative",
 		"QuickName": "Decorative Image",
-		"Rec": ""
+		"Rec": "Decorative images should have a null alt attribute.<strong>Example:</strong>&lt;img src='image.png' alt=&quot;&quot;/&gt;"
 	},
 	{
 		"Value": "imageBackground",
 		"QuickName": "Background Image",
-		"Rec": ""
+		"Rec": "If this is a background image and contains text, there must be a textual alternative.  Textual alternatives can include visual or 'screen-reader-only' text.<strong>Example:</strong>&lt;div class='background-img'&gt;&lt;span class='screen-reader-only'&gt;TEXTUAL EQUIVALENT&lt;/span&gt;"
 	},
 	{
 		"Value": "imageInfo",
 		"QuickName": "Informational Image",
-		"Rec": ""
+		"Rec": "All informational images should contain descriptive alt text.<strong>Example:</strong>&lt;img src=&quot;image.png&quot; alt=&quot;Marker is awesome!&quot; /&gt;"
 	},
 	{
 		"Value": "h1",
 		"QuickName": "Heading Level 1 (h1)",
-		"Rec": ""
+		"Rec": "This should be marked up as a heading level 1 (&lt;h1&gt;).<strong>Example:</strong>&lt;h1&gt;Marker!&lt;/h1&gt;"
 	},
 	{
 		"Value": "h2",
 		"QuickName": "Heading Level 2 (h2)",
-		"Rec": ""
+		"Rec": "This should be marked up as a heading level 2. (&lt;h2&gt;).<strong>Example:</strong>&lt;h2&gt;Who should use Marker?&lt;/h2&gt;"
 	},
 	{
 		"Value": "h3",
 		"QuickName": "Heading Level 3 (h3)",
-		"Rec": ""
+		"Rec": "This should be marked up as a heading level 3 (&lt;h3&gt;).<strong>Example:</strong>&lt;h3&gt;Headings must follow semantic order&lt;/h2&gt;"
 	},
 	{
 		"Value": "h4",
 		"QuickName": "Heading Level 4 (h4)",
-		"Rec": ""
+		"Rec": "This should be marked up as a heading level 4 (&lt;h4&gt;).<strong>Example:</strong>&lt;h4&gt;Ensure there is a heading level 3&lt;/h4&gt;"
 	},
 	{
 		"Value": "h5",
 		"QuickName": "Heading Level 5 (h5)",
-		"Rec": ""
+		"Rec": "This should be marked up as a heading level 5 (&lt;h5&gt;).<strong>Example:</strong>&lt;h5&gt;Do you have a heading level 4?&lt;/h5&gt;"
 	},
 	{
 		"Value": "h6",
 		"QuickName": "Heading Level 6 (h6)",
-		"Rec": ""
+		"Rec": "This should be marked up as a heading level 6 (&lt;h6&gt;).<strong>Example:</strong>&lt;h6&gt;Don't use this because of it's size&lt;/h6&gt;"
 	},
 	{
 		"Value": "menu",
 		"QuickName": "Menu",
-		"Rec": ""
+		"Rec": "Menus require the following aria attributes: <ul><li>Role=&quot;menu&quot; on the &lt;UL&gt;</li><li>Role=&quot;menuitem&quot; on each sub-item &lt;LI&gt;</li></ul><strong>WCAG Example</strong><a href='https://www.w3.org/TR/wai-aria-practices/#menu'>ARIA Menus</a>"
 	},
 	{
 		"Value": "tabset",
@@ -96,19 +101,24 @@
 		"Rec": ""
 	},
 	{
+		"Value": "carousel",
+		"QuickName": "Carousel",
+		"Rec": "You shouldn't use a carousel.<strong>Example:</strong><a href='http://www.shouldiuseacarousel.com' target='_blank'>Should I use a carousel<span class='screen-reader-only'> Opens in a new window</span></a>"
+	},
+	{
 		"Value": "Graph",
 		"QuickName": "Graph",
 		"Rec": ""
 	},
 	{
 		"Value": "dataTable",
-		"QuickName": "Data Table",
-		"Rec": ""
+		"QuickName": "Data Table (Tabular Data)",
+		"Rec": "Tabular data should be marked up in a data table, with a caption and table headings.  The caption for the table doesn't necessarily have to be a caption element, but can be also be a heading that is associated to the table with the 'aria-labelledby' attribute.  Table headings that are positioned in the row should use the attribute 'scope=row'."
 	},
 	{
 		"Value": "layoutTable",
 		"QuickName": "Layout Table",
-		"Rec": ""
+		"Rec": "Tables used for layout purposes should always have the attribute 'role=&quot;presentation&quot;'.<strong>Example:</strong>&lt;table role=&quot;presentation&quot; /&gt;"
 	},
 	{
 		"Value": "orderedList",

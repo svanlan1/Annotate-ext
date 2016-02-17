@@ -41,7 +41,7 @@ div.body {
 .instruction {
 	font-size: 12px;
 	padding: 5px;
-	color: #888;
+	color: #5e5e5e;
 	border-bottom: 1px solid #e9e9e9;
 	display:block;
 }
@@ -97,7 +97,7 @@ button {
 }
 
 #marker_options {
-	width: 259px;
+	width: 245px;
 	display:block;
 	margin-top: 5px;
 	padding: 3px;
@@ -151,6 +151,16 @@ a.marker_page_marker:hover {
 	font-size: 12px;
 }
 
+.marker_recommendation strong {
+	margin-top: 3px;
+	display:block;
+}
+
+.marker_user_note_side strong {
+	display:block;
+	margin-top: 3px;
+}
+
 .marker_side_text_selection {
 	border-bottom: 1px solid #aaa;
 	padding: 3px;
@@ -161,6 +171,19 @@ a.marker_page_marker:hover {
 	font-size: 12px;
 	font-family: 'Raleway', sans-serif;
 	line-height: 1px;
+	display: inline-block;
+	margin-top: 7px;
+}
+
+.marker_ele_type {
+	padding-left: 5px;
+}
+
+.marker_side_text_selection .expand_collapse {
+	font-size: 12px;
+	float:right;
+	margin-right: 3px;
+	display: inline;
 }
 
 .marker_side_text_selection select {
@@ -173,9 +196,10 @@ a.marker_page_marker:hover {
 }
 
 .marker_side_text_selection .instruction {
-	color: #666;
+	color: #000;
 	font-size: 12px;
 	font-family: 'Raleway', sans-serif;
+	font-weight: bold;
 	border-bottom: 0;
 }
 
@@ -224,6 +248,10 @@ a.marker_page_marker:hover {
 .marker_save_note_btn {
 	border: 2px solid green;
 	color: green;
+}
+
+.marker_recommendation_div {
+	margin-top: 5px;
 }
 
 .screen-reader-only {

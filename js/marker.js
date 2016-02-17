@@ -128,6 +128,15 @@ function getStarted() {
 	}).html('<img src="' + chrome.extension.getURL('images/save_24.png') + '" alt="Save markings" />').appendTo(marker_options_div).click(function(e) {
 		alert('Save to PDF functionality coming');
 	});	
+
+	$('<a />').attr({
+		'href': 'javascript:void(0);',
+		'id': 'marker_expand',
+		'class': 'marker_option'
+	}).html('<img src="' + chrome.extension.getURL('images/expand_collapse_24.png') + '" alt="Expand/Collapse All" />').appendTo(marker_options_div).click(function(e) {
+		$(mifBody).find('.marker_info').slideUp();
+		$(mifBody).find('.collapse').text('Expand');
+	});	
 	
 
 	$('<div />').attr('class', 'marker_side_text_container').attr('role', 'list').appendTo(mifBody);
@@ -204,7 +213,7 @@ function createContextMenu(el, e) {
 			if($(side_box).find('.marker_user_note_side').length > 0) {
 				$(side_box).find('.marker_user_note_side').remove();
 			}
-			$(side_box).append('<div class="marker marker_user_note_side"><strong>User note:</strong><br />' + text + '</div>');
+			$(side_box).append('<div class="marker marker_user_note_side"><strong>User note:</strong>' + text + '</div>');
 
 		}).appendTo(menu);
 		$('<button />').addClass('marker marker_fun_btn').attr('value', 'Delete').text('Delete this flag').click(function(e) {
@@ -234,9 +243,24 @@ function add_marker_text() {
 		'role': 'listitem'
 	}).appendTo($(mifBody).find('.marker_side_text_container'));
 
-	$('<h3 />').text(mCount + ':').appendTo(divItem);
-	$('<label />').attr('for', 'marker_select_box_' + mCount).addClass('instruction marker_required').text('Type of element?').appendTo(divItem);
-	add_marker_select_options(divItem);
+	var h3 = $('<h3 />').text(mCount + ':').appendTo(divItem);
+	$('<span />').addClass('marker_ele_type').appendTo(h3);
+	$('<a />').attr({
+		'href': 'javascript:void(0);',
+		'class': 'marker expand_collapse'
+	}).html('<span class="collapse">Collapse</span> <span class="screen-reader-only"> Flag Number' + mCount).click(function(e) {
+		if($(this).find('.collapse').text() === "Collapse") {
+			$(this).find('.collapse').text('Expand');
+			$(divItem).find('.marker_info').slideUp();
+		} else {
+			$(this).find('.collapse').text('Collapse');
+			$(divItem).find('.marker_info').slideDown();
+		}
+		
+	}).appendTo(divItem);
+	var infoDiv = $('<div />').addClass('marker marker_info').appendTo(divItem);
+	$('<label />').attr('for', 'marker_select_box_' + mCount).addClass('instruction marker_required').text('Type of element?').appendTo(infoDiv);
+	add_marker_select_options(infoDiv);
 }
 
 function add_marker_select_options(divItem) {
@@ -262,7 +286,9 @@ function add_marker_select_options(divItem) {
 		var val = $(this).val();
 		$(this).find('option').each(function(i,v) {
 			if(val === $(v).attr('value')) {
-				var recDiv = $('<div />').addClass('marker').html($(v).attr('data-marker-rec'));
+				var recDiv = $('<div />').addClass('marker marker_recommendation_div').html($(v).attr('data-marker-rec'));
+				$(this).parent(0).parent().parent().find('.marker_ele_type').text($(v).text());
+				$(this).parent().parent().find('.marker_recommendation_div').remove();
 				$(this).parent().parent().find('.marker_recommendation').append(recDiv);
 				return false;
 			}
