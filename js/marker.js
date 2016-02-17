@@ -22,6 +22,7 @@ function run_marker() {
 
 	//Variable controls whether or not clicking in the page should place a flag.  Default = false
 	localStorage.setItem('marker_place_flag', 'false');
+	localStorage.setItem('e_c', 'expanded');
 
 	//Wrap the original body element in a <DIV> and set the width appropriately
 	var width = $(window).width() - 300 + 'px';
@@ -139,9 +140,21 @@ function getStarted() {
 		'id': 'marker_expand',
 		'class': 'marker_option',
 		'title': 'Collapse All'
-	}).html('<img src="' + chrome.extension.getURL('images/expand_collapse_24.png') + '" alt="Expand/Collapse All" />').appendTo(marker_options_div).click(function(e) {
-		$(mifBody).find('.marker_info').slideUp();
-		$(mifBody).find('.collapse').text('Expand');
+	}).html('<img src="' + chrome.extension.getURL('images/collapse_24.png') + '" alt="Expand/Collapse All" />').appendTo(marker_options_div).click(function(e) {
+		if(localStorage.getItem('e_c') === 'expanded') {
+			$(mifBody).find('.marker_info').slideUp();
+			$(mifBody).find('.collapse').text('Expand');
+			$(this).attr('title', 'Expand All');
+			$(this).find('img').attr('src', chrome.extension.getURL('images/expand_24.png'));
+			localStorage.setItem('e_c', 'collapsed');			
+		} else {
+			$(mifBody).find('.marker_info').slideDown();
+			$(mifBody).find('.collapse').text('Collapse');
+			$(this).attr('title', 'Collapse All');
+			$(this).find('img').attr('src', chrome.extension.getURL('images/collapse_24.png'));
+			localStorage.setItem('e_c', 'expanded');		
+		}
+
 	});	
 	
 

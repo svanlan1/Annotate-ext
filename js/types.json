@@ -6,21 +6,6 @@
 		"Recommendation": ""
 	},	
 	{
-		"Value": "html",
-		"QuickName": "HTML",
-		"Rec": "Ensure that the &lt;html&gt; element has a valid 'lang' attribute."
-	},
-	{
-		"Value": "title",
-		"QuickName": "Title",
-		"Rec": "Ensure that this page has a descriptive title.  Screen readers read out the title of the page before anything else, so this is very important."
-	},
-	{
-		"Value": "meta",
-		"QuickName": "Meta",
-		"Rec": ""
-	},
-	{
 		"Value": "anchor",
 		"QuickName": "Anchor",
 		"Rec": "All anchors require a valid href attribute and link text.  If an image is the sole piece of content inside of the anchor, ensure that the image has descriptive alt text."
@@ -30,6 +15,36 @@
 		"QuickName": "Anchor (Opening in a new window)",
 		"Rec": "If an anchor is opening in a new window, the user must be alerted.  Methods for this include adding 'screen-reader-only' text, or adding an icon with alt text alerting the user.  The most common text for either of these methods is 'Opens in a new window'"
 	},
+	{
+		"Value": "button",
+		"QuickName": "Button",
+		"Rec": ""
+	},	
+	{
+		"Value": "chart",
+		"QuickName": "Chart",
+		"Rec": ""
+	},
+	{
+		"Value": "carousel",
+		"QuickName": "Carousel",
+		"Rec": "You shouldn't use a carousel.<strong>Example:</strong><a href='http://www.shouldiuseacarousel.com' target='_blank'>Should I use a carousel<span class='screen-reader-only'> Opens in a new window</span></a>"
+	},	
+	{
+		"Value": "modalDialog",
+		"QuickName": "Dialog (Modal)",
+		"Rec": "Dialogs require a number of considerations.<ol><li>The parent container (generally a &lt;div&gt; requires the attribute 'role=&quot;dialog&quot;'</li><li>The parent container (div) should contain the attribute 'aria-lablledby'.  The value for this is generally the #id of the &lt;h2&gt; inside of the dialog</li><li>The dialog should contain an a heading with a valid #id<br />&lt;h2 id=&quot;dialog_heading_id&quot;/&gt;</li><li>Focus should be trapped inside of the dialog.  Tabbing past the last tabbable element should take the user back to the first tabbable element</li><li>Ensure all images (background, foreground) have the proper textual equivalent</li><li>The background content should have the attribute 'aria-hidden=&quot;true&quot;'</li></ul><strong>Example:</strong>For a working example, visit <a href='http://www.sva11y.com'>SVA11y.com</a>"
+	},
+	{
+		"Value": "nonModalDialog",
+		"QuickName": "Dialog (Non-Modal)",
+		"Rec": ""
+	},	
+	{
+		"Value": "Graph",
+		"QuickName": "Graph",
+		"Rec": ""
+	},	
 	{
 		"Value": "imageDecorative",
 		"QuickName": "Decorative Image",
@@ -45,6 +60,27 @@
 		"QuickName": "Informational Image",
 		"Rec": "All informational images should contain descriptive alt text.<strong>Example:</strong>&lt;img src=&quot;image.png&quot; alt=&quot;Marker is awesome!&quot; /&gt;"
 	},
+	{
+		"Value": "inputText",
+		"QuickName": "Input[type=text] ",
+		"Rec": ""
+	},
+	{
+		"Value": "inputButton",
+		"QuickName": "Input[type=button]",
+		"Rec": ""
+	},
+	{
+		"Value": "inputCheckbox",
+		"QuickName": "Input[type=checkbox]",
+		"Rec": ""
+	},	
+	{
+		"Value": "html",
+		"QuickName": "HTML",
+		"Rec": "Ensure that the &lt;html&gt; element has a valid 'lang' attribute."
+	},
+
 	{
 		"Value": "h1",
 		"QuickName": "Heading Level 1 (h1)",
@@ -76,51 +112,6 @@
 		"Rec": "This should be marked up as a heading level 6 (&lt;h6&gt;).<strong>Example:</strong>&lt;h6&gt;Don't use this because of it's size&lt;/h6&gt;"
 	},
 	{
-		"Value": "menu",
-		"QuickName": "Menu",
-		"Rec": "Menus require the following aria attributes: <ul><li>Role=&quot;menu&quot; on the &lt;UL&gt;</li><li>Role=&quot;menuitem&quot; on each sub-item &lt;LI&gt;</li></ul><strong>WCAG Example</strong><a href='https://www.w3.org/TR/wai-aria-practices/#menu'>ARIA Menus</a>"
-	},
-	{
-		"Value": "tabset",
-		"QuickName": "Tabset",
-		"Rec": ""
-	},
-	{
-		"Value": "modalDialog",
-		"QuickName": "Dialog (Modal)",
-		"Rec": ""
-	},
-	{
-		"Value": "nonModalDialog",
-		"QuickName": "Dialog (Non-Modal)",
-		"Rec": ""
-	},
-	{
-		"Value": "chart",
-		"QuickName": "Chart",
-		"Rec": ""
-	},
-	{
-		"Value": "carousel",
-		"QuickName": "Carousel",
-		"Rec": "You shouldn't use a carousel.<strong>Example:</strong><a href='http://www.shouldiuseacarousel.com' target='_blank'>Should I use a carousel<span class='screen-reader-only'> Opens in a new window</span></a>"
-	},
-	{
-		"Value": "Graph",
-		"QuickName": "Graph",
-		"Rec": ""
-	},
-	{
-		"Value": "dataTable",
-		"QuickName": "Data Table (Tabular Data)",
-		"Rec": "Tabular data should be marked up in a data table, with a caption and table headings.  The caption for the table doesn't necessarily have to be a caption element, but can be also be a heading that is associated to the table with the 'aria-labelledby' attribute.  Table headings that are positioned in the row should use the attribute 'scope=row'."
-	},
-	{
-		"Value": "layoutTable",
-		"QuickName": "Layout Table",
-		"Rec": "Tables used for layout purposes should always have the attribute 'role=&quot;presentation&quot;'.<strong>Example:</strong>&lt;table role=&quot;presentation&quot; /&gt;"
-	},
-	{
 		"Value": "orderedList",
 		"QuickName": "Ordered List",
 		"Rec": ""
@@ -134,20 +125,14 @@
 		"Value": "definitionList",
 		"QuickName": "Definition List",
 		"Rec": ""
+	},	{
+		"Value": "menu",
+		"QuickName": "Menu",
+		"Rec": "Menus require the following aria attributes: <ul><li>Role=&quot;menu&quot; on the &lt;UL&gt;</li><li>Role=&quot;menuitem&quot; on each sub-item &lt;LI&gt;</li></ul><strong>WCAG Example</strong><a href='https://www.w3.org/TR/wai-aria-practices/#menu'>ARIA Menus</a>"
 	},
 	{
-		"Value": "inputText",
-		"QuickName": "Input[type=text] ",
-		"Rec": ""
-	},
-	{
-		"Value": "inputButton",
-		"QuickName": "Input[type=button]",
-		"Rec": ""
-	},
-	{
-		"Value": "inputCheckbox",
-		"QuickName": "Input[type=checkbox]",
+		"Value": "meta",
+		"QuickName": "Meta",
 		"Rec": ""
 	},
 	{
@@ -156,13 +141,34 @@
 		"Rec": ""
 	},
 	{
-		"Value": "button",
-		"QuickName": "Button",
-		"Rec": ""
-	},
-	{
 		"Value": "select",
 		"QuickName": "Select",
+		"Rec": "Ensure that all form fields have an explicit label with a valid 'for' attribute that associates the label to the select box<strong>Example:</strong> &lt;label for=&quot;select_box_id&quot;>Select&lt;/label&gt;<br />&lt;select id=&quot;select_box_id&quot;&gt;&lt;/select&gt;"
+	},			
+	{
+		"Value": "tabset",
+		"QuickName": "Tabset",
+		"Rec": "Tabsets require the following aria attributes: <ul><li>Role=&auot;tabset&quot; on the &lt;ul&gt;</li><li>Role=&quot;tab&quot;</li></ul>"
+	},
+	{
+		"Value": "title",
+		"QuickName": "Title",
+		"Rec": "Ensure that this page has a descriptive title.  Screen readers read out the title of the page before anything else, so this is very important."
+	},
+	{
+		"Value": "tooltip",
+		"QuickName": "Tooltips",
 		"Rec": ""
+	},	
+	{
+		"Value": "dataTable",
+		"QuickName": "Table (Data)",
+		"Rec": "Tabular data should be marked up in a data table, with a caption and table headings.  The caption for the table doesn't necessarily have to be a caption element, but can be also be a heading that is associated to the table with the 'aria-labelledby' attribute.  Table headings that are positioned in the row should use the attribute 'scope=row'."
+	},
+	{
+		"Value": "layoutTable",
+		"QuickName": "Table (Layout)",
+		"Rec": "Tables used for layout purposes should always have the attribute 'role=&quot;presentation&quot;'.<strong>Example:</strong>&lt;table role=&quot;presentation&quot; /&gt;"
 	}
+
 ]
