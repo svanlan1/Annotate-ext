@@ -91,13 +91,13 @@ function getStarted() {
 		'id': 'place_marker',
 		'class': 'marker_option',
 		'title': 'Place markers on page'
-	}).html('<img src="' + chrome.extension.getURL('images/flag_24_inactive.png') + '" alt="Click to place marker on page" />').click(function() {
+	}).html('<img src="' + chrome.extension.getURL('images/pin_24_inactive.png') + '" alt="Click to place marker on page" />').click(function() {
 		if(localStorage.getItem('marker_place_flag') == 'false') {
-			$(this).find('img').attr('src', chrome.extension.getURL('images/flag_24.png'));
+			$(this).find('img').attr('src', chrome.extension.getURL('images/pin_24.png'));
 			localStorage.setItem('marker_place_flag', 'true');
 			place_marker();			
 		} else {
-			$(this).find('img').attr('src', chrome.extension.getURL('images/flag_24_inactive.png'));
+			$(this).find('img').attr('src', chrome.extension.getURL('images/pin_24_inactive.png'));
 			localStorage.setItem('marker_place_flag', 'false');			
 			unplace_marker();
 		}
@@ -162,7 +162,7 @@ function place_marker() {
 	$('.marker_body_wrap, a, button').bind('click', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
-		var x = e.pageX - 10,
+		var x = e.pageX - 50,
 			y = e.pageY - 15;
 
 		var flag_wrap = $('<a />').attr('href', 'javascript:void(0);').attr('class', 'marker_page_marker').attr('data-marker-count', mCount).css({
@@ -177,8 +177,11 @@ function place_marker() {
 			$(mifBody).find('#marker_select_box_' + $(this).attr('data-marker-count')).focus();
 			return false;
 		}).appendTo('body').draggable({ helper: "original" });
+
+		//$('<div />').addClass('arrow-right').appendTo(flag_wrap);
+
 		var m = $('<img />').attr({
-			'src': chrome.extension.getURL('images/flag_24.png'),
+			'src': chrome.extension.getURL('images/pin_24.png'),
 			'class': 'marker_page_marker',
 			'data-marker-count': mCount
 		}).attr('alt', 'Marker ' + mCount).appendTo(flag_wrap);

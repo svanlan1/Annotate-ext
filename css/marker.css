@@ -12,6 +12,7 @@
 body {
 	margin: 0 auto;
 	padding: 0;
+	overflow-x: hidden;
 }
 
 div.body {
@@ -131,16 +132,27 @@ a.marker_page_marker:hover {
     vertical-align: -webkit-baseline-middle;
 }
 
-.marker_page_marker:after {
-	display: inline;
-	height: 15px;
-	padding: 3px;
+
+.marker_page_marker:before {
 	content: attr(data-marker-count);
-	border: 2px solid #666;
+	border: 2px solid #333;
 	background-color: #fff;
 	color: #000;
 	font-family: 'Raleway', sans-serif;
 	text-decoration: none;
+	margin-left: 6px;
+	padding: 3px;
+}
+
+.arrow-right {
+	width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-right: 5px solid #333;
+    position: absolute;
+    left: 25px;
+    top: 5px;
 }
 
 .marker_side_text_container {
@@ -263,4 +275,3 @@ a.marker_page_marker:hover {
 	width: 1px;
 	overflow:hidden;
 }
-
