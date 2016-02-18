@@ -66,19 +66,35 @@ function run_marker() {
 	}).appendTo($(mif).find('head'));		
 
 	$('<h1 />').attr('class', 'marker').html('Marker <img src="' + chrome.extension.getURL('images/marker_32.png') + '" alt="" />').appendTo(mifBody);
+	
+	var slideDiv = $('<div />').attr('id', 'marker_welcome_text').appendTo(mifBody);
+	$('<a />').attr({
+		'href': 'javascript:void(0);',
+		'class': 'expand_collapse'
+	}).html('<span class="collapse">Collapse tips</span>').click(function(e) {
+		if($(this).find('.collapse').text() === "Collapse tips") {
+			$(this).find('.collapse').text('Expand tips');
+			$(slideDiv).find('.welcome').slideUp();
+		} else {
+			$(this).find('.collapse').text('Collapse tips');
+			$(slideDiv).find('.welcome').slideDown();
+		}
+		
+	}).appendTo(slideDiv);	
+	
 	$('<div />').attr({
 		'class': 'marker welcome'
-	}).text('a tool for making accessibility recommendations').appendTo(mifBody);
+	}).text('a tool for making accessibility recommendations').appendTo(slideDiv);
 	$('<div />').attr({
 		'class': 'marker welcome'
-	}).text('To begin, select an option below to either place a flag or select an area that you\'d like to confine your annotations to.').appendTo(mifBody);	
+	}).text('To begin, select an option below to either place a flag or select an area that you\'d like to confine your annotations to.').appendTo(slideDiv);	
 	$('<div />').attr({
 		'class': 'marker welcome'
-	}).text('Once you place a flag, you will be able to choose what type of element you think it should be').appendTo(mifBody);
+	}).text('Once you place a flag, you will be able to choose what type of element you think it should be').appendTo(slideDiv);
 
 	$('<div />').attr({
 		'class': 'marker welcome'
-	}).text('To add notes to or remove a flag, simply right click on it and choose your desired action').appendTo(mifBody);	
+	}).text('To add notes to or remove a flag, simply right click on it and choose your desired action').appendTo(slideDiv);	
 
 	//getStarted() will draw the rest of the contents in the <iframe>.  Separating them to keep functions small and light.
 	getStarted();
@@ -149,14 +165,14 @@ function getStarted() {
 		'title': 'Collapse All'
 	}).html('<img src="' + chrome.extension.getURL('images/collapse_24.png') + '" alt="Expand/Collapse All" />').appendTo(marker_options_div).click(function(e) {
 		if(localStorage.getItem('e_c') === 'expanded') {
-			$(mifBody).find('.marker_info').slideUp();
-			$(mifBody).find('.collapse').text('Expand');
+			$(mifBody).find('.marker_side_text_container').find('.marker_info').slideUp();
+			$(mifBody).find('.marker_side_text_container').find('.collapse').text('Expand');
 			$(this).attr('title', 'Expand All');
 			$(this).find('img').attr('src', chrome.extension.getURL('images/expand_24.png'));
 			localStorage.setItem('e_c', 'collapsed');			
 		} else {
-			$(mifBody).find('.marker_info').slideDown();
-			$(mifBody).find('.collapse').text('Collapse');
+			$(mifBody).find('.marker_side_text_container').find('.marker_info').slideDown();
+			$(mifBody).find('.marker_side_text_container').find('.collapse').text('Collapse');
 			$(this).attr('title', 'Collapse All');
 			$(this).find('img').attr('src', chrome.extension.getURL('images/collapse_24.png'));
 			localStorage.setItem('e_c', 'expanded');		
@@ -236,7 +252,7 @@ function createContextMenu(el, e) {
 
 		$('<label />').addClass('marker').attr('for', 'marker_textarea_' + $(el).attr('data-marker-count')).text('Add notes').appendTo(menu);
 		$('<textarea />').addClass('marker marker_note').attr('id', 'marker_textarea_' + $(el).attr('data-marker-count')).appendTo(menu);
-		$('<button />').addClass('marker marker_fun_btn marker_save_note_btn').attr('value', 'Save').text('Save').click(function(e) {
+		$('<button />').addClass('marker marker_fun_btn marker_save_note_btn').attr('value', 'Save Note').text('Save').click(function(e) {
 			var text = $('#marker_textarea_' + $(el).attr('data-marker-count')).val().replace('<', '&lt;').replace('<', '&gt;'),
 				side_box = $(mifBody).find('#marker_select_box_' + $(el).attr('data-marker-count')).parent();
 			if($(side_box).find('.marker_user_note_side').length > 0) {
@@ -272,8 +288,6 @@ function add_marker_text() {
 		'role': 'listitem'
 	}).appendTo($(mifBody).find('.marker_side_text_container'));
 
-	var h3 = $('<h3 />').text(mCount + ':').appendTo(divItem);
-	$('<span />').addClass('marker_ele_type').appendTo(h3);
 	$('<a />').attr({
 		'href': 'javascript:void(0);',
 		'class': 'marker expand_collapse'
@@ -287,6 +301,8 @@ function add_marker_text() {
 		}
 		
 	}).appendTo(divItem);
+	var h3 = $('<h3 />').text(mCount + ':').appendTo(divItem);
+	$('<span />').addClass('marker_ele_type').appendTo(h3);	
 	var infoDiv = $('<div />').addClass('marker marker_info').appendTo(divItem);
 	$('<label />').attr('for', 'marker_select_box_' + mCount).addClass('instruction marker_required').text('Type of element?').appendTo(infoDiv);
 	add_marker_select_options(infoDiv);
@@ -306,7 +322,7 @@ function add_marker_select_options(divItem) {
 	});
 
 	var sel = $('<select />').attr('id', 'marker_select_box_' + mCount).attr('aria-required', 'true').appendTo(divItem);
-	var d = $('<div />').addClass('marker marker_recommendation').attr('id', 'marker_select_text_div_' + mCount).html('<strong>Recommendations:</strong>').appendTo(divItem);
+	var d = $('<div />').addClass('marker marker_recommendation').attr('id', 'marker_select_text_div_' + mCount).html('<strong class="recommendations">Recommendations</strong>').appendTo(divItem);
 	$(options).each(function(i,v) {
 		$('<option />').attr('value', v.Value).attr('data-marker-rec', v.Rec).text(v.QuickName).appendTo(sel);
 	});

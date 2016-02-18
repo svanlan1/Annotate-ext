@@ -35,53 +35,6 @@ div.body {
 }
 
 /* Content/ <iframe /> styles */
-.marker {
-	font-family: 'Raleway', sans-serif;	
-}
-
-.instruction {
-	font-size: 12px;
-	padding: 5px;
-	color: #5e5e5e;
-	border-bottom: 1px solid #e9e9e9;
-	display:block;
-}
-
-.welcome {
-	font-size: 13px;
-	padding: 5px;
-	color: #000;
-	display: block;
-}
-
-h1.marker {
-	padding: 2px;
-	border-bottom: 1px solid #666;
-	text-align: center;
-	-webkit-margin-after: 0;
-}
-
-h2 {
-	padding: 2px;
-	font-weight: normal;
-}
-
-label {
-	font-family: 'Raleway', sans-serif !important;	
-	font-size: 13px !important;
-	height: 20px;
-	display: inherit;
-}
-
-button {
-	margin-top: 0 !important;
-	vertical-align: initial;
-}
-
-#marker_div_container {
-	z-index: 2147483647;
-
-}
 
 #marker_iframe {
 	width: 270px;
@@ -96,6 +49,61 @@ button {
 	font-family: 'Raleway', sans-serif;	
 	background-color: #fff;
 }
+
+/* Font styles */
+.marker {
+	font-family: 'Raleway', sans-serif;	
+}
+
+.instruction {
+	font-size: 13px;
+	padding: 5px;
+	color: #000;
+	border-bottom: 1px solid #e9e9e9;
+	display:block;
+}
+
+h1.marker {
+	padding: 2px;
+	border-bottom: 1px solid #666;
+	text-align: center;
+	-webkit-margin-after: 0;
+}
+
+h2.marker {
+	padding: 2px;
+	font-weight: normal;
+}
+
+label.instruction {
+	font-family: 'Ubuntu', sans-serif !important;	
+	font-size: 13px !important;
+	height: 20px;
+	display: inherit;
+}
+
+button {
+	margin-top: 0 !important;
+	vertical-align: initial;
+}
+
+/* Welcome text and tips styles */
+#marker_welcome_text .expand_collapse {
+	font-size: 12px;
+	margin-right: 3px;
+	display: inline-block;
+	font-family: 'Raleway', sans-serif;
+}
+
+.welcome {
+	font-size: 13px;
+	padding: 5px;
+	color: #000;
+	display: block;
+}
+
+
+/* Actionable options */
 
 #marker_options {
 	width: 265px;
@@ -114,6 +122,8 @@ button {
 	outline: 1px dotted #000;
 }
 
+
+/* Original page injections */
 a.marker_page_marker {
 	color: #000;
 	text-decoration: none;
@@ -124,14 +134,6 @@ a.marker_page_marker {
 a.marker_page_marker:hover {
 	transform: scale(1.1);
 }
-
-.marker_required:after {
-	content: '*';
-	color: #c00;
-	font-size: 36px;
-    vertical-align: -webkit-baseline-middle;
-}
-
 
 .marker_page_marker:before {
 	content: attr(data-marker-count);
@@ -144,45 +146,66 @@ a.marker_page_marker:hover {
 	padding: 3px;
 }
 
-.arrow-right {
-	width: 0;
-    height: 0;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    border-right: 5px solid #333;
-    position: absolute;
-    left: 25px;
-    top: 5px;
+/* Marker right click note styles */
+.marker_context_menu {
+	position: absolute;
+	border: 2px solid #aaa;
+	background-color: #fff;
+	padding: 5px;
+	display: block;
+	z-index: 2147483645;
 }
 
+.marker_context_close {
+	float:right;
+}
+
+.marker_note {
+	resize: none;
+	height: 174px;
+	width: 200px;
+	padding: 0;
+	vertical-align: inherit;
+	font-size: 12px;
+}
+
+label.marker {
+	font-family: 'Raleway', sans-serif;	
+	font-size: 13px !important;
+	height: 20px;
+	display: inherit;
+}
+
+.marker_fun_btn {
+  background: #fff;
+  border: 2px solid #c00;
+  font-family: 'Raleway', sans-serif;
+  font-size: 12px !important;
+  width: 200px;
+  text-align: center;
+  color: #c00;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  display: block;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.marker_save_note_btn {
+	border: 2px solid #000080;
+	color: #000080;
+	font-weight: bold;
+}
+
+
+/* Marker text and recommendations */
 .marker_side_text_container {
 	border-top: 2px solid #aaa;
 	font-family: 'Ubuntu', sans-serif;
 }
 
-.marker_recommendation {
-	font-size: 13px;
-}
-
-.marker_recommendation strong {
-	margin-top: 3px;
-	display:block;
-	width: 100%;
-	background-color: #e9e9e9;
-	font-family: 'Ubuntu', sans-serif;
-	padding: 3px;
-}
-
-.marker_user_note_side strong {
-	display:block;
-	margin-top: 3px;
-}
-
-strong.aria {
-	border-bottom: 1px solid #aaa;
-	width: 100%;
-	display: block;
-	background-color: #e9e9e9;
+.marker_side_text_container a:hover, .marker_side_text_container a:focus {
+	outline: 1px dotted #000;
 }
 
 .marker_side_text_selection {
@@ -197,10 +220,6 @@ strong.aria {
 	line-height: 1px;
 	display: inline-block;
 	margin-top: 7px;
-}
-
-.marker_ele_type {
-	padding-left: 5px;
 }
 
 .marker_side_text_selection .expand_collapse {
@@ -229,62 +248,106 @@ strong.aria {
 	border-bottom: 0;
 }
 
-.marker_context_menu {
-	position: absolute;
-	border: 2px solid #aaa;
-	background-color: #fff;
-	padding: 5px;
-	display: block;
-	z-index: 2147483645;
+.marker_ele_type {
+	padding-left: 5px;
 }
 
-.marker_context_close {
-	float:right;
+.marker_required:after {
+	content: '*';
+    color: #c00;
+    font-size: 15px;
 }
 
-.marker_note {
-	resize: none;
-	height: 174px;
-	width: 200px;
-	padding: 0;
-	vertical-align: inherit;
-	font-size: 12px;
-}
-
-.marker_user_note_side {
-	display: block;
-	font-size: 12px;
-}
-
-.marker_fun_btn {
-  background: #fff;
-  border: 2px solid #c00;
-  font-family: 'Raleway', sans-serif;
-  font-size: 12px !important;
-  width: 200px;
-  text-align: center;
-  color: #c00;
-  margin-bottom: 2px;
-  margin-top: 2px;
-  display: block;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.marker_save_note_btn {
-	border: 2px solid green;
-	color: green;
+.marker_recommendation {
+	font-size: 13px;
 }
 
 .marker_recommendation_div {
 	margin-top: 5px;
 	font-family: 'Ubuntu', sans-serif;
 	font-size: 13px;
+	padding: 2px;
 }
 
 .marker_recommendation_div ol, .marker_recommendation_div ul {
 	padding-left: 15px;
 }
+
+.marker_recommendation_div a {
+	text-decoration: none;
+	color: #000080;
+}
+
+.marker_recommendation_div a:visited {
+	color: #000080;
+}
+
+.marker_recommendation_div img {
+	vertical-align: sub;
+	margin-left: 5px;
+}
+
+.marker_recommendation strong {
+	margin-top: 3px;
+	display:block;
+	width: 100%;
+	background-color: #e9e9e9;
+	font-family: 'Ubuntu', sans-serif;
+	padding: 3px;
+}
+
+strong.recommendations {
+	border-bottom: 2px solid #333;
+	width: 100%;
+	display: block;
+	background-color: #e9e9e9;
+}
+
+strong.example {
+	border-bottom: 2px solid #480f09;
+	width: 100%;
+	display: block;
+	background-color: #e9e9e9;	
+}
+
+
+
+strong.aria {
+	border-bottom: 2px solid #0d5e05;
+	width: 100%;
+	display: block;
+	background-color: #e9e9e9;
+}
+
+.marker_user_note_side {
+	display: block;
+	font-size: 13px;
+	font-family: 'Ubuntu', sans-serif;
+}
+
+.marker_user_note_side strong {
+	display:block;
+	border-bottom: 2px solid #000080;
+	font-size: 13px;
+	width: 100%;
+	background-color: #e9e9e9;
+	margin-bottom: 5px;
+	padding-left: 3px;
+
+}
+
+.marker-highlight {
+	font-weight: bold;
+}
+
+.marker_or {
+	font-weight: bold;
+	display:block;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+/* Misc. helper styles */
 
 #marker_save_to_pdf {
 	width: 100%;

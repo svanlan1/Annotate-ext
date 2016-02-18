@@ -8,17 +8,22 @@
 	{
 		"Value": "anchor",
 		"QuickName": "Anchor",
-		"Rec": "All anchors require a valid href attribute and link text.  If an image is the sole piece of content inside of the anchor, ensure that the image has descriptive alt text."
+		"Rec": "All anchors require a valid href attribute and link text.  If an image is the sole piece of content inside of the anchor, ensure that the image has descriptive alt text.<strong class='example'>Example</strong>&lt;a <span class='marker-highlight'>href=&quot;index.html&quot;</span>&gt;SVA11y.com&lt;/a&gt;<br />&lt;a href=&quot;index.html&quot;&gt;<br />&nbsp;&nbsp;&lt;img src=&quot;image.png&quot; <span class='marker-highlight'>alt=&quot;SVA11y.com&quot;</span> /&gt;<br />&lt;/a&gt;<br /><br /><span class='marker-important-info'>It is important to note that without the 'href' attribute and valid value, the anchor will not be focusable to keyboard users."
 	},
 	{
 		"Value": "anchorNewWindow",
-		"QuickName": "Anchor (Opening in a new window)",
-		"Rec": "If an anchor is opening in a new window, the user must be alerted.  Methods for this include adding 'screen-reader-only' text, or adding an icon with alt text alerting the user.  The most common text for either of these methods is 'Opens in a new window'"
+		"QuickName": "Anchor (Opens in a new window)",
+		"Rec": "If an anchor is opening in a new window, the user must be alerted.  Methods for this include adding 'screen-reader-only' text, or adding an icon with alt text alerting the user.  The most common text for either of these methods is 'Opens in a new window'<strong class='example'>Example</strong>&lt;a href=&quot;new_window.html&quot; target=&quot;_blank&quot;&gt;<br />&nbsp;&nbsp;New Window HTML&nbsp;&nbsp;<br />&nbsp;&nbsp;<span class='marker-highlight'>&lt;span class=&quot;screen-reader-only&quot;&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;Opens in a new window<br />&nbsp;&nbsp;&lt;/span&gt;</span><br />&lt;/a&gt;"
+	},
+	{
+		"Value": "anchorLinked",
+		"QuickName": "Anchor (Linked image)",
+		"Rec": "When an image is the sole piece of content inside of an anchor, ensure the image has descriptive alt text.<strong class='example'>Example</strong>&lt;a href=&quot;index.html&quot;&gt;<br />&nbsp;&nbsp;&lt;img src=&quot;image.jpg&quot; <span class='marker-highlight'>alt=&quot;Breaking News&quot;</span> /&gt;"
 	},
 	{
 		"Value": "button",
 		"QuickName": "Button",
-		"Rec": "All buttons require a valid value and text.  Screen readers will read out the text of the button.<strong>Example:</strong>&lt;button&gt;Submit&lt;/button&gt;<strong class='aria'>ARIA</strong>You can also use the attribute 'role=&quot;button&quot;' on an anchor and effectively turn it into a button.<strong>Example:</strong>&lt;a href=&quot;javascript:void(0);&quot; role=&quot;button&quot;&gt;Submit&lt;/a&gt;"
+		"Rec": "All buttons require explicit text.  Screen readers will read out the text of the button.<strong class='example'>Example</strong>&lt;button&gt;<span class='marker-highlight'>Submit</span>&lt;/button&gt;<strong class='aria'>ARIA</strong>You can also use the attribute 'role=&quot;button&quot;' on an anchor and effectively turn it into a button.<strong class='example'>Example</strong>&lt;a href=&quot;javascript:void(0);&quot; <span class='marker-highlight'>role=&quot;button&quot;</span>&gt;Submit&lt;/a&gt;"
 	},	
 	{
 		"Value": "chart",
@@ -28,47 +33,62 @@
 	{
 		"Value": "carousel",
 		"QuickName": "Carousel",
-		"Rec": "You shouldn't use a carousel.<strong>Example:</strong><a href='http://www.shouldiuseacarousel.com' target='_blank'>Should I use a carousel<span class='screen-reader-only'> Opens in a new window</span></a>"
+		"Rec": "You shouldn't use a carousel.<strong class='example'>Example</strong><a href='http://www.shouldiuseacarousel.com' target='_blank'>Should I use a carousel - by Jared Smith @ WebAIM<span class='screen-reader-only'> Opens in a new window</span></a>"
 	},	
 	{
 		"Value": "modalDialog",
 		"QuickName": "Dialog (Modal)",
-		"Rec": "Dialogs require a number of considerations.<ol><li>The parent container (generally a &lt;div&gt; requires the attribute 'role=&quot;dialog&quot;'</li><li>The parent container (div) should contain the attribute 'aria-lablledby'.  The value for this is generally the #id of the &lt;h2&gt; inside of the dialog</li><li>The dialog should contain an a heading with a valid #id<br />&lt;h2 id=&quot;dialog_heading_id&quot;/&gt;</li><li>Focus should be trapped inside of the dialog.  Tabbing past the last tabbable element should take the user back to the first tabbable element</li><li>Ensure all images (background, foreground) have the proper textual equivalent</li><li>The background content should have the attribute 'aria-hidden=&quot;true&quot;'</li></ol><strong>Example:</strong>For a working example, visit <a href='http://www.sva11y.com'>SVA11y.com</a>"
+		"Rec": "Dialogs require a number of considerations.<ol><li>The parent container (generally a &lt;div&gt; requires the attribute 'role=&quot;dialog&quot;'</li><li>The parent container (div) should contain the attribute 'aria-lablledby'.  The value for this is generally the #id of the &lt;h2&gt; inside of the dialog</li><li>The dialog should contain an a heading with a valid #id<br />&lt;h2 id=&quot;dialog_heading_id&quot;/&gt;</li><li>Focus should be trapped inside of the dialog.  Tabbing past the last tabbable element should take the user back to the first tabbable element</li><li>Ensure all images (background, foreground) have the proper textual equivalent</li><li>The background content should have the attribute 'aria-hidden=&quot;true&quot;'</li></ol><strong class='example'>Example</strong>For a working example, visit <br /><a href='http://www.sva11y.com' target='_blank'>SVA11y.com <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "nonModalDialog",
 		"QuickName": "Dialog (Non-Modal)",
 		"Rec": ""
+	},
+	{
+		"Value": "drawers",
+		"QuickName": "Drawers/Accordion",
+		"Rec": ""
+	},
+	{
+		"Value": "formErrors",
+		"QuickName": "Error Handling on Forms",
+		"Rec": "Form fields that either require a specific format of text or are simply a required field, the use of ARIA should be utilized.  Required fields should use the attribute 'aria-required=&quot;true&quot;'.  When the field is in error, use one of the following methods:<ol><li>Dynamically inject error text inside of the elements label.<br />&lt;label for=quot;ele_in_err&quot;>First name:  &lt;span class=&quot;error&quot;&gt;is in error&lt;/label&gt;</li><li>Or, use the aria attribute 'aria-describedby'<br />&lt;inpt type=&quot;text&quot; aria-required=&quot;true&quot; aria-describedby=&quot;ele_in_err_error_text&quot; /&gt;<br />&lt/span id=&quot;ele_in_err_error_text&quot;&gt;Error: this field cannot be blank&lt;/span&gt;</li></ol>"
 	},	
 	{
 		"Value": "Graph",
 		"QuickName": "Graph",
 		"Rec": ""
-	},	
+	},
+	{
+		"Value": "html",
+		"QuickName": "HTML",
+		"Rec": "Ensure that the &lt;html&gt; element has a valid 'lang' attribute.<strong class='example'>Example</strong>&lt;html <span class='marker-highlight'>lang=&quot;en-us&quot;</span>&gt;&lt/html&gt;"
+	},		
 	{
 		"Value": "imageDecorative",
 		"QuickName": "Decorative Image",
-		"Rec": "Decorative images should have a null alt attribute.<strong>Example:</strong>&lt;img src='image.png' alt=&quot;&quot;/&gt;"
+		"Rec": "Decorative images should have a null alt attribute.<strong class='example'>Example</strong>&lt;img src='image.png' <span class='marker-highlight'>alt=&quot;&quot;</span> /&gt;"
 	},
 	{
 		"Value": "imageBackground",
 		"QuickName": "Background Image",
-		"Rec": "If this is a background image and contains text, there must be a textual alternative.  Textual alternatives can include visual or 'screen-reader-only' text.<strong>Example:</strong>&lt;div class='background-img'&gt;&lt;span class='screen-reader-only'&gt;TEXTUAL EQUIVALENT&lt;/span&gt;"
+		"Rec": "If this is a background image and contains text, there must be a textual alternative.  Textual alternatives can include visual or 'screen-reader-only' text.<strong class='example'>Example</strong>&lt;div class='background-img'&gt;<br /><span class='marker-highlight'>&nbsp;&nbsp;&lt;span class=&quot;screen-reader-only&quot;&gt;<br />&nbsp;&nbsp;&nbsp;TEXTUAL EQUIVALENT</br>&nbsp;&nbsp;&lt;/span&gt;</span><br />&lt;/div&gt;"
 	},
 	{
 		"Value": "imageInfo",
 		"QuickName": "Informational Image",
-		"Rec": "All informational images should contain descriptive alt text.<strong>Example:</strong>&lt;img src=&quot;image.png&quot; alt=&quot;Marker is awesome!&quot; /&gt;"
+		"Rec": "All informational images should contain descriptive alt text.<strong class='example'>Example</strong>&lt;img src=&quot;image.png&quot; <span class='marker-highlight'>alt=&quot;Marker is awesome!&quot;</span> /&gt;"
 	},
 	{
 		"Value": "inputText",
 		"QuickName": "Input[type=text] ",
-		"Rec": "All form fields require an explicit label.  This can be accomplished by either using a &lt;label&gt; element, using the &quot;aria-labelledby&quot; attribute, or using the &quot;aria-label&quot; attribute on the input.<strong>Example:</strong>&lt;label for=&quot;input_id&quot;&gt;First name&lt;/label&gt;<br />&lt;input type=&quot;text&quot; id=&quot;input_id&quot; /&gt;<strong>OR</strong>&lt;input type=&quot;text&quot; id=&quot;input_id&quot; aria-label=&quot;First Name&quot; /&gt;"
+		"Rec": "All form fields require an explicit label.  This can be accomplished by either using a &lt;label&gt; element, using the &quot;aria-labelledby&quot; attribute, or using the &quot;aria-label&quot; attribute on the input.<strong class='example'>Example</strong>&lt;label for=&quot;input_id&quot;&gt;First name&lt;/label&gt;<br />&lt;input type=&quot;text&quot; id=&quot;input_id&quot; /&gt;<strong class='aria'>ARIA</strong>&lt;input type=&quot;text&quot; id=&quot;input_id&quot; aria-label=&quot;First Name&quot; /&gt;"
 	},
 	{
 		"Value": "inputButton",
 		"QuickName": "Input[type=button]",
-		"Rec": "Use native HTML elements (such as input[type=button]) whenever possible.  Ensure that there is a valid &quot;value&quot; attribute with a value.<strong>Example:</strong>&lt;input type=&quot;button&quot; value=&quot;Submit&quot; /&gt;"
+		"Rec": "Use native HTML elements (such as input[type=button]) whenever possible.  Ensure that there is a valid &quot;value&quot; attribute with a value.<strong class='example'>Example</strong>&lt;input type=&quot;button&quot; value=&quot;Submit&quot; /&gt;"
 	},
 	{
 		"Value": "inputCheckbox",
@@ -78,44 +98,43 @@
 	{
 		"Value": "inputImage",
 		"QuickName": "Input[type=image]",
-		"Rec": "Input images should be treated the same as an informational image.  Ensure the input has explicit alt text.  This value cannot be left blank.<strong>Example:</strong>&lt;input type=&quot;image&quot; alt=&quot;Submit&quot; /&gt;"
+		"Rec": "Input images should be treated the same as an informational image.  Ensure the input has explicit alt text.  This value cannot be left blank.<strong class='example'>Example</strong>&lt;input type=&quot;image&quot; alt=&quot;Submit&quot; /&gt;"
 	},
-	{
-		"Value": "html",
-		"QuickName": "HTML",
-		"Rec": "Ensure that the &lt;html&gt; element has a valid 'lang' attribute."
-	},
-
 	{
 		"Value": "h1",
 		"QuickName": "Heading Level 1 (h1)",
-		"Rec": "This should be marked up as a heading level 1 (&lt;h1&gt;).<strong>Example:</strong>&lt;h1&gt;Marker!&lt;/h1&gt;"
+		"Rec": "This should be marked up as a heading level 1 (&lt;h1&gt;).<strong class='example'>Example</strong>&lt;h1&gt;Marker!&lt;/h1&gt;"
 	},
 	{
 		"Value": "h2",
 		"QuickName": "Heading Level 2 (h2)",
-		"Rec": "This should be marked up as a heading level 2. (&lt;h2&gt;).<strong>Example:</strong>&lt;h2&gt;Who should use Marker?&lt;/h2&gt;"
+		"Rec": "This should be marked up as a heading level 2. (&lt;h2&gt;).<strong class='example'>Example</strong>&lt;h2&gt;Who should use Marker?&lt;/h2&gt;"
 	},
 	{
 		"Value": "h3",
 		"QuickName": "Heading Level 3 (h3)",
-		"Rec": "This should be marked up as a heading level 3 (&lt;h3&gt;).<strong>Example:</strong>&lt;h3&gt;Headings must follow semantic order&lt;/h2&gt;"
+		"Rec": "This should be marked up as a heading level 3 (&lt;h3&gt;).<strong class='example'>Example</strong>&lt;h3&gt;Headings must follow semantic order&lt;/h2&gt;"
 	},
 	{
 		"Value": "h4",
 		"QuickName": "Heading Level 4 (h4)",
-		"Rec": "This should be marked up as a heading level 4 (&lt;h4&gt;).<strong>Example:</strong>&lt;h4&gt;Ensure there is a heading level 3&lt;/h4&gt;"
+		"Rec": "This should be marked up as a heading level 4 (&lt;h4&gt;).<strong class='example'>Example</strong>&lt;h4&gt;Ensure there is a heading level 3&lt;/h4&gt;"
 	},
 	{
 		"Value": "h5",
 		"QuickName": "Heading Level 5 (h5)",
-		"Rec": "This should be marked up as a heading level 5 (&lt;h5&gt;).<strong>Example:</strong>&lt;h5&gt;Do you have a heading level 4?&lt;/h5&gt;"
+		"Rec": "This should be marked up as a heading level 5 (&lt;h5&gt;).<strong class='example'>Example</strong>&lt;h5&gt;Do you have a heading level 4?&lt;/h5&gt;"
 	},
 	{
 		"Value": "h6",
 		"QuickName": "Heading Level 6 (h6)",
-		"Rec": "This should be marked up as a heading level 6 (&lt;h6&gt;).<strong>Example:</strong>&lt;h6&gt;Don't use this because of it's size&lt;/h6&gt;"
+		"Rec": "This should be marked up as a heading level 6 (&lt;h6&gt;).<strong class='example'>Example</strong>&lt;h6&gt;Don't use this because of it's size&lt;/h6&gt;"
 	},
+	{
+		"Value": "label",
+		"QuickName": "Label",
+		"Rec": "Labels should be used for all input[type=text], input[type=checkbox], input[type=radio], and textarea elements.  The label should have a valid 'for' attribute which associates the label to the desired element.<br /><br />You can also wrap the element in a label.  Ensure there is text inside of the label element.<strong class='example'>Example</strong>&lt;label for=&quot;first_name&quot;&gt;First Name&lt;/label&gt; <br /> <span class='marker_or'>OR</span> &lt;label&gt;First Name<br />&nbsp;&nbsp; &lt;input type=&quot;text&quot; id=&quot;first_name&quot; /&gt;<br />&lt;/label&gt;<strong class='aria'>ARIA</strong>You can also use the 'aria-label' attribute on input elements.<br />&lt;input type=&quot;text&quot; id=&quot;first_name&quot; aria-label=&quot;First Name&quot; /&gt;<br /><br />When possible, always use semantic elements before using ARIA attributes."
+	},		
 	{
 		"Value": "orderedList",
 		"QuickName": "List (Ordered)",
@@ -130,7 +149,8 @@
 		"Value": "definitionList",
 		"QuickName": "List (Definition)",
 		"Rec": ""
-	},	{
+	},
+	{
 		"Value": "menu",
 		"QuickName": "Menu",
 		"Rec": "Menus require the following aria attributes: <ul><li>Role=&quot;menu&quot; on the &lt;UL&gt;</li><li>Role=&quot;menuitem&quot; on each sub-item &lt;LI&gt;</li></ul><strong>WCAG Example</strong><a href='https://www.w3.org/TR/wai-aria-practices/#menu'>ARIA Menus</a>"
@@ -143,12 +163,12 @@
 	{
 		"Value": "radioGroup",
 		"QuickName": "Radio Group",
-		"Rec": ""
+		"Rec": "Groups of radio buttons should be marked up in either <ol><li>A fieldset with a legend element</li><li>Wrapped inside of a &lt;div role=&quot;group&quot; aria-labelledby=&quot;group_heading_id&quot;&gt;.  <br /><br />The attributes role=&quot;group&quot; and aria-labelledby=&quot #id of head element &quot; should be used</li></ol><strong class='example'>Example</strong><a href='http://www.sva11y.com' target='_blank'>SVA11y.com - Radio Groups <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "select",
 		"QuickName": "Select",
-		"Rec": "Ensure that all form fields have an explicit label with a valid 'for' attribute that associates the label to the select box<strong>Example:</strong> &lt;label for=&quot;select_box_id&quot;>Select&lt;/label&gt;<br />&lt;select id=&quot;select_box_id&quot;&gt;&lt;/select&gt;"
+		"Rec": "Ensure that all form fields have an explicit label with a valid 'for' attribute that associates the label to the select box<strong class='example'>Example</strong> &lt;label for=&quot;select_box_id&quot;>Select&lt;/label&gt;<br />&lt;select id=&quot;select_box_id&quot;&gt;&lt;/select&gt;"
 	},			
 	{
 		"Value": "tabset",
@@ -158,7 +178,7 @@
 	{
 		"Value": "title",
 		"QuickName": "Title",
-		"Rec": "Ensure that this page has a descriptive title.  Screen readers read out the title of the page before anything else, so this is very important."
+		"Rec": "Ensure that this page has a descriptive title.  Screen readers read out the title of the page before anything else, so this is very important.<strong class='example'>Example</strong>&lt;title&gt;<br >&nbsp;&nbsp;Marker! An accessibility markup tool<br />&lt;/title&gt;"
 	},
 	{
 		"Value": "tooltip",
@@ -168,12 +188,32 @@
 	{
 		"Value": "dataTable",
 		"QuickName": "Table (Data)",
-		"Rec": "Tabular data should be marked up in a data table, with a caption and table headings.  The caption for the table doesn't necessarily have to be a caption element, but can be also be a heading that is associated to the table with the 'aria-labelledby' attribute.  Table headings that are positioned in the row should use the attribute 'scope=row'."
+		"Rec": "Tabular data should be marked up in a data table, with a caption and table headings.  The caption for the table doesn't necessarily have to be a caption element, but can be also be a heading that is associated to the table with the 'aria-labelledby' attribute.  Table headings that are positioned in the row should use the attribute 'scope=row'.<strong>Example</strong>&lt;table&gt;<br />&lt;caption&gt;Data Table Caption&lt;/caption&gt;<br />&nbsp;&nbsp;&lt;thead&gt;<br />&nbsp;&nbsp;&lt;th scope=&quot;col&quot;&gt;Column 1&gt;&lt;/thead&gt;<br />&lt;tbody&gt;<br />&nbsp;&nbsp;&lt;td&gt;Column 1 text&lt;/td&gt;<br />&lt;/tbody&gt;<br />&lt;/table&gt;"
 	},
 	{
 		"Value": "layoutTable",
 		"QuickName": "Table (Layout)",
-		"Rec": "Tables used for layout purposes should always have the attribute 'role=&quot;presentation&quot;'.<strong>Example:</strong>&lt;table role=&quot;presentation&quot; /&gt;"
+		"Rec": "Tables used for layout purposes should always have the attribute 'role=&quot;presentation&quot;'.<strong class='example'>Example</strong>&lt;table role=&quot;presentation&quot; /&gt;"
+	},
+	{
+		"Value": "-",
+		"QuickName": "-----Global-----",
+		"Rec": ""
+	},
+	{
+		"Value": "focusManagement",
+		"QuickName": "Focus Management",
+		"Rec": "Do not suppress the default browser focus indication without setting a focus indicator of your own.<strong class='example'>Example</strong>:focus { outline: 2px solid #000; }"
+	},
+	{
+		"Value": "colorContrast",
+		"QuickName": "Color Contrast",
+		"Rec": "Ensure that all text under 16pts has at least a 4.5:1 color contrast ratio between the foreground and background.  For large size text (16pt or larger), a contrast ratio of at least 3:1 should be met."
+	},
+	{
+		"Value": "tabOrder",
+		"QuickName": "Tab Order",
+		"Rec": "Tabbing through the page should move left to right, top to bottom.  Tabbable elements should be wrapped in an anchor, or have a tabindex of 0. <br /> It is a best practice to allow the browser to assign the taborder, and to only use a tabindex where applicable.<strong class='example'>Example</strong>&lt;span id=&quot;error&quot; tabindex=&quot;-1&quot; &gt;<br />&nbsp;&nbsp;This is important information that your Javascript should set focus to dynamically<br />&lt;/span&gt;<br /><br />In the example above, the element has a tabindex of '-1'.  The element is not focusable, but can be programmatically focusable.  This is an acceptable use of tabindex."
 	}
 
 ]
