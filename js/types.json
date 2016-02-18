@@ -18,7 +18,7 @@
 	{
 		"Value": "button",
 		"QuickName": "Button",
-		"Rec": ""
+		"Rec": "All buttons require a valid value and text.  Screen readers will read out the text of the button.<strong>Example:</strong>&lt;button&gt;Submit&lt;/button&gt;<strong class='aria'>ARIA</strong>You can also use the attribute 'role=&quot;button&quot;' on an anchor and effectively turn it into a button.<strong>Example:</strong>&lt;a href=&quot;javascript:void(0);&quot; role=&quot;button&quot;&gt;Submit&lt;/a&gt;"
 	},	
 	{
 		"Value": "chart",
@@ -33,7 +33,7 @@
 	{
 		"Value": "modalDialog",
 		"QuickName": "Dialog (Modal)",
-		"Rec": "Dialogs require a number of considerations.<ol><li>The parent container (generally a &lt;div&gt; requires the attribute 'role=&quot;dialog&quot;'</li><li>The parent container (div) should contain the attribute 'aria-lablledby'.  The value for this is generally the #id of the &lt;h2&gt; inside of the dialog</li><li>The dialog should contain an a heading with a valid #id<br />&lt;h2 id=&quot;dialog_heading_id&quot;/&gt;</li><li>Focus should be trapped inside of the dialog.  Tabbing past the last tabbable element should take the user back to the first tabbable element</li><li>Ensure all images (background, foreground) have the proper textual equivalent</li><li>The background content should have the attribute 'aria-hidden=&quot;true&quot;'</li></ul><strong>Example:</strong>For a working example, visit <a href='http://www.sva11y.com'>SVA11y.com</a>"
+		"Rec": "Dialogs require a number of considerations.<ol><li>The parent container (generally a &lt;div&gt; requires the attribute 'role=&quot;dialog&quot;'</li><li>The parent container (div) should contain the attribute 'aria-lablledby'.  The value for this is generally the #id of the &lt;h2&gt; inside of the dialog</li><li>The dialog should contain an a heading with a valid #id<br />&lt;h2 id=&quot;dialog_heading_id&quot;/&gt;</li><li>Focus should be trapped inside of the dialog.  Tabbing past the last tabbable element should take the user back to the first tabbable element</li><li>Ensure all images (background, foreground) have the proper textual equivalent</li><li>The background content should have the attribute 'aria-hidden=&quot;true&quot;'</li></ol><strong>Example:</strong>For a working example, visit <a href='http://www.sva11y.com'>SVA11y.com</a>"
 	},
 	{
 		"Value": "nonModalDialog",
@@ -63,18 +63,23 @@
 	{
 		"Value": "inputText",
 		"QuickName": "Input[type=text] ",
-		"Rec": ""
+		"Rec": "All form fields require an explicit label.  This can be accomplished by either using a &lt;label&gt; element, using the &quot;aria-labelledby&quot; attribute, or using the &quot;aria-label&quot; attribute on the input.<strong>Example:</strong>&lt;label for=&quot;input_id&quot;&gt;First name&lt;/label&gt;<br />&lt;input type=&quot;text&quot; id=&quot;input_id&quot; /&gt;<strong>OR</strong>&lt;input type=&quot;text&quot; id=&quot;input_id&quot; aria-label=&quot;First Name&quot; /&gt;"
 	},
 	{
 		"Value": "inputButton",
 		"QuickName": "Input[type=button]",
-		"Rec": ""
+		"Rec": "Use native HTML elements (such as input[type=button]) whenever possible.  Ensure that there is a valid &quot;value&quot; attribute with a value.<strong>Example:</strong>&lt;input type=&quot;button&quot; value=&quot;Submit&quot; /&gt;"
 	},
 	{
 		"Value": "inputCheckbox",
 		"QuickName": "Input[type=checkbox]",
 		"Rec": ""
-	},	
+	},
+	{
+		"Value": "inputImage",
+		"QuickName": "Input[type=image]",
+		"Rec": "Input images should be treated the same as an informational image.  Ensure the input has explicit alt text.  This value cannot be left blank.<strong>Example:</strong>&lt;input type=&quot;image&quot; alt=&quot;Submit&quot; /&gt;"
+	},
 	{
 		"Value": "html",
 		"QuickName": "HTML",
@@ -113,17 +118,17 @@
 	},
 	{
 		"Value": "orderedList",
-		"QuickName": "Ordered List",
+		"QuickName": "List (Ordered)",
 		"Rec": ""
 	},
 	{
 		"Value": "unorderedList",
-		"QuickName": "Unordered List",
+		"QuickName": "List (Unordered)",
 		"Rec": ""
 	},
 	{
 		"Value": "definitionList",
-		"QuickName": "Definition List",
+		"QuickName": "List (Definition)",
 		"Rec": ""
 	},	{
 		"Value": "menu",

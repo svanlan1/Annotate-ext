@@ -57,7 +57,13 @@ function run_marker() {
 		'rel': 'stylesheet',
 		'type': 'text/css',
 		'href':  chrome.extension.getURL('css/railway.css')
-	}).appendTo('head');	
+	}).appendTo('head');
+
+	$('<link />').attr({
+		'rel': 'stylesheet',
+		'type': 'text/css',
+		'href': 'https://fonts.googleapis.com/css?family=Ubuntu'
+	}).appendTo($(mif).find('head'));		
 
 	$('<h1 />').attr('class', 'marker').html('Marker <img src="' + chrome.extension.getURL('images/marker_32.png') + '" alt="" />').appendTo(mifBody);
 	$('<div />').attr({
@@ -132,6 +138,7 @@ function getStarted() {
 		'class': 'marker_option',
 		'title': 'Save to PDF'
 	}).html('<img src="' + chrome.extension.getURL('images/save_24.png') + '" alt="Save markings" />').appendTo(marker_options_div).click(function(e) {
+		//saveToPdf();
 		alert('Save to PDF functionality coming');
 	});	
 
@@ -320,6 +327,17 @@ function add_marker_select_options(divItem) {
 
 function displayContextMenu() {
 	console.log('test');
+}
+
+function saveToPdf() {
+	$('<iframe />').attr('id', 'results_iframe').appendTo('html');
+	var x = $('#results_iframe')[0].contentWindow.document,
+		xHead = $(x).find('head'),
+		xBody = $(x).find('body');
+	var pdfDiv = $('<div />').attr('id', 'marker_save_to_pdf');
+	$(xHead).append($('head').html());
+	$(pdfDiv).html($('body').html()).appendTo(xBody);
+	$(pdfDiv).append($(mifBody).find('.marker_side_text_container'));
 }
 
 function stop_marker() {
