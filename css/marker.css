@@ -21,6 +21,16 @@ div.body {
 	padding: 0;
 }
 
+.marker_options_label {
+	display: block;
+}
+
+.marker_options_input {
+	width: 800px;
+	height: 200px;
+	font-family: 'Raleway', sans-serif;
+	padding: 5px;
+}
 
 /* Original Page Style Manipulation */
 .marker_body_wrap {
@@ -108,7 +118,6 @@ button {
 #marker_options {
 	width: 265px;
 	display:block;
-	margin-top: 5px;
 	padding: 3px;
 	border-top: 2px solid #aaa;
 }

@@ -13,7 +13,7 @@ var mCount = 1; // Running tally of how many flags have been placed on the page
 /***********************************************************************************************************
 *	run_marker() function sets up the iframe on the left and sets the original body element positioned right
 ***********************************************************************************************************/
-function run_marker() {
+function run_marker(welcome) {
 	//Send message to background script letting it know that the application is currently active.
 	chrome.runtime.sendMessage({
 		greeting: 'start'
@@ -67,34 +67,45 @@ function run_marker() {
 
 	$('<h1 />').attr('class', 'marker').html('Marker <img src="' + chrome.extension.getURL('images/marker_32.png') + '" alt="" />').appendTo(mifBody);
 	
-	var slideDiv = $('<div />').attr('id', 'marker_welcome_text').appendTo(mifBody);
-	$('<a />').attr({
-		'href': 'javascript:void(0);',
-		'class': 'expand_collapse'
-	}).html('<span class="collapse">Collapse tips</span>').click(function(e) {
-		if($(this).find('.collapse').text() === "Collapse tips") {
-			$(this).find('.collapse').text('Expand tips');
-			$(slideDiv).find('.welcome').slideUp();
-		} else {
-			$(this).find('.collapse').text('Collapse tips');
-			$(slideDiv).find('.welcome').slideDown();
-		}
+	if(welcome === 'show') {
+		var slideDiv = $('<div />').attr('id', 'marker_welcome_text').addClass('welcome').appendTo(mifBody);
+		$('<a />').attr({
+			'href': 'javascript:void(0);',
+			'class': 'expand_collapse'
+		}).html('<span class="collapse">Collapse tips</span>').click(function(e) {
+			if($(this).find('.collapse').text() === "Collapse tips") {
+				$(this).find('.collapse').text('Expand tips');
+				$(slideDiv).find('.welcome').slideUp();
+			} else {
+				$(this).find('.collapse').text('Collapse tips');
+				$(slideDiv).find('.welcome').slideDown();
+			}
+			
+		}).appendTo(slideDiv);
 		
-	}).appendTo(slideDiv);	
-	
-	$('<div />').attr({
-		'class': 'marker welcome'
-	}).text('a tool for making accessibility recommendations').appendTo(slideDiv);
-	$('<div />').attr({
-		'class': 'marker welcome'
-	}).text('To begin, select an option below to either place a flag or select an area that you\'d like to confine your annotations to.').appendTo(slideDiv);	
-	$('<div />').attr({
-		'class': 'marker welcome'
-	}).text('Once you place a flag, you will be able to choose what type of element you think it should be').appendTo(slideDiv);
+		$('<input />').attr('type', 'checkbox').attr('id', 'dont_show_welcome').click(function() {
+			chrome.runtime.sendMessage({
+				greeting: 'welcome'
+			});
+			$(mifBody).find('.welcome').remove();
+		}).appendTo(slideDiv);
+		$('<label />').attr('for', 'dont_show_welcome').text('Never show this again').appendTo(slideDiv);
+		
+		$('<div />').attr({
+			'class': 'marker welcome'
+		}).text('a tool for making accessibility recommendations').appendTo(slideDiv);
+		$('<div />').attr({
+			'class': 'marker welcome'
+		}).text('To begin, select an option below to either place a flag or select an area that you\'d like to confine your annotations to.').appendTo(slideDiv);	
+		$('<div />').attr({
+			'class': 'marker welcome'
+		}).text('Once you place a flag, you will be able to choose what type of element you think it should be').appendTo(slideDiv);
 
-	$('<div />').attr({
-		'class': 'marker welcome'
-	}).text('To add notes to or remove a flag, simply right click on it and choose your desired action').appendTo(slideDiv);	
+		$('<div />').attr({
+			'class': 'marker welcome'
+		}).text('To add notes to or remove a flag, simply right click on it and choose your desired action').appendTo(slideDiv);	
+	}
+
 
 	//getStarted() will draw the rest of the contents in the <iframe>.  Separating them to keep functions small and light.
 	getStarted();
@@ -341,10 +352,6 @@ function add_marker_select_options(divItem) {
 	});
 }
 
-function displayContextMenu() {
-	console.log('test');
-}
-
 function saveToPdf() {
 	$('<iframe />').attr('id', 'results_iframe').appendTo('html');
 	var x = $('#results_iframe')[0].contentWindow.document,
@@ -368,7 +375,7 @@ function stop_marker() {
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 	if($('#marker_iframe').length == 0) {
-		run_marker();
+		run_marker(request.welcome);
 	} else {
 		stop_marker();
 	}

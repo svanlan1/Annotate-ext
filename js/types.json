@@ -38,7 +38,7 @@
 	{
 		"Value": "modalDialog",
 		"QuickName": "Dialog (Modal)",
-		"Rec": "Dialogs require a number of considerations.<ol><li>The parent container (generally a &lt;div&gt; requires the attribute 'role=&quot;dialog&quot;'</li><li>The parent container (div) should contain the attribute 'aria-lablledby'.  The value for this is generally the #id of the &lt;h2&gt; inside of the dialog</li><li>The dialog should contain an a heading with a valid #id<br />&lt;h2 id=&quot;dialog_heading_id&quot;/&gt;</li><li>Focus should be trapped inside of the dialog.  Tabbing past the last tabbable element should take the user back to the first tabbable element</li><li>Ensure all images (background, foreground) have the proper textual equivalent</li><li>The background content should have the attribute 'aria-hidden=&quot;true&quot;'</li></ol><strong class='example'>Example</strong>For a working example, visit <br /><a href='http://www.sva11y.com' target='_blank'>SVA11y.com <span class='screen-reader-only'> Opens in a new window</span></a>"
+		"Rec": "Dialogs require a number of considerations.<ol><li>The parent container (generally a &lt;div&gt; requires the attribute 'role=&quot;dialog&quot;'</li><li>The parent container (div) should contain the attribute 'aria-lablledby'.  The value for this is generally the #id of the &lt;h2&gt; inside of the dialog</li><li>The dialog should contain an a heading with a valid #id<br />&lt;h2 id=&quot;dialog_heading_id&quot;/&gt;</li><li>Focus should be trapped inside of the dialog.  Tabbing past the last tabbable element should take the user back to the first tabbable element</li><li>Ensure all images (background, foreground) have the proper textual equivalent</li><li>The background content should have the attribute 'aria-hidden=&quot;true&quot;'</li></ol><strong class='example'>Example</strong>&lt;div class=&quot;entire_body&quot; <span class='marker-highlight'>aria-hidden=&quot;true&quot;</span> &gt;Body content...&lt;/div&gt;<br />&lt;div class=&quot;dialog&quot; <span class='marker-highlight'>aria-labelledby=&quot;dialog_head&quot;</span>&gt;<br />&lt;h2 <span class='marker-highlight'>id=&quot;dialog_head&quot;</span>&gt;Dialog Heading!&lt;/h2&gt;<br /><br />For a complete working example, visit <br /><a href='http://www.sva11y.com' target='_blank'>SVA11y.com <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "nonModalDialog",
@@ -53,7 +53,7 @@
 	{
 		"Value": "formErrors",
 		"QuickName": "Error Handling on Forms",
-		"Rec": "Form fields that either require a specific format of text or are simply a required field, the use of ARIA should be utilized.  Required fields should use the attribute 'aria-required=&quot;true&quot;'.  When the field is in error, use one of the following methods:<ol><li>Dynamically inject error text inside of the elements label.<br />&lt;label for=quot;ele_in_err&quot;>First name:  &lt;span class=&quot;error&quot;&gt;is in error&lt;/label&gt;</li><li>Or, use the aria attribute 'aria-describedby'<br />&lt;inpt type=&quot;text&quot; aria-required=&quot;true&quot; aria-describedby=&quot;ele_in_err_error_text&quot; /&gt;<br />&lt/span id=&quot;ele_in_err_error_text&quot;&gt;Error: this field cannot be blank&lt;/span&gt;</li></ol>"
+		"Rec": "Form fields that either require a specific format of text or are simply a required field, the use of ARIA should be utilized.  Required fields should use the attribute 'aria-required=&quot;true&quot;'.  When the field is in error, use one of the following methods:<ol><li>Dynamically inject error text inside of the elements label.<br />&lt;label for=&quot;ele_in_err&quot;>First name:<br />&nbsp;&nbsp; <span class='marker-highlight'> &lt;span class=&quot;error&quot;&gt;is in error&lt;/span&gt;</span><br />&lt;/label&gt;</li><li>Or, use the aria attribute 'aria-describedby'<br />&lt;input type=&quot;text&quot; <span class='marker-highlight'> aria-required=&quot;true&quot; aria-describedby=&quot;ele_in_err_error_text&quot;</span> /&gt;<br /><span class='marker-highlight'>&lt;span id=&quot;ele_in_err_error_text&quot;&gt;<br />&nbsp;&nbsp;Error: this field cannot be blank<br />&lt;/span&gt;</span></li></ol>"
 	},	
 	{
 		"Value": "Graph",
@@ -64,31 +64,31 @@
 		"Value": "html",
 		"QuickName": "HTML",
 		"Rec": "Ensure that the &lt;html&gt; element has a valid 'lang' attribute.<strong class='example'>Example</strong>&lt;html <span class='marker-highlight'>lang=&quot;en-us&quot;</span>&gt;&lt/html&gt;"
-	},		
-	{
-		"Value": "imageDecorative",
-		"QuickName": "Decorative Image",
-		"Rec": "Decorative images should have a null alt attribute.<strong class='example'>Example</strong>&lt;img src='image.png' <span class='marker-highlight'>alt=&quot;&quot;</span> /&gt;"
 	},
 	{
 		"Value": "imageBackground",
-		"QuickName": "Background Image",
+		"QuickName": "Image (Background)",
 		"Rec": "If this is a background image and contains text, there must be a textual alternative.  Textual alternatives can include visual or 'screen-reader-only' text.<strong class='example'>Example</strong>&lt;div class='background-img'&gt;<br /><span class='marker-highlight'>&nbsp;&nbsp;&lt;span class=&quot;screen-reader-only&quot;&gt;<br />&nbsp;&nbsp;&nbsp;TEXTUAL EQUIVALENT</br>&nbsp;&nbsp;&lt;/span&gt;</span><br />&lt;/div&gt;"
+	},			
+	{
+		"Value": "imageDecorative",
+		"QuickName": "Image (Decorative)",
+		"Rec": "Decorative images should have a null alt attribute.<strong class='example'>Example</strong>&lt;img src='image.png' <span class='marker-highlight'>alt=&quot;&quot;</span> /&gt;"
 	},
 	{
 		"Value": "imageInfo",
-		"QuickName": "Informational Image",
+		"QuickName": "Image (Informational)",
 		"Rec": "All informational images should contain descriptive alt text.<strong class='example'>Example</strong>&lt;img src=&quot;image.png&quot; <span class='marker-highlight'>alt=&quot;Marker is awesome!&quot;</span> /&gt;"
 	},
 	{
 		"Value": "inputText",
 		"QuickName": "Input[type=text] ",
-		"Rec": "All form fields require an explicit label.  This can be accomplished by either using a &lt;label&gt; element, using the &quot;aria-labelledby&quot; attribute, or using the &quot;aria-label&quot; attribute on the input.<strong class='example'>Example</strong>&lt;label for=&quot;input_id&quot;&gt;First name&lt;/label&gt;<br />&lt;input type=&quot;text&quot; id=&quot;input_id&quot; /&gt;<strong class='aria'>ARIA</strong>&lt;input type=&quot;text&quot; id=&quot;input_id&quot; aria-label=&quot;First Name&quot; /&gt;"
+		"Rec": "All form fields require an explicit label.  This can be accomplished by either using a &lt;label&gt; element, using the &quot;aria-labelledby&quot; attribute, or using the &quot;aria-label&quot; attribute on the input.<strong class='example'>Example</strong>&lt;label <span class='marker-highlight'>for=&quot;input_id&quot;</span>&gt;First name&lt;/label&gt;<br />&lt;input type=&quot;text&quot; <span class='marker-highlight'>id=&quot;input_id&quot;</span> /&gt;<strong class='aria'>ARIA</strong>&lt;input type=&quot;text&quot; id=&quot;input_id&quot; <span class='marker-highlight'>aria-label=&quot;First Name&quot;</span> /&gt;"
 	},
 	{
 		"Value": "inputButton",
 		"QuickName": "Input[type=button]",
-		"Rec": "Use native HTML elements (such as input[type=button]) whenever possible.  Ensure that there is a valid &quot;value&quot; attribute with a value.<strong class='example'>Example</strong>&lt;input type=&quot;button&quot; value=&quot;Submit&quot; /&gt;"
+		"Rec": "Use native HTML elements (such as input[type=button]) whenever possible.  Ensure that there is a valid &quot;value&quot; attribute with a value.<strong class='example'>Example</strong>&lt;input type=&quot;button&quot; <span class='marker-highlight'>value=&quot;Submit&quot;</span> /&gt;"
 	},
 	{
 		"Value": "inputCheckbox",
@@ -98,7 +98,7 @@
 	{
 		"Value": "inputImage",
 		"QuickName": "Input[type=image]",
-		"Rec": "Input images should be treated the same as an informational image.  Ensure the input has explicit alt text.  This value cannot be left blank.<strong class='example'>Example</strong>&lt;input type=&quot;image&quot; alt=&quot;Submit&quot; /&gt;"
+		"Rec": "Input images should be treated the same as an informational image.  Ensure the input has explicit alt text.  This value cannot be left blank.<strong class='example'>Example</strong>&lt;input type=&quot;image&quot; <span class='marker-highlight'> alt=&quot;Submit&quot; </span>/&gt;"
 	},
 	{
 		"Value": "h1",
@@ -133,7 +133,7 @@
 	{
 		"Value": "label",
 		"QuickName": "Label",
-		"Rec": "Labels should be used for all input[type=text], input[type=checkbox], input[type=radio], and textarea elements.  The label should have a valid 'for' attribute which associates the label to the desired element.<br /><br />You can also wrap the element in a label.  Ensure there is text inside of the label element.<strong class='example'>Example</strong>&lt;label for=&quot;first_name&quot;&gt;First Name&lt;/label&gt; <br /> <span class='marker_or'>OR</span> &lt;label&gt;First Name<br />&nbsp;&nbsp; &lt;input type=&quot;text&quot; id=&quot;first_name&quot; /&gt;<br />&lt;/label&gt;<strong class='aria'>ARIA</strong>You can also use the 'aria-label' attribute on input elements.<br />&lt;input type=&quot;text&quot; id=&quot;first_name&quot; aria-label=&quot;First Name&quot; /&gt;<br /><br />When possible, always use semantic elements before using ARIA attributes."
+		"Rec": "Labels should be used for all input[type=text], input[type=checkbox], input[type=radio], and textarea elements.  The label should have a valid 'for' attribute which associates the label to the desired element.<br /><br />You can also wrap the element in a label.  Ensure there is text inside of the label element.<strong class='example'>Example</strong>&lt;label <span class='marker-highlight'>for=&quot;first_name&quot;</span>&gt;First Name&lt;/label&gt; <br /> <span class='marker_or'>OR</span> &lt;label&gt;First Name<br />&nbsp;&nbsp; &lt;input type=&quot;text&quot; id=&quot;first_name&quot; /&gt;<br />&lt;/label&gt;<strong class='aria'>ARIA</strong>You can also use the 'aria-label' attribute on input elements.<br />&lt;input type=&quot;text&quot; id=&quot;first_name&quot; <span class='marker-highlight'>aria-label=&quot;First Name&quot;</span> /&gt;<br /><br />When possible, always use semantic elements before using ARIA attributes."
 	},		
 	{
 		"Value": "orderedList",
@@ -168,12 +168,12 @@
 	{
 		"Value": "select",
 		"QuickName": "Select",
-		"Rec": "Ensure that all form fields have an explicit label with a valid 'for' attribute that associates the label to the select box<strong class='example'>Example</strong> &lt;label for=&quot;select_box_id&quot;>Select&lt;/label&gt;<br />&lt;select id=&quot;select_box_id&quot;&gt;&lt;/select&gt;"
+		"Rec": "Ensure that all form fields have an explicit label with a valid 'for' attribute that associates the label to the select box<strong class='example'>Example</strong><span class='marker-highlight'> &lt;label for=&quot;select_box_id&quot;>Select&lt;/label&gt;</span><br />&lt;select id=&quot;select_box_id&quot;&gt;&lt;/select&gt;"
 	},			
 	{
 		"Value": "tabset",
 		"QuickName": "Tabset",
-		"Rec": "Tabsets require the following aria attributes: <ul><li>Role=&auot;tabset&quot; on the &lt;ul&gt;</li><li>Role=&quot;tab&quot;</li></ul>"
+		"Rec": "Tabsets require the following aria attributes: <ul><li>Role=&quot;tabset&quot; on the &lt;ul&gt;</li><li>Role=&quot;tab&quot;</li></ul>"
 	},
 	{
 		"Value": "title",
@@ -188,12 +188,12 @@
 	{
 		"Value": "dataTable",
 		"QuickName": "Table (Data)",
-		"Rec": "Tabular data should be marked up in a data table, with a caption and table headings.  The caption for the table doesn't necessarily have to be a caption element, but can be also be a heading that is associated to the table with the 'aria-labelledby' attribute.  Table headings that are positioned in the row should use the attribute 'scope=row'.<strong>Example</strong>&lt;table&gt;<br />&lt;caption&gt;Data Table Caption&lt;/caption&gt;<br />&nbsp;&nbsp;&lt;thead&gt;<br />&nbsp;&nbsp;&lt;th scope=&quot;col&quot;&gt;Column 1&gt;&lt;/thead&gt;<br />&lt;tbody&gt;<br />&nbsp;&nbsp;&lt;td&gt;Column 1 text&lt;/td&gt;<br />&lt;/tbody&gt;<br />&lt;/table&gt;"
+		"Rec": "Tabular data should be marked up in a data table, with a caption and table headings.  The caption for the table doesn't necessarily have to be a caption element, but can be also be a heading that is associated to the table with the 'aria-labelledby' attribute.<br />  Table headings that are positioned in the row should use the attribute 'scope=row'.<strong>Example</strong>&lt;table&gt;<br />&nbsp;&nbsp;<span class='marker-highlight'>&lt;caption&gt;Data Table Caption&lt;/caption&gt;</span><br />&nbsp;&nbsp;&lt;thead&gt;<br />&nbsp;&nbsp;&nbsp;<span class='marker-highlight'>&lt;th scope=&quot;col&quot;&gt;Column 1&lt;/th&gt;</span><br />&nbsp;&nbsp;&lt;/thead&gt;<br />&nbsp;&nbsp;&lt;tbody&gt;<br />&nbsp;&nbsp;&nbsp;&lt;td&gt;Column 1 text&lt;/td&gt;<br />&nbsp;&nbsp;&lt;/tbody&gt;<br />&lt;/table&gt;<strong class='aria'>ARIA</strong>&lt;table <span class='marker-highlight'> aria-labelledby=&quot;table_label_id&quot;</span> &lt;/table&gt;<br />&lt;span <span class='marker-highlight'>id=&quot;table_label_id&quot;</span>&gt;Explicit label text&lt;/span&gt;"
 	},
 	{
 		"Value": "layoutTable",
 		"QuickName": "Table (Layout)",
-		"Rec": "Tables used for layout purposes should always have the attribute 'role=&quot;presentation&quot;'.<strong class='example'>Example</strong>&lt;table role=&quot;presentation&quot; /&gt;"
+		"Rec": "Tables used for layout purposes should always have the attribute 'role=&quot;presentation&quot;'.<strong class='example'>Example</strong>&lt;table <span class='marker-highlight'>role=&quot;presentation&quot;</span> /&gt;"
 	},
 	{
 		"Value": "-",
