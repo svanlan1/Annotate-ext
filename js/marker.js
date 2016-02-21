@@ -29,12 +29,16 @@ function run_marker(welcome) {
 	$('body').wrapInner('<div class="marker_body_wrap" style="width:'+width+'" />');
 	$('body').prepend('<div class="shim"></div>');
 
-	//var marker_div_container = $('<div />').attr('id', 'marker_div_container').before('body');
+	var marker_div_container = $('<div />').attr('id', 'marker_div_container').appendTo('html');
 	//Create the MARKER iframe and append it to the <HTML> element
 	$('<iframe />').attr({
 		'id': 'marker_iframe',
 		'class': 'marker'
-	}).appendTo('html');
+	}).appendTo(marker_div_container);
+
+	$(marker_div_container).resizable({
+  		handles: "e"
+	});
 
 	//Set the global variables to their correct values
 	mif = $("#marker_iframe")[0].contentWindow.document;
@@ -63,7 +67,13 @@ function run_marker(welcome) {
 		'rel': 'stylesheet',
 		'type': 'text/css',
 		'href': 'https://fonts.googleapis.com/css?family=Ubuntu'
-	}).appendTo($(mif).find('head'));		
+	}).appendTo($(mif).find('head'));	
+
+	$('<link />').attr({
+		'rel': 'stylesheet',
+		'type': 'text/css',
+		'href': 'https://fonts.googleapis.com/css?family=Ubuntu'
+	}).appendTo('head');		
 
 	$('<h1 />').attr('class', 'marker').html('Marker <img src="' + chrome.extension.getURL('images/marker_32.png') + '" alt="" />').appendTo(mifBody);
 	
@@ -109,6 +119,22 @@ function run_marker(welcome) {
 
 	//getStarted() will draw the rest of the contents in the <iframe>.  Separating them to keep functions small and light.
 	getStarted();
+
+	$(window).on('resize', function(e) {
+		var winWidth = $(window).width() - 278;
+		$('.marker_body_wrap').css('width', winWidth + 'px');
+		if($('#marker_window_resize_msg').length === 0) {
+			$('<div />').attr({
+				'id': 'marker_window_resize_msg'
+			}).html('<strong>Alert!</strong> <span style="padding: 5px;">Resizing the window does not automatically readjust your markers on the page.  You may need to reposition them (but don\'t worry, they\'re all totally draggable)</span>').appendTo('.marker_body_wrap').fadeIn('slow');
+
+		} else {
+			$('#marker_window_resize_msg').show();
+		}
+		setTimeout(function() {
+			$('#marker_window_resize_msg').fadeOut('slow');
+		}, 4000)
+	});	
 
 }
 
@@ -371,6 +397,8 @@ function stop_marker() {
 		greeting: 'stop'
 	});	
 }
+
+
 
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {

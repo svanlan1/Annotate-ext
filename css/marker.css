@@ -32,6 +32,16 @@ div.body {
 	padding: 5px;
 }
 
+#save_button {
+	position: fixed;
+	right: 30px;
+	bottom: 50px;
+}
+
+#save_button .marker_fun_btn {
+	width: 100px;
+}
+
 /* Original Page Style Manipulation */
 .marker_body_wrap {
 	position: absolute;
@@ -44,7 +54,42 @@ div.body {
 	position:absolute;
 }
 
+#marker_window_resize_msg {
+	border: 1px solid #000;
+	position: fixed;
+	top: 10px;
+	display: block;
+	left: 300px;
+    background-color: #000;
+    z-index: 21454122578;
+    height: 160px;
+    font-family: 'Ubuntu', sans-serif;	
+    color: #fff;
+	box-shadow: rgb(136, 136, 136) 6px 6px 10px 0px;
+	border-radius: 15px;
+	font-size: .9em;
+    text-align: center;
+    width: 300px;
+    padding: 5px;
+    height: 100px;
+    display:none;
+}
+
+#marker_window_resize_msg strong {
+	display: block;
+	padding: 3px;
+	width: 100%;
+}
+
 /* Content/ <iframe /> styles */
+
+#marker_div_container {
+	display:block;
+	left: 0;
+	top: 0;
+	position:fixed;
+	width: 278px;
+}
 
 #marker_iframe {
 	width: 270px;
