@@ -420,3 +420,26 @@ strong.aria {
 	width: 1px;
 	overflow:hidden;
 }
+
+/* Results <iframe /> styles */
+#marker_results_frame {
+	right: 0;
+	top: 0;
+	position: fixed;
+	height: 100%;
+	display: block;
+	background-color: #fff;
+	border-top: 3px dashed #000;
+	border-left: 3px dashed #666;
+	padding: 5px;
+	z-index: 21433235543849;
+	overflow-y: scroll;
+}
+
+#body_shim {
+	position: absolute;
+	bottom: 0;
+	height: 200px;
+	width: 100%;
+	display:block;
+}

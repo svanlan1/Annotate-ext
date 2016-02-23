@@ -29,16 +29,12 @@ function run_marker(welcome) {
 	$('body').wrapInner('<div class="marker_body_wrap" style="width:'+width+'" />');
 	$('body').prepend('<div class="shim"></div>');
 
-	var marker_div_container = $('<div />').attr('id', 'marker_div_container').appendTo('html');
+	//var marker_div_container = $('<div />').attr('id', 'marker_div_container').appendTo('html');
 	//Create the MARKER iframe and append it to the <HTML> element
 	$('<iframe />').attr({
 		'id': 'marker_iframe',
 		'class': 'marker'
-	}).appendTo(marker_div_container);
-
-	$(marker_div_container).resizable({
-  		handles: "e"
-	});
+	}).appendTo('html');
 
 	//Set the global variables to their correct values
 	mif = $("#marker_iframe")[0].contentWindow.document;
@@ -191,8 +187,8 @@ function getStarted() {
 		'class': 'marker_option',
 		'title': 'Save to PDF'
 	}).html('<img src="' + chrome.extension.getURL('images/save_24.png') + '" alt="Save markings" />').appendTo(marker_options_div).click(function(e) {
-		//saveToPdf();
-		alert('Save to PDF functionality coming');
+		saveToPdf();
+		//alert('Save to PDF functionality coming');
 	});	
 
 	$('<a />').attr({
@@ -379,14 +375,49 @@ function add_marker_select_options(divItem) {
 }
 
 function saveToPdf() {
-	$('<iframe />').attr('id', 'results_iframe').appendTo('html');
+	/*$('<iframe />').attr('id', 'results_iframe').appendTo('html');
 	var x = $('#results_iframe')[0].contentWindow.document,
 		xHead = $(x).find('head'),
 		xBody = $(x).find('body');
 	var pdfDiv = $('<div />').attr('id', 'marker_save_to_pdf');
 	$(xHead).append($('head').html());
 	$(pdfDiv).html($('body').html()).appendTo(xBody);
-	$(pdfDiv).append($(mifBody).find('.marker_side_text_container'));
+	$(pdfDiv).append($(mifBody).find('.marker_side_text_container'));*/
+	var div = $('<div />').attr('id', 'marker_results_frame').appendTo('html');
+	$(div).css('width', $(window).width() - 286 + 'px');
+
+	var close = $('<a />').attr({
+		'id': 'marker_results_close',
+		'class': 'marker',
+		'href': 'javascript:void(0)'
+	}).html('<img src="' + chrome.extension.getURL('images/close.png') + '" alt="Close Results" />').css({
+		'position': 'absolute',
+		'top': '20px',
+		'right': '10px',
+		'display': 'block'
+	}).click(function() {
+		$(div).remove();
+	}).appendTo(div);
+	//$(div).html($('body').clone());
+	wrapUpResults(div);
+
+	//$('#marker_body_wrap').append('<div id="body_shim"></div>');
+}
+
+function wrapUpResults(div) {
+	var notes = $(mifBody).find('.marker_side_text_selection');
+	$(notes).each(function(i,v) {
+		var head = $(v).find('.marker_ele_type'),
+			h3 = $(v).find('h3'),
+			rec = $(v).find('.marker_recommendation'),
+			notes = $(v).find('marker_user_note_side');
+
+		//$(head).prepend(h3);
+		var title = $(h3).text();
+		$('<h2 />').addClass('marker').text(title).appendTo(div);
+		$('<p />').addClass('marker instruction').html(rec).appendTo(div);
+		$('<p />').addClass('marker instruction').html(notes).appendTo(div);
+	});
 }
 
 function stop_marker() {
