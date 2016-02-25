@@ -180,15 +180,17 @@ function getStarted() {
 			unplace_marker();
 			localStorage.setItem('marker_place_flag', 'false');
 			$(mifBody).find('#place_marker').find('img').attr('src', chrome.extension.getURL('images/pin_24_inactive.png'));
-			$('#marker_body_wrap').css('cursor', 'crosshair !important;');
+			
 			$(this).find('img').attr('src', chrome.extension.getURL('images/select_24_active.jpg'));
 			localStorage.setItem('draw', 'true');
 			initDraw(document.getElementById('marker_body_wrap'));
+			$('body').attr('style', 'cursor: crosshair');
 		} else {
 			$('#marker_body_wrap').css('cursor', 'default !important;');
 			localStorage.setItem('draw', 'false');
 			$(this).find('img').attr('src', chrome.extension.getURL('images/select_24.png'));
 			stop_drawing_boxes(document.getElementById('marker_body_wrap'));
+			$('body').attr('style', 'cursor: default');
 		}
 		
 	});	
@@ -477,46 +479,49 @@ function initDraw(canvas) {
     };
     var element = null;
 
-    canvas.onmousemove = function (e) {
-        setMousePosition(e);
-        if (element !== null) {
-            element.style.width = Math.abs(mouse.x - mouse.startX) + 'px';
-            element.style.height = Math.abs(mouse.y - mouse.startY) + 'px';
-            element.style.left = (mouse.x - mouse.startX < 0) ? mouse.x + 'px' : mouse.startX + 'px';
-            element.style.top = (mouse.y - mouse.startY < 0) ? mouse.y + 'px' : mouse.startY + 'px';
-            canvas.style.cursor = "crosshair";
-        }
+    if(localStorage.getItem('draw') === 'true') {
+    	canvas.onmousemove = function (e) {
+	        setMousePosition(e);
+	        if (element !== null) {
+	            element.style.width = Math.abs(mouse.x - mouse.startX) + 'px';
+	            element.style.height = Math.abs(mouse.y - mouse.startY) + 'px';
+	            element.style.left = (mouse.x - mouse.startX < 0) ? mouse.x + 'px' : mouse.startX + 'px';
+	            element.style.top = (mouse.y - mouse.startY < 0) ? mouse.y + 'px' : mouse.startY + 'px';
+	            //canvas.style.cursor = "crosshair";
+	        }
+	    }
+
+	    canvas.onclick = function (e) {
+	        if (element !== null) {
+	            element = null;
+	            //canvas.style.cursor = "default";
+	            console.log("finsihed.");
+	        } else {
+	            console.log("begun.");
+	            e.preventDefault();
+	            mouse.startX = mouse.x;
+	            mouse.startY = mouse.y;
+	            element = document.createElement('div');
+	            element.className = 'rectangle'
+	            element.style.left = mouse.x + 'px';
+	            element.style.top = mouse.y + 'px';
+	            canvas.appendChild(element)
+	            //canvas.style.cursor = "crosshair";
+	            $(element).draggable();
+	        	$(element).resizable({
+				  handles: "n, e, s, w",
+				  resize: function( event, ui ) {
+				  	stop_drawing_boxes(document.getElementById('marker_body_wrap'));
+				  },
+				  stop: function (event, ui ) {
+				  	initDraw(document.getElementById('marker_body_wrap'));
+				  }
+				}); 
+				return false;          
+	        }
+	    }    	
     }
 
-    canvas.onclick = function (e) {
-        if (element !== null) {
-            element = null;
-            canvas.style.cursor = "default";
-            console.log("finsihed.");
-        } else {
-            console.log("begun.");
-            e.preventDefault();
-            mouse.startX = mouse.x;
-            mouse.startY = mouse.y;
-            element = document.createElement('div');
-            element.className = 'rectangle'
-            element.style.left = mouse.x + 'px';
-            element.style.top = mouse.y + 'px';
-            canvas.appendChild(element)
-            canvas.style.cursor = "crosshair";
-            $(element).draggable();
-        	$(element).resizable({
-			  handles: "n, e, s, w",
-			  resize: function( event, ui ) {
-			  	stop_drawing_boxes(document.getElementById('marker_body_wrap'));
-			  },
-			  stop: function (event, ui ) {
-			  	initDraw(document.getElementById('marker_body_wrap'));
-			  }
-			}); 
-			return false;          
-        }
-    }
 }
 
 function stop_drawing_boxes(canvas) {
