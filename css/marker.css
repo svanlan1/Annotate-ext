@@ -43,15 +43,17 @@ div.body {
 }
 
 /* Original Page Style Manipulation */
-.marker_body_wrap {
+#marker_body_wrap {
 	position: absolute;
 	right: 0;
+	padding-left: 10px;
 }
 
-.shim {
-	height: 100%;
-	width: 100%;
-	position:absolute;
+#shim {
+ width:2000px;
+    height:2000px;
+    border: 10px solid transparent;
+    position:absolute;
 }
 
 #marker_window_resize_msg {
@@ -423,10 +425,6 @@ strong.aria {
 
 /* Results <iframe /> styles */
 #marker_results_frame {
-	right: 0;
-	top: 0;
-	position: fixed;
-	height: 100%;
 	display: block;
 	background-color: #fff;
 	border-top: 3px dashed #000;
@@ -442,4 +440,11 @@ strong.aria {
 	height: 200px;
 	width: 100%;
 	display:block;
+}
+
+.rectangle {
+    border: 2px solid #FF0000;
+    position: absolute;
+    z-index: 2147483635;
+    position: absolute !important;
 }

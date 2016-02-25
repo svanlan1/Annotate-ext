@@ -23,11 +23,12 @@ function run_marker(welcome) {
 	//Variable controls whether or not clicking in the page should place a flag.  Default = false
 	localStorage.setItem('marker_place_flag', 'false');
 	localStorage.setItem('e_c', 'expanded');
+	localStorage.setItem('draw', 'false');
 
 	//Wrap the original body element in a <DIV> and set the width appropriately
-	var width = $(window).width() - 300 + 'px';
-	$('body').wrapInner('<div class="marker_body_wrap" style="width:'+width+'" />');
-	$('body').prepend('<div class="shim"></div>');
+	var width = $(window).width() - 270 + 'px';
+	$('body').wrapInner('<div id="marker_body_wrap" style="width:'+width+'; float:right;" />');
+	//$('body').prepend('<div id="shim"></div>');
 
 	//var marker_div_container = $('<div />').attr('id', 'marker_div_container').appendTo('html');
 	//Create the MARKER iframe and append it to the <HTML> element
@@ -118,11 +119,11 @@ function run_marker(welcome) {
 
 	$(window).on('resize', function(e) {
 		var winWidth = $(window).width() - 278;
-		$('.marker_body_wrap').css('width', winWidth + 'px');
+		$('#marker_body_wrap').css('width', winWidth + 'px');
 		if($('#marker_window_resize_msg').length === 0) {
 			$('<div />').attr({
 				'id': 'marker_window_resize_msg'
-			}).html('<strong>Alert!</strong> <span style="padding: 5px;">Resizing the window does not automatically readjust your markers on the page.  You may need to reposition them (but don\'t worry, they\'re all totally draggable)</span>').appendTo('.marker_body_wrap').fadeIn('slow');
+			}).html('<strong>Alert!</strong> <span style="padding: 5px;">Resizing the window does not automatically readjust your markers on the page.  You may need to reposition them (but don\'t worry, they\'re all totally draggable)</span>').appendTo('#marker_body_wrap').fadeIn('slow');
 
 		} else {
 			$('#marker_window_resize_msg').show();
@@ -149,9 +150,12 @@ function getStarted() {
 		'title': 'Place markers on page'
 	}).html('<img src="' + chrome.extension.getURL('images/pin_24_inactive.png') + '" alt="Click to place marker on page" />').click(function() {
 		if(localStorage.getItem('marker_place_flag') == 'false') {
+			$(mifBody).find('#marker_draws').find('img').attr('src', chrome.extension.getURL('images/select_24.png'));
 			$(this).find('img').attr('src', chrome.extension.getURL('images/pin_24.png'));
 			localStorage.setItem('marker_place_flag', 'true');
-			place_marker();			
+			localStorage.setItem('draw', 'false');
+			place_marker();	
+			stop_drawing_boxes(document.getElementById('marker_body_wrap'));
 		} else {
 			$(this).find('img').attr('src', chrome.extension.getURL('images/pin_24_inactive.png'));
 			localStorage.setItem('marker_place_flag', 'false');			
@@ -164,9 +168,25 @@ function getStarted() {
 		'href': 'javascript:void(0);',
 		'id': 'marker_draws',
 		'class': 'marker_option',
-		'title': 'Select area of page'
+		'title': 'Highlight an area of page'
 	}).html('<img src="' + chrome.extension.getURL('images/select_24.png') + '" alt="Click to select a section of the page" />').appendTo(marker_options_div).click(function(e) {
-		alert('Select area of page functionality coming soon');
+		//alert('Select area of page functionality coming soon');
+		//initDraw(document.getElementById('marker_body_wrap'));
+		if(localStorage.getItem('draw') === 'false') {
+			unplace_marker();
+			localStorage.setItem('marker_place_flag', 'false');
+			$(mifBody).find('#place_marker').find('img').attr('src', chrome.extension.getURL('images/pin_24_inactive.png'));
+			$('#marker_body_wrap').css('cursor', 'crosshair !important;');
+			$(this).find('img').attr('src', chrome.extension.getURL('images/select_24_active.jpg'));
+			localStorage.setItem('draw', 'true');
+			initDraw(document.getElementById('marker_body_wrap'));
+		} else {
+			$('#marker_body_wrap').css('cursor', 'default !important;');
+			localStorage.setItem('draw', 'false');
+			$(this).find('img').attr('src', chrome.extension.getURL('images/select_24.png'));
+			stop_drawing_boxes(document.getElementById('marker_body_wrap'));
+		}
+		
 	});	
 
 	$('<a />').attr({
@@ -175,7 +195,7 @@ function getStarted() {
 		'class': 'marker_option',
 		'title': 'Clear and start over'
 	}).html('<img src="' + chrome.extension.getURL('images/clear.png') + '" alt="Start Over" />').appendTo(marker_options_div).click(function(e) {
-		$('.marker_page_marker, .marker_context_menu').remove();
+		$('.marker_page_marker, .marker_context_menu, .rectangle').remove();
 		$(mifBody).find('.marker_side_text_selection').remove();
 		mCount = 1;
 
@@ -227,8 +247,8 @@ function getStarted() {
 
 
 function place_marker() {
-	$('.marker_body_wrap').css('cursor', 'pointer');
-	$('.marker_body_wrap, a, button').bind('click', function(e) {
+	$('#marker_body_wrap').css('cursor', 'pointer');
+	$('#marker_body_wrap, a, button').bind('click', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 		var x = e.pageX - 50,
@@ -263,7 +283,7 @@ function place_marker() {
 }
 
 function unplace_marker() {
-	$('.marker_body_wrap, .marker_body_wrap a, .marker_body_wrap button').unbind('click');
+	$('#marker_body_wrap, #marker_body_wrap a, #marker_body_wrap button').unbind('click');
 }
 
 function createContextMenu(el, e) {
@@ -374,6 +394,19 @@ function add_marker_select_options(divItem) {
 	});
 }
 
+function drawBox() {
+	
+	if(localStorage.getItem('draw') === 'false') {
+		$('.marker_body_wrap').click(function() {
+			
+		});
+		localStorage.setItem('draw', 'true');
+	} else {
+		localStorage.setItem('draw', 'false');
+	}
+	
+}
+
 function saveToPdf() {
 	/*$('<iframe />').attr('id', 'results_iframe').appendTo('html');
 	var x = $('#results_iframe')[0].contentWindow.document,
@@ -383,7 +416,7 @@ function saveToPdf() {
 	$(xHead).append($('head').html());
 	$(pdfDiv).html($('body').html()).appendTo(xBody);
 	$(pdfDiv).append($(mifBody).find('.marker_side_text_container'));*/
-	var div = $('<div />').attr('id', 'marker_results_frame').appendTo('html');
+	var div = $('<div />').attr('id', 'marker_results_frame').appendTo('#marker_body_wrap');
 	$(div).css('width', $(window).width() - 286 + 'px');
 
 	var close = $('<a />').attr({
@@ -399,21 +432,24 @@ function saveToPdf() {
 		$(div).remove();
 	}).appendTo(div);
 	//$(div).html($('body').clone());
+	$('#marker_body_wrap').find('img').each(function(i,v) {
+		var url = getBase64Image(v);
+		$(v).attr('src', url);
+	})
 	wrapUpResults(div);
+	setTimeout(function() {
 
+	}, 100);
 	//$('#marker_body_wrap').append('<div id="body_shim"></div>');
 }
 
 function wrapUpResults(div) {
 	var notes = $(mifBody).find('.marker_side_text_selection');
 	$(notes).each(function(i,v) {
-		var head = $(v).find('.marker_ele_type'),
-			h3 = $(v).find('h3'),
-			rec = $(v).find('.marker_recommendation'),
-			notes = $(v).find('marker_user_note_side');
+		var title = $(v).find('h3').text(),
+			rec = $(v).find('.marker_recommendation').html(),
+			notes = $(v).find('marker_user_note_side').html();
 
-		//$(head).prepend(h3);
-		var title = $(h3).text();
 		$('<h2 />').addClass('marker').text(title).appendTo(div);
 		$('<p />').addClass('marker instruction').html(rec).appendTo(div);
 		$('<p />').addClass('marker instruction').html(notes).appendTo(div);
@@ -430,6 +466,96 @@ function stop_marker() {
 }
 
 
+function initDraw(canvas) {
+    function setMousePosition(e) {
+        var ev = e || window.event; //Moz || IE
+        if (ev.pageX) { //Moz
+            mouse.x = ev.pageX - 270;
+            mouse.y = ev.pageY;
+        } else if (ev.clientX) { //IE
+            mouse.x = ev.clientX + document.body.scrollLeft;
+            mouse.y = ev.clientY + document.body.scrollTop;
+        }
+    };
+
+    var mouse = {
+        x: 0,
+        y: 0,
+        startX: 0,
+        startY: 0
+    };
+    var element = null;
+
+    canvas.onmousemove = function (e) {
+        setMousePosition(e);
+        if (element !== null) {
+            element.style.width = Math.abs(mouse.x - mouse.startX) + 'px';
+            element.style.height = Math.abs(mouse.y - mouse.startY) + 'px';
+            element.style.left = (mouse.x - mouse.startX < 0) ? mouse.x + 'px' : mouse.startX + 'px';
+            element.style.top = (mouse.y - mouse.startY < 0) ? mouse.y + 'px' : mouse.startY + 'px';
+            canvas.style.cursor = "crosshair";
+        }
+    }
+
+    canvas.onclick = function (e) {
+        if (element !== null) {
+            element = null;
+            canvas.style.cursor = "default";
+            console.log("finsihed.");
+        } else {
+            console.log("begun.");
+            e.preventDefault();
+            mouse.startX = mouse.x;
+            mouse.startY = mouse.y;
+            element = document.createElement('div');
+            element.className = 'rectangle'
+            element.style.left = mouse.x + 'px';
+            element.style.top = mouse.y + 'px';
+            canvas.appendChild(element)
+            canvas.style.cursor = "crosshair";
+            $(element).draggable();
+        	$(element).resizable({
+			  handles: "n, e, s, w",
+			  resize: function( event, ui ) {
+			  	stop_drawing_boxes(document.getElementById('marker_body_wrap'));
+			  },
+			  stop: function (event, ui ) {
+			  	initDraw(document.getElementById('marker_body_wrap'));
+			  }
+			}); 
+			return false;          
+        }
+    }
+}
+
+function stop_drawing_boxes(canvas) {
+    canvas.onmousemove = function (e) {
+        
+    }
+
+    canvas.onclick = function (e) {
+    	console.log('no longer drawing boxes :(')
+    }
+}
+
+// Code taken from MatthewCrumley (http://stackoverflow.com/a/934925/298479)
+function getBase64Image(img) {
+    // Create an empty canvas element
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    // Copy the image contents to the canvas
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    // Get the data-URL formatted image
+    // Firefox supports PNG and JPEG. You could check img.src to guess the
+    // original format, but be aware the using "image/jpg" will re-encode the image.
+    var dataURL = canvas.toDataURL("image/png");
+
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+}
 
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
