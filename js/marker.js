@@ -116,9 +116,15 @@ function run_marker(welcome) {
 
 	//getStarted() will draw the rest of the contents in the <iframe>.  Separating them to keep functions small and light.
 	getStarted();
+	window.addEventListener("resize", resize_window);
+	/*$(window).on('resize', function(e) {
+		
+	});	*/
 
-	$(window).on('resize', function(e) {
-		var winWidth = $(window).width() - 278;
+}
+
+function resize_window() {
+	var winWidth = $(window).width() - 278;
 		$('#marker_body_wrap').css('width', winWidth + 'px');
 		if($('#marker_window_resize_msg').length === 0) {
 			$('<div />').attr({
@@ -130,9 +136,7 @@ function run_marker(welcome) {
 		}
 		setTimeout(function() {
 			$('#marker_window_resize_msg').fadeOut('slow');
-		}, 4000)
-	});	
-
+		}, 4000)	
 }
 
 /******************************************************************************
@@ -392,19 +396,6 @@ function add_marker_select_options(divItem) {
 			}
 		});
 	});
-}
-
-function drawBox() {
-	
-	if(localStorage.getItem('draw') === 'false') {
-		$('.marker_body_wrap').click(function() {
-			
-		});
-		localStorage.setItem('draw', 'true');
-	} else {
-		localStorage.setItem('draw', 'false');
-	}
-	
 }
 
 function saveToPdf() {
