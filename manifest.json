@@ -13,7 +13,7 @@
     {
       "matches": ["<all_urls>"],
       "js": ["js/marker.js", "js/jquery.js", "js/jquery-ui.js"],
-      "css": ["css/marker.css", "css/jquery-ui.min.css", "css/jquery-ui.structure.min.css", "css/jquery-ui.theme.min.css"],
+      "css": ["css/marker.css", "css/jquery-ui.min.css", "css/jquery-ui.structure.min.css", "css/jquery-ui.theme.min.css", "css/print.css"],
       "run_at" : "document_start"
     }
   ],
@@ -44,6 +44,7 @@
     "images/pin_24.png",
     "images/pin_24_inactive.png",
     "images/new_window_16.jpg",
+    "css/print.css",
     "images/save_24.png",
     "images/select_24.png",
     "images/select_24_active.jpg",

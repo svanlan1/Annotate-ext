@@ -25,6 +25,8 @@ function run_marker(welcome) {
 	localStorage.setItem('e_c', 'expanded');
 	localStorage.setItem('draw', 'false');
 
+	$('head').append('<link rel="stylesheet" type="text/css" type="print" href="'+ chrome.extension.getURL("css/print.css") +'" />');
+
 	//Wrap the original body element in a <DIV> and set the width appropriately
 	var width = $(window).width() - 270 + 'px';
 	$('body').wrapInner('<div id="marker_body_wrap" style="width:'+width+'; float:right;" />');
@@ -257,7 +259,7 @@ function place_marker() {
 	$('#marker_body_wrap, a, button').bind('click', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
-		var x = e.pageX - 50,
+		var x = e.pageX - 287,
 			y = e.pageY - 15;
 
 		var flag_wrap = $('<a />').attr('href', 'javascript:void(0);').attr('class', 'marker_page_marker').attr('data-marker-count', mCount).css({
@@ -271,7 +273,7 @@ function place_marker() {
 			e.preventDefault();
 			$(mifBody).find('#marker_select_box_' + $(this).attr('data-marker-count')).focus();
 			return false;
-		}).appendTo('body').draggable({ helper: "original" });
+		}).appendTo('#marker_body_wrap').draggable({ helper: "original" });
 
 		//$('<div />').addClass('arrow-right').appendTo(flag_wrap);
 
@@ -401,6 +403,65 @@ function add_marker_select_options(divItem) {
 }
 
 function saveToPdf() {
+	var modal = $('<div />').attr({
+		'id': 'marker-print-modal',
+		'class': 'marker'
+	}).appendTo('body');
+
+	var div = $('<div />').attr({
+		'id': 'marker-print-dialog',
+		'class': 'marker'
+	}).html('Thanks for using Marker!  In this initial release, saving to PDF will be done through Chrome\'s built in print functionality. <br /><br />When the dialog comes up (after you click Save to PDF), be sure to select the destination as "Save as PDF"<br /><br />').appendTo('body');
+
+	var btn = $('<button />').click(function() {
+		$(modal).remove();
+		$(div).remove();
+		setTimeout(function() {
+			window.print();
+		}, 100);
+	}).addClass('marker-btn').text('Save to PDF').appendTo(div);
+
+	var cancelBtn = $('<button />').click(function() {
+		$(modal).remove();
+		$(div).remove();
+	}).addClass('marker-btn').text('Cancel').appendTo(div);
+
+
+
+	
+	/*var div = $('<div />').attr({
+		'id': 'marker_hidden_div'
+	}).css({
+		'height': $(window).height(),
+		'width': '99%',
+		'display': 'none',
+		'overflow-x': 'hidden'
+	}).appendTo('body');
+
+	//$('body').clone().appendTo(div);
+
+	var w = window.open();
+	$(w).attr('title', document.title + ' - Annotations');
+	$(w.document.head).html($('head').html());
+	$(w.document.head).append('<link rel="stylesheet" type="text/css" href="' + chrome.extension.getURL('css/marker.css') + '" />');
+	$(w.document.head).append('<link rel="stylesheet" type="text/css" type="print" href="'+ chrome.extension.getURL("css/print.css") +'" />');
+	//$(w.document.body).find('#marker_body_wrap').removeAttr('style');
+	var testBod = $('body');
+	//$(body).contents().find('#marker_body_wrap').removeAttr('style');
+	//var testBody = $(body).first('div').removeAttr('style');
+	$(w.document.body).html($(testBod).html());
+	$(w.document.body).find('div').eq(0).removeAttr('style').css('position', 'inherit');
+	$(w.document.body).contents().unwrap();
+	//$(w.document.body).find('.marker_page_marker').css('left', $(w.document.body).find('.marker_page_marker').css('left') - 133 + 'px');
+
+	$(w.document.body).find('.marker_page_marker').each(function(i,v) {
+		var l = $(v).css('left').substring(0,3);
+		$(v).css('left', l - 130 + 'px');
+	});
+	//$(div).remove();*/
+}
+
+function saveToPdf1() {
 	/*$('<iframe />').attr('id', 'results_iframe').appendTo('html');
 	var x = $('#results_iframe')[0].contentWindow.document,
 		xHead = $(x).find('head'),
@@ -410,24 +471,22 @@ function saveToPdf() {
 	$(pdfDiv).html($('body').html()).appendTo(xBody);
 	$(pdfDiv).append($(mifBody).find('.marker_side_text_container'));*/
 	var div = $('<div />').attr('id', 'marker_results_frame').appendTo('#marker_body_wrap');
-	$(div).css('width', $(window).width() - 286 + 'px');
+	$(div).css('width', $(window).width() - 336 + 'px');
 
 	var close = $('<a />').attr({
 		'id': 'marker_results_close',
 		'class': 'marker',
 		'href': 'javascript:void(0)'
 	}).html('<img src="' + chrome.extension.getURL('images/close.png') + '" alt="Close Results" />').css({
-		'position': 'absolute',
-		'top': '20px',
-		'right': '10px',
-		'display': 'block'
+		'float': 'right'
 	}).click(function() {
 		$(div).remove();
 	}).appendTo(div);
 	//$(div).html($('body').clone());
 	$('#marker_body_wrap').find('img').each(function(i,v) {
-		var url = getBase64Image(v);
-		$(v).attr('src', url);
+		var preURL = absolute($(v).attr('src'));
+		var postURL = getBase64Image(preURL, div);
+		$(v).attr('src', postURL);
 	})
 	wrapUpResults(div);
 	setTimeout(function() {
@@ -534,23 +593,58 @@ function stop_drawing_boxes(canvas) {
     }
 }
 
+function absolute(img) {
+	var link = document.createElement("img");
+	link.href = img;
+	return link.protocol+"//"+link.host+link.pathname+link.search+link.hash;
+}
+
 // Code taken from MatthewCrumley (http://stackoverflow.com/a/934925/298479)
-function getBase64Image(img) {
+function getBase64Image(img,div) {
     // Create an empty canvas element
-    var canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
+    var c = document.createElement("canvas");
+    $(c).appendTo(div);
+
+    if($(img).indexOf('http') == -1) {
+
+    }
+    //canvas.width = img.width;
+    //canvas.height = img.height;
 
     // Copy the image contents to the canvas
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
+
+     //var c=document.getElementById("myCanvas");
+    var ctx=c.getContext("2d");
+    //var img=document.getElementById("scream");
+    //ctx.drawImage(img,10,10);   
+
 
     // Get the data-URL formatted image
     // Firefox supports PNG and JPEG. You could check img.src to guess the
     // original format, but be aware the using "image/jpg" will re-encode the image.
-    var dataURL = canvas.toDataURL("image/png");
+    var dataURL = c.toDataURL("image/jpg");
 
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+}
+
+function getDataUri(url, callback) {
+    var image = new Image();
+
+    image.onload = function () {
+        var canvas = document.createElement('canvas');
+        canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+        canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+
+        canvas.getContext('2d').drawImage(this, 0, 0);
+
+        // Get raw image data
+        callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
+
+        // ... or get as Data URI
+        callback(canvas.toDataURL('image/png'));
+    };
+
+    image.src = url;
 }
 
 
