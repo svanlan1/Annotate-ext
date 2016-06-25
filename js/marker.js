@@ -48,7 +48,7 @@ function run_marker(welcome) {
 		'rel': 'stylesheet',
 		'type': 'text/css',
 		'href': chrome.extension.getURL('css/marker.css')
-	}).appendTo($(mif).find('head'));
+	}).appendTo($(mif).find('head')).appendTo('head');
 
 	$('<link />').attr({
 		'rel': 'stylesheet',
@@ -283,7 +283,7 @@ function place_marker() {
 			'data-marker-count': mCount
 		}).attr('alt', 'Marker ' + mCount).appendTo(flag_wrap);
 
-		add_marker_text();
+		add_marker_text($(this));
 
 		mCount++;
 		return false;
@@ -342,7 +342,7 @@ function showMenu(id) {
 	$('#' + id).show();
 }
 
-function add_marker_text() {
+function add_marker_text(el) {
 	var divItem = $('<div />').attr({
 		'class': 'marker_side_text_selection',
 		'data-marker-count': mCount,
@@ -366,10 +366,10 @@ function add_marker_text() {
 	$('<span />').addClass('marker_ele_type').appendTo(h3);	
 	var infoDiv = $('<div />').addClass('marker marker_info').appendTo(divItem);
 	$('<label />').attr('for', 'marker_select_box_' + mCount).addClass('instruction marker_required').text('Type of element?').appendTo(infoDiv);
-	add_marker_select_options(infoDiv);
+	add_marker_select_options(infoDiv, el);
 }
 
-function add_marker_select_options(divItem) {
+function add_marker_select_options(divItem, el) {
 	var options;
 	$.ajax({
 		url: chrome.extension.getURL('js/types.json'),
@@ -400,6 +400,9 @@ function add_marker_select_options(divItem) {
 			}
 		});
 	});
+	var type = el.nodeName;
+	var text = $(el).text();
+	console.log(type);
 }
 
 function saveToPdf() {
@@ -416,8 +419,17 @@ function saveToPdf() {
 	var btn = $('<button />').click(function() {
 		$(modal).remove();
 		$(div).remove();
+		var b = $('#marker_body_wrap');
+		var textDiv = $('<div />').addClass('marker-text-bottom-div').appendTo(b);
+		$(mifBody).find('.marker_side_text_selection').each(function(i,v) {
+			
+			$(v).find('h3').clone().appendTo(textDiv);
+			$(v).find('.marker_recommendation').clone().appendTo(textDiv);
+
+		});		
 		setTimeout(function() {
 			window.print();
+			$(textDiv).remove();
 		}, 100);
 	}).addClass('marker-btn').text('Save to PDF').appendTo(div);
 
@@ -425,40 +437,6 @@ function saveToPdf() {
 		$(modal).remove();
 		$(div).remove();
 	}).addClass('marker-btn').text('Cancel').appendTo(div);
-
-
-
-	
-	/*var div = $('<div />').attr({
-		'id': 'marker_hidden_div'
-	}).css({
-		'height': $(window).height(),
-		'width': '99%',
-		'display': 'none',
-		'overflow-x': 'hidden'
-	}).appendTo('body');
-
-	//$('body').clone().appendTo(div);
-
-	var w = window.open();
-	$(w).attr('title', document.title + ' - Annotations');
-	$(w.document.head).html($('head').html());
-	$(w.document.head).append('<link rel="stylesheet" type="text/css" href="' + chrome.extension.getURL('css/marker.css') + '" />');
-	$(w.document.head).append('<link rel="stylesheet" type="text/css" type="print" href="'+ chrome.extension.getURL("css/print.css") +'" />');
-	//$(w.document.body).find('#marker_body_wrap').removeAttr('style');
-	var testBod = $('body');
-	//$(body).contents().find('#marker_body_wrap').removeAttr('style');
-	//var testBody = $(body).first('div').removeAttr('style');
-	$(w.document.body).html($(testBod).html());
-	$(w.document.body).find('div').eq(0).removeAttr('style').css('position', 'inherit');
-	$(w.document.body).contents().unwrap();
-	//$(w.document.body).find('.marker_page_marker').css('left', $(w.document.body).find('.marker_page_marker').css('left') - 133 + 'px');
-
-	$(w.document.body).find('.marker_page_marker').each(function(i,v) {
-		var l = $(v).css('left').substring(0,3);
-		$(v).css('left', l - 130 + 'px');
-	});
-	//$(div).remove();*/
 }
 
 function saveToPdf1() {

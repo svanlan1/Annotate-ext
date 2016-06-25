@@ -2,4 +2,15 @@
 	@page {
 		size: 14in 8.5in;
 	}
+
+	#marker_iframe {
+		display:none;
+	}
+
+	#marker_body_wrap {
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 75%;
+	}
 }

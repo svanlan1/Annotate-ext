@@ -12,7 +12,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["js/marker.js", "js/jquery.js", "js/jquery-ui.js"],
+      "js": ["js/download.js","js/test_anchors.js", "js/test_html.js", "js/test_images.js", "js/marker2.js", "js/jquery.js", "js/jquery-ui.js"],
       "css": ["css/marker.css", "css/jquery-ui.min.css", "css/jquery-ui.structure.min.css", "css/jquery-ui.theme.min.css", "css/print.css"],
       "run_at" : "document_start"
     }
@@ -27,11 +27,14 @@
    "web_accessible_resources": [
     "index.html",
     "marker.html",
-    "js/marker.js",
+    "js/marker2.js",
     "css/marker.css",
     "css/railway.css",
     "js/options.json",
     "js/types.json",
+    "images/check_24_inactive.png",
+    "images/check_24_error.png",
+    "images/check_24_pass.png",
     "images/clear.png",
     "images/close.png",
     "images/expand_24.png",
