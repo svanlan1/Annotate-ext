@@ -408,7 +408,7 @@ function draw_select_color_options() {
 	$('<strong />').addClass('marker').text('Change box color').appendTo(div);
 	var input = document.createElement('INPUT');
 	$(input).attr('type', 'text');
-	$(input).attr('id', 'marker_color_select').addClass('jscolor').val(localStorage.getItem('box_color').substring(1, localStorage.getItem('box_color').length)).appendTo(div);
+	$(input).attr('id', 'marker_color_select').attr('style', 'z-index: 2147483635').addClass('jscolor').val(localStorage.getItem('box_color').substring(1, localStorage.getItem('box_color').length)).appendTo(div);
 	var picker = new jscolor(input);
 	
 	$('.change_width').click(function() {
