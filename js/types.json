@@ -8,27 +8,27 @@
 	{
 		"Value": "anchor",
 		"QuickName": "Anchor",
-		"Rec": "All anchors require a valid href attribute and link text.  If an image is the sole piece of content inside of the anchor, ensure that the image has descriptive alt text.<strong class='example'>Example</strong>&lt;a <span class='marker-highlight'>href=&quot;index.html&quot;</span>&gt;SVA11y.com&lt;/a&gt;<br />&lt;a href=&quot;index.html&quot;&gt;<br />&nbsp;&nbsp;&lt;img src=&quot;image.png&quot; <span class='marker-highlight'>alt=&quot;SVA11y.com&quot;</span> /&gt;<br />&lt;/a&gt;<br /><br /><span class='marker-important-info'>It is important to note that without the 'href' attribute and valid value, the anchor will not be focusable to keyboard users."
+		"Rec": "All anchors require a valid href attribute and link text.  If an image is the sole piece of content inside of the anchor, ensure that the image has descriptive alt text.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#anchors' target='_blank'>http://sva11y.com/components.html#anchors <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "anchorNewWindow",
 		"QuickName": "Anchor (Opens in a new window)",
-		"Rec": "If an anchor is opening in a new window, the user must be alerted.  Methods for this include adding 'screen-reader-only' text, or adding an icon with alt text alerting the user.  The most common text for either of these methods is 'Opens in a new window'<strong class='example'>Example</strong>&lt;a href=&quot;new_window.html&quot; target=&quot;_blank&quot;&gt;<br />&nbsp;&nbsp;New Window HTML&nbsp;&nbsp;<br />&nbsp;&nbsp;<span class='marker-highlight'>&lt;span class=&quot;screen-reader-only&quot;&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;Opens in a new window<br />&nbsp;&nbsp;&lt;/span&gt;</span><br />&lt;/a&gt;"
+		"Rec": "If an anchor is opening in a new window, the user must be alerted.  Methods for this include adding 'screen-reader-only' text, or adding an icon with alt text alerting the user.  The most common text for either of these methods is 'Opens in a new window'<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#anchors_new_window' target='_blank'>http://sva11y.com/components.html#anchors_new_window <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "anchorLinked",
 		"QuickName": "Anchor (Linked image)",
-		"Rec": "When an image is the sole piece of content inside of an anchor, ensure the image has descriptive alt text.<strong class='example'>Example</strong>&lt;a href=&quot;index.html&quot;&gt;<br />&nbsp;&nbsp;&lt;img src=&quot;image.jpg&quot; <span class='marker-highlight'>alt=&quot;Breaking News&quot;</span> /&gt;"
+		"Rec": "When an image is the sole piece of content inside of an anchor, ensure the image has descriptive alt text.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#anchors_linked' target='_blank'>http://sva11y.com/components.html#anchors_linked <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "button",
 		"QuickName": "Button",
-		"Rec": "All buttons require explicit text.  Screen readers will read out the text of the button.<strong class='example'>Example</strong>&lt;button&gt;<span class='marker-highlight'>Submit</span>&lt;/button&gt;<strong class='aria'>ARIA</strong>You can also use the attribute 'role=&quot;button&quot;' on an anchor and effectively turn it into a button.<strong class='example'>Example</strong>&lt;a href=&quot;javascript:void(0);&quot; <span class='marker-highlight'>role=&quot;button&quot;</span>&gt;Submit&lt;/a&gt;"
+		"Rec": "All buttons require explicit text.  Screen readers will read out the text of the button.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#buttons' target='_blank'>http://sva11y.com/components.html#buttons <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},	
 	{
 		"Value": "chart",
 		"QuickName": "Chart",
-		"Rec": ""
+		"Rec": "<a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "carousel",
@@ -38,117 +38,117 @@
 	{
 		"Value": "modalDialog",
 		"QuickName": "Dialog (Modal)",
-		"Rec": "Dialogs require a number of considerations.<ol><li>The parent container (generally a &lt;div&gt; requires the attribute 'role=&quot;dialog&quot;'</li><li>The parent container (div) should contain the attribute 'aria-lablledby'.  The value for this is generally the #id of the &lt;h2&gt; inside of the dialog</li><li>The dialog should contain an a heading with a valid #id<br />&lt;h2 id=&quot;dialog_heading_id&quot;/&gt;</li><li>Focus should be trapped inside of the dialog.  Tabbing past the last tabbable element should take the user back to the first tabbable element</li><li>Ensure all images (background, foreground) have the proper textual equivalent</li><li>The background content should have the attribute 'aria-hidden=&quot;true&quot;'</li></ol><strong class='example'>Example</strong>&lt;div class=&quot;entire_body&quot; <span class='marker-highlight'>aria-hidden=&quot;true&quot;</span> &gt;Body content...&lt;/div&gt;<br />&lt;div class=&quot;dialog&quot; <span class='marker-highlight'>aria-labelledby=&quot;dialog_head&quot;</span>&gt;<br />&lt;h2 <span class='marker-highlight'>id=&quot;dialog_head&quot;</span>&gt;Dialog Heading!&lt;/h2&gt;<br /><br />For a complete working example, visit <br /><a href='http://www.sva11y.com' target='_blank'>SVA11y.com <span class='screen-reader-only'> Opens in a new window</span></a>"
+		"Rec": "Dialogs require a number of considerations.<ol><li>The parent container (generally a &lt;div&gt; requires the attribute 'role=&quot;dialog&quot;'</li><li>The parent container (div) should contain the attribute 'aria-lablledby'.  The value for this is generally the #id of the &lt;h2&gt; inside of the dialog</li><li>The dialog should contain an a heading with a valid #id<br />&lt;h2 id=&quot;dialog_heading_id&quot;/&gt;</li><li>Focus should be trapped inside of the dialog.  Tabbing past the last tabbable element should take the user back to the first tabbable element</li><li>Ensure all images (background, foreground) have the proper textual equivalent</li><li>The background content should have the attribute 'aria-hidden=&quot;true&quot;'</li></ol><strong class='example'>Example</strong><a href='http://sva11y.com/components.html#dialog' target='_blank'>http://sva11y.com/components.html#dialog <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "nonModalDialog",
 		"QuickName": "Dialog (Non-Modal)",
-		"Rec": ""
+		"Rec": "<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "drawers",
 		"QuickName": "Drawers/Accordion",
-		"Rec": ""
+		"Rec": "<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "formErrors",
 		"QuickName": "Error Handling on Forms",
-		"Rec": "Form fields that either require a specific format of text or are simply a required field, the use of ARIA should be utilized.  Required fields should use the attribute 'aria-required=&quot;true&quot;'.  When the field is in error, use one of the following methods:<ol><li>Dynamically inject error text inside of the elements label.<br />&lt;label for=&quot;ele_in_err&quot;>First name:<br />&nbsp;&nbsp; <span class='marker-highlight'> &lt;span class=&quot;error&quot;&gt;is in error&lt;/span&gt;</span><br />&lt;/label&gt;</li><li>Or, use the aria attribute 'aria-describedby'<br />&lt;input type=&quot;text&quot; <span class='marker-highlight'> aria-required=&quot;true&quot; aria-describedby=&quot;ele_in_err_error_text&quot;</span> /&gt;<br /><span class='marker-highlight'>&lt;span id=&quot;ele_in_err_error_text&quot;&gt;<br />&nbsp;&nbsp;Error: this field cannot be blank<br />&lt;/span&gt;</span></li></ol>"
+		"Rec": "Form fields that either require a specific format of text or are simply a required field, the use of ARIA should be utilized.  Required fields should use the attribute 'aria-required=&quot;true&quot;'.  <strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},	
 	{
 		"Value": "Graph",
 		"QuickName": "Graph",
-		"Rec": ""
+		"Rec": "<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "html",
 		"QuickName": "HTML",
-		"Rec": "Ensure that the &lt;html&gt; element has a valid 'lang' attribute.<strong class='example'>Example</strong>&lt;html <span class='marker-highlight'>lang=&quot;en-us&quot;</span>&gt;&lt/html&gt;"
+		"Rec": "Ensure that the &lt;html&gt; element has a valid 'lang' attribute.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "imageBackground",
 		"QuickName": "Image (Background)",
-		"Rec": "If this is a background image and contains text, there must be a textual alternative.  Textual alternatives can include visual or 'screen-reader-only' text.<strong class='example'>Example</strong>&lt;div class='background-img'&gt;<br /><span class='marker-highlight'>&nbsp;&nbsp;&lt;span class=&quot;screen-reader-only&quot;&gt;<br />&nbsp;&nbsp;&nbsp;TEXTUAL EQUIVALENT</br>&nbsp;&nbsp;&lt;/span&gt;</span><br />&lt;/div&gt;"
+		"Rec": "If this is a background image and contains text, there must be a textual alternative.  Textual alternatives can include visual or 'screen-reader-only' text.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},			
 	{
 		"Value": "imageDecorative",
 		"QuickName": "Image (Decorative)",
-		"Rec": "Decorative images should have a null alt attribute.<strong class='example'>Example</strong>&lt;img src='image.png' <span class='marker-highlight'>alt=&quot;&quot;</span> /&gt;"
+		"Rec": "Decorative images should have a null alt attribute.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "imageInfo",
 		"QuickName": "Image (Informational)",
-		"Rec": "All informational images should contain descriptive alt text.<strong class='example'>Example</strong>&lt;img src=&quot;image.png&quot; <span class='marker-highlight'>alt=&quot;Marker is awesome!&quot;</span> /&gt;"
+		"Rec": "All informational images should contain descriptive alt text.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "inputText",
 		"QuickName": "Input[type=text] ",
-		"Rec": "All form fields require an explicit label.  This can be accomplished by either using a &lt;label&gt; element, using the &quot;aria-labelledby&quot; attribute, or using the &quot;aria-label&quot; attribute on the input.<strong class='example'>Example</strong>&lt;label <span class='marker-highlight'>for=&quot;input_id&quot;</span>&gt;First name&lt;/label&gt;<br />&lt;input type=&quot;text&quot; <span class='marker-highlight'>id=&quot;input_id&quot;</span> /&gt;<strong class='aria'>ARIA</strong>&lt;input type=&quot;text&quot; id=&quot;input_id&quot; <span class='marker-highlight'>aria-label=&quot;First Name&quot;</span> /&gt;"
+		"Rec": "All form fields require an explicit label.  This can be accomplished by either using a &lt;label&gt; element, using the &quot;aria-labelledby&quot; attribute, or using the &quot;aria-label&quot; attribute on the input.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "inputButton",
 		"QuickName": "Input[type=button]",
-		"Rec": "Use native HTML elements (such as input[type=button]) whenever possible.  Ensure that there is a valid &quot;value&quot; attribute with a value.<strong class='example'>Example</strong>&lt;input type=&quot;button&quot; <span class='marker-highlight'>value=&quot;Submit&quot;</span> /&gt;"
+		"Rec": "Use native HTML elements (such as input[type=button]) whenever possible.  Ensure that there is a valid &quot;value&quot; attribute with a value.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "inputCheckbox",
 		"QuickName": "Input[type=checkbox]",
-		"Rec": ""
+		"Rec": "<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "inputImage",
 		"QuickName": "Input[type=image]",
-		"Rec": "Input images should be treated the same as an informational image.  Ensure the input has explicit alt text.  This value cannot be left blank.<strong class='example'>Example</strong>&lt;input type=&quot;image&quot; <span class='marker-highlight'> alt=&quot;Submit&quot; </span>/&gt;"
+		"Rec": "Input images should be treated the same as an informational image.  Ensure the input has explicit alt text.  This value cannot be left blank.<strong class='example'>Example</strong><strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "h1",
 		"QuickName": "Heading Level 1 (h1)",
-		"Rec": "This should be marked up as a heading level 1 (&lt;h1&gt;).<strong class='example'>Example</strong>&lt;h1&gt;Marker!&lt;/h1&gt;"
+		"Rec": "This should be marked up as a heading level 1.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "h2",
 		"QuickName": "Heading Level 2 (h2)",
-		"Rec": "This should be marked up as a heading level 2. (&lt;h2&gt;).<strong class='example'>Example</strong>&lt;h2&gt;Who should use Marker?&lt;/h2&gt;"
+		"Rec": "This should be marked up as a heading level 2.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "h3",
 		"QuickName": "Heading Level 3 (h3)",
-		"Rec": "This should be marked up as a heading level 3 (&lt;h3&gt;).<strong class='example'>Example</strong>&lt;h3&gt;Headings must follow semantic order&lt;/h2&gt;"
+		"Rec": "This should be marked up as a heading level 3.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "h4",
 		"QuickName": "Heading Level 4 (h4)",
-		"Rec": "This should be marked up as a heading level 4 (&lt;h4&gt;).<strong class='example'>Example</strong>&lt;h4&gt;Ensure there is a heading level 3&lt;/h4&gt;"
+		"Rec": "This should be marked up as a heading level 4.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "h5",
 		"QuickName": "Heading Level 5 (h5)",
-		"Rec": "This should be marked up as a heading level 5 (&lt;h5&gt;).<strong class='example'>Example</strong>&lt;h5&gt;Do you have a heading level 4?&lt;/h5&gt;"
+		"Rec": "This should be marked up as a heading level 5.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "h6",
 		"QuickName": "Heading Level 6 (h6)",
-		"Rec": "This should be marked up as a heading level 6 (&lt;h6&gt;).<strong class='example'>Example</strong>&lt;h6&gt;Don't use this because of it's size&lt;/h6&gt;"
+		"Rec": "This should be marked up as a heading level 6.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "label",
 		"QuickName": "Label",
-		"Rec": "Labels should be used for all input[type=text], input[type=checkbox], input[type=radio], and textarea elements.  The label should have a valid 'for' attribute which associates the label to the desired element.<br /><br />You can also wrap the element in a label.  Ensure there is text inside of the label element.<strong class='example'>Example</strong>&lt;label <span class='marker-highlight'>for=&quot;first_name&quot;</span>&gt;First Name&lt;/label&gt; <br /> <span class='marker_or'>OR</span> &lt;label&gt;First Name<br />&nbsp;&nbsp; &lt;input type=&quot;text&quot; id=&quot;first_name&quot; /&gt;<br />&lt;/label&gt;<strong class='aria'>ARIA</strong>You can also use the 'aria-label' attribute on input elements.<br />&lt;input type=&quot;text&quot; id=&quot;first_name&quot; <span class='marker-highlight'>aria-label=&quot;First Name&quot;</span> /&gt;<br /><br />When possible, always use semantic elements before using ARIA attributes."
+		"Rec": "Labels should be used for all input[type=text], input[type=checkbox], input[type=radio], and textarea elements.  The label should have a valid 'for' attribute which associates the label to the desired element.<br /><br />You can also wrap the element in a label.  Ensure there is text inside of the label element.<strong class='example'>Example</strong><strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},		
 	{
 		"Value": "orderedList",
 		"QuickName": "List (Ordered)",
-		"Rec": ""
+		"Rec": "<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "unorderedList",
 		"QuickName": "List (Unordered)",
-		"Rec": ""
+		"Rec": "<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "definitionList",
 		"QuickName": "List (Definition)",
-		"Rec": ""
+		"Rec": "<a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "menu",
@@ -158,7 +158,7 @@
 	{
 		"Value": "meta",
 		"QuickName": "Meta",
-		"Rec": ""
+		"Rec": "<a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "radioGroup",
@@ -168,7 +168,7 @@
 	{
 		"Value": "select",
 		"QuickName": "Select",
-		"Rec": "Ensure that all form fields have an explicit label with a valid 'for' attribute that associates the label to the select box<strong class='example'>Example</strong><span class='marker-highlight'> &lt;label for=&quot;select_box_id&quot;>Select&lt;/label&gt;</span><br />&lt;select id=&quot;select_box_id&quot;&gt;&lt;/select&gt;"
+		"Rec": "Ensure that all form fields have an explicit label with a valid 'for' attribute that associates the label to the select box<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},			
 	{
 		"Value": "tabset",
@@ -183,17 +183,17 @@
 	{
 		"Value": "tooltip",
 		"QuickName": "Tooltips",
-		"Rec": ""
+		"Rec": "<a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},	
 	{
 		"Value": "dataTable",
 		"QuickName": "Table (Data)",
-		"Rec": "Tabular data should be marked up in a data table, with a caption and table headings.  The caption for the table doesn't necessarily have to be a caption element, but can be also be a heading that is associated to the table with the 'aria-labelledby' attribute.<br />  Table headings that are positioned in the row should use the attribute 'scope=row'.<strong>Example</strong>&lt;table&gt;<br />&nbsp;&nbsp;<span class='marker-highlight'>&lt;caption&gt;Data Table Caption&lt;/caption&gt;</span><br />&nbsp;&nbsp;&lt;thead&gt;<br />&nbsp;&nbsp;&nbsp;<span class='marker-highlight'>&lt;th scope=&quot;col&quot;&gt;Column 1&lt;/th&gt;</span><br />&nbsp;&nbsp;&lt;/thead&gt;<br />&nbsp;&nbsp;&lt;tbody&gt;<br />&nbsp;&nbsp;&nbsp;&lt;td&gt;Column 1 text&lt;/td&gt;<br />&nbsp;&nbsp;&lt;/tbody&gt;<br />&lt;/table&gt;<strong class='aria'>ARIA</strong>&lt;table <span class='marker-highlight'> aria-labelledby=&quot;table_label_id&quot;</span> &lt;/table&gt;<br />&lt;span <span class='marker-highlight'>id=&quot;table_label_id&quot;</span>&gt;Explicit label text&lt;/span&gt;"
+		"Rec": "Tabular data should be marked up in a data table, with a caption and table headings.  The caption for the table doesn't necessarily have to be a caption element, but can be also be a heading that is associated to the table with the 'aria-labelledby' attribute.<br />  Table headings that are positioned in the row should use the attribute 'scope=row'.<strong>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "layoutTable",
 		"QuickName": "Table (Layout)",
-		"Rec": "Tables used for layout purposes should always have the attribute 'role=&quot;presentation&quot;'.<strong class='example'>Example</strong>&lt;table <span class='marker-highlight'>role=&quot;presentation&quot;</span> /&gt;"
+		"Rec": "Tables used for layout purposes should always have the attribute 'role=&quot;presentation&quot;'.<strong class='example'>Example</strong><a href='http://sva11y.com/components.html#' target='_blank'>http://sva11y.com/components.html# <span class='screen-reader-only'> Opens in a new window</span></a>"
 	},
 	{
 		"Value": "-",

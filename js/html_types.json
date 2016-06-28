@@ -1,0 +1,149 @@
+[
+	{
+		"Value": "",
+		"QuickName": "",
+		"Rec": ""
+	},{
+		"Value": "a",
+		"QuickName": "Anchor",
+		"Rec": "Hyperlink"
+	},	{
+		"Value": "abbr",
+		"QuickName": "Abbr",
+		"Rec": "Abbreviation"
+	},	{
+		"Value": "address",
+		"QuickName": "Address",
+		"Rec": "Contact information"
+	},	{
+		"Value": "area",
+		"QuickName": "Area",
+		"Rec": "image-map hyperlink"
+	},	{
+		"Value": "article",
+		"QuickName": "Article",
+		"Rec": "Standard article"
+	},	{
+		"Value": "aside",
+		"QuickName": "Aside",
+		"Rec": "Tangenital content"
+	},	{
+		"Value": "audio",
+		"QuickName": "Audio",
+		"Rec": "Audio stream"
+	},	{
+		"Value": "b",
+		"QuickName": "B",
+		"Rec": "Offset text conventionally styled in bold"
+	},	{
+		"Value": "base",
+		"QuickName": "Base",
+		"Rec": "base URL"
+	},{
+		"Value": "bdi",
+		"QuickName": "BDI",
+		"Rec": "BiDi isolate"
+	},	{
+		"Value": "blockquote",
+		"QuickName": "Blockquote",
+		"Rec": "Block quotation"
+	},	{
+		"Value": "body",
+		"QuickName": "Body",
+		"Rec": "Document Body"
+	},	{
+		"Value": "br",
+		"QuickName": "Br",
+		"Rec": "Line Break"
+	},	{
+		"Value": "button",
+		"QuickName": "Button",
+		"Rec": "Button element"
+	},	{
+		"Value": "canvas",
+		"QuickName": "Canvas",
+		"Rec": "Canvas for dynamic graphics"
+	},	{
+		"Value": "caption",
+		"QuickName": "Caption",
+		"Rec": "Table title"
+	},	{
+		"Value": "code",
+		"QuickName": "Code",
+		"Rec": "Code fragment"
+	},{
+		"Value": "dd",
+		"QuickName": "dd",
+		"Rec": "Definition list description or value"
+	},	{
+		"Value": "dl",
+		"QuickName": "dl",
+		"Rec": "Definition List"
+	},	{
+		"Value": "dt",
+		"QuickName": "dt",
+		"Rec": "Definition list term or name"
+	},	{
+		"Value": "embed",
+		"QuickName": "Embed",
+		"Rec": "Integration point for plugins"
+	},	{
+		"Value": "footer",
+		"QuickName": "Footer",
+		"Rec": "Footer element"
+	},	{
+		"Value": "form",
+		"QuickName": "Form",
+		"Rec": "User-submittable form"
+	},	{
+		"Value": "h1",
+		"QuickName": "h1",
+		"Rec": "Heading level 1"
+	},	{
+		"Value": "h2",
+		"QuickName": "h2",
+		"Rec": "Heading level 2"
+	},{
+		"Value": "h3",
+		"QuickName": "h3",
+		"Rec": "Heading level 3"
+	},	{
+		"Value": "h4",
+		"QuickName": "h4",
+		"Rec": "Heading level 4"
+	},	{
+		"Value": "h5",
+		"QuickName": "h5",
+		"Rec": "Heading level 5"
+	},	{
+		"Value": "h6",
+		"QuickName": "h6",
+		"Rec": "Heading level 6"
+	},	{
+		"Value": "header",
+		"QuickName": "Header",
+		"Rec": "Header element"
+	},	{
+		"Value": "i",
+		"QuickName": "I",
+		"Rec": "Offset text conventionally styled in Italic"
+	},	{
+		"Value": "iframe",
+		"QuickName": "Iframe",
+		"Rec": "Nested browsing context (inline frame)"
+	},	{
+		"Value": "img",
+		"QuickName": "Img",
+		"Rec": "Image"
+	},{
+		"Value": "input",
+		"QuickName": "Input",
+		"Rec": "Input control"
+	},	{
+		"Value": "input type=text",
+		"QuickName": "Input type=text",
+		"Rec": "Text input field"
+	}		
+	
+
+]

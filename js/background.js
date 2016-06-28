@@ -8,14 +8,83 @@ if(!localStorage.getItem('top')) {
 	localStorage.setItem('top', '50');
 }
 
+if(!localStorage.getItem('set')) {
+	localStorage.setItem('set', 'blank');
+}
+
+if(!localStorage.getItem('box_color')) {
+	localStorage.setItem('box_color', '#c00');
+}
+
+if(!localStorage.getItem('box_width')) {
+	localStorage.setItem('box_width', '2');
+}
+
+if(!localStorage.getItem('marker-font-size')) {
+	localStorage.setItem('marker-font-size', '16px');
+}
+
+if(!localStorage.getItem('flag-color')) {
+	localStorage.setItem('flag-color', 'red');
+}
+
+if(!localStorage.getItem('icon_pack_1')) {
+	localStorage.setItem('icon_pack_1', 'true');
+}
+
+if(!localStorage.getItem('highlight_color')) {
+	localStorage.setItem('highlight_color', '#e6f16a');
+}
+
+if(!localStorage.getItem('box_bg_color')) {
+	localStorage.setItem('box_bg_color', '');
+}
+
+if(!localStorage.getItem('pin_size')) {
+	localStorage.setItem('pin_size', '24px');
+}
+
+if(!localStorage.getItem('show_tips')) {
+	localStorage.setItem('show_tips', 'true');
+}
+
+
+
+
 function setVars(req) {
 	localStorage.setItem('left', req.left);
 	localStorage.setItem('top', req.top);
+	localStorage.setItem('show_tips', req.show_tips);
 }
 
 
 chrome.browserAction.onClicked.addListener(function(tab) {
-	chrome.tabs.sendRequest(tab.id, {greeting: 'start_stop', 'welcome': localStorage.getItem('welcome'), left: localStorage.getItem('left'), top: localStorage.getItem('top'), clicked: "icon"}, function(response) {});
+	if(!localStorage.getItem('version')) {
+		localStorage.setItem('version', '0');
+	}
+	if(localStorage.getItem('set') === 'a11y') {
+		if(localStorage.getItem('a11y_preset')) {
+			var preset = localStorage.getItem('a11y_preset');
+		} else {
+			var preset = '[]';
+		}
+		
+	} else if (localStorage.getItem('set') === 'html') {
+		if(localStorage.getItem('html_preset')) {
+			var preset = localStorage.getItem('html_preset');
+		} else {
+			var preset = '[]';
+		}
+		
+	} else {
+		var preset = '[]';
+	}
+	if(localStorage.getItem('version') !== chrome.runtime.getManifest().version) {
+		var install_flag = 'true'
+	} else {
+		var install_flag = 'false';
+	}
+	chrome.tabs.sendRequest(tab.id, {greeting: 'start_stop', 'welcome': localStorage.getItem('welcome'), show_tips: localStorage.getItem('show_tips'), pin_size: localStorage.getItem('pin_size'), box_bg_color: localStorage.getItem('box_bg_color'), install: install_flag, box_color: localStorage.getItem('box_color'), icon_pack_1: localStorage.getItem('icon_pack_1'), marker_font_size: localStorage.getItem('marker-font-size'), preset: preset, set: localStorage.getItem('set'), flag_color: localStorage.getItem('flag-color'), left: localStorage.getItem('left'), top: localStorage.getItem('top'), box_width: localStorage.getItem('box_width'), highlight_color: localStorage.getItem('highlight_color'), clicked: "icon"}, function(response) {});
 });
 
 chrome.runtime.onMessage.addListener(
@@ -36,6 +105,14 @@ chrome.runtime.onMessage.addListener(
 			setVars(request);
 		}
 	});
+
+chrome.runtime.onInstalled.addListener(
+	function(details) {
+			if(details.reason === 'install') {
+				localStorage.setItem('version', chrome.runtime.getManifest().version);
+			}
+		}
+	)
 
 
 

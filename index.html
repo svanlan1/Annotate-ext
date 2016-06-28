@@ -3,102 +3,302 @@
 	<head>
 		<title>Marker!</title>
 		<link href='css/railway.css' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu" />
 		<link rel="stylesheet" type="text/css" href="css/marker.css" />
 		<script src="js/jquery.js" type="text/javascript"></script>
 		<script src="js/jquery-ui.js" type="text/javascript"></script>
+		<script src="js/jscolor.min.js" type="text/javascript"></script>
 		<script src="js/options.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div class="body marker">
 			<h1 class="pretty">Marker!</h1>
-			<div id="save_button">
-				<button class="marker_fun_btn">Save</button>
-			</div>
-			<div role="group" aria-labelledby="marker-group-h2">
-				<h2>Change default Marker options</h2>
-				<input type="radio" name="def" id="a11y" /><label for="a11y">Accessibility</label><br />
-				<input type="radio" name="def" id="html" /><label for="a11y">HTML</label><br />
-				<input type="radio" name="def" id="blank" /><label for="blank">Blank (Notes Only)</label><br />
-			</div>
-			<h2>Changing the recommendations</h2>
-			<p class="instruction">
-				If you'd like to change the recommendations, you can do it here.  But do keep in mind that changing the recommendations could have grave consequences.<br />
-				<strong>All recommendations must keep their current formatting</strong><br />
-				Here are a few things to keep in mind:<br />
-				<ol>
-					<li>When writing HTML examples, use the HTML character codes for the '<', '>', and '" (double quotes)'.  The codes are as follows:
-						<ul>
-							<li>Less than (<): 
-							<li>Greater than (>):
-						</ul>
-					</li>
-				</ol>
-			</p>
-			<div id="marker_index_options">
+			<span class="tabs" role="tablist">
+				<h2 id="marker-group-h2">
+					<a href="javascript:void(0);" class="tab tab-selected" aria-controls="def_show_hide" aria-expanded="true" id="def_ops">Change default Marker options <span class="screen-reader-only"> click to show changable options</span></a></h2>
+				<h2>
+					<a href="javascript:void(0);" class="tab" aria-controls="rec_show_hide" aria-expanded="false" id="change_recs">Change the preset recommendations <span class="screen-reader-only"> click to change preset recommendation text</span></a></h2>	
+				<h2>
+					<a href="javascript:void(0);" class="tab" aria-controls="os_show_hide" aria-expanded="false" id="os_ops">Contribution information <span class="screen-reader-only"> click to show contribution options</span></a></h2>	
+				<h2>
+					<a href="javascript:void(0);" class="tab" aria-controls="faq_hide_show" aria-expanded="false" id='show_faq'>FAQ <span class="screen-reader-only"> click to read Frequently Asked Questions</span></a></h2>
+			</span>							
+
+			<div  id="def_show_hide" class="split">				
+				<div class="instruction" id="def_instrucs">
+					<div class="alert" tabindex="-1"><img src="images/check_24_pass.jpg" alt="Success!" />Your settings have been saved.  These settings will take effect on the next new instance of Marker.</div>
+					<h3><a href="javascript:void(0);" class="default_options_a" aria-expanded="false">Change preset grouping</a></h3>
+						<div class="default_group_toggle">
+						<span class="instructional">
+							These are the options that will load on each new instance of Marker.  You can change these options at the page level, but they will not persist.  The only way to get the preset recommendations, color, width, and pin color to persist is through these options.
+						</span>					
+						<span style="padding-left: 20px; padding-right: 20px; width: 97%; display:block;" role="group" aria-labelledby="marker-group-h2">
+						
+							<input type="radio" name="def" id="a11y" /><label for="a11y">Accessibility</label><br />
+							<input type="radio" name="def" id="html" /><label for="html">HTML</label><br />
+							<input type="radio" name="def" id="blank" /><label for="blank">Blank (Notes Only)</label><br />	
+							<div class="clear-line"></div>					
+							<strong>Accessibility</strong> will give you the ability to place accessibility recommendations throughout the page.  Additionally, it also has a 'Quick-check' button that will analyze the current HTML of the page and place markers on all of the elements that it takes issue with.  Running the 'Accessibility Quick-check' tool will also pre-populate the recommendations area.<div class="clear-line"></div>
+							<strong>HTML</strong> will give you the ability to place HTML element recommendations on the current HTML page.<div class="clear-line"></div>
+							<strong>Blank</strong> will simply give you a textarea field for each marker.<div class="clear-line"></div>
+							<strong>COMING SOON</strong> entering your own preset recommendations on 'Blank'<div class="clear-line"></div>
+							<input type="checkbox" id="show_tips-chk" /><label for="show_tips_chk" class="marker_options_edit" style="display: inline;">Show tips</label>
+						</span>
+					</div>
+					<h3><a href="javascript:void(0);" class="default_options_a" aria-expanded="false">Change default box options</a></h3>
+						<div class="default_group_toggle">
+							<span class="instruct_span" role="group" aria-labelledby="marker-group-h2">
+								<label class="marker_options_edit" for="marker_select_border_color">Box color</label>
+								<span class="instructional" id="hex_instruct">Enter the HEX value (e.g., #c00c00, #000000)</span><br />
+								<input type="text" id="marker_select_border_color" class="jscolor" aria-describedby="hex_instruct" /><br />
+
+								<div class="clear-line"></div>
+
+								<label for="marker_select_border_width" class="marker_options_edit">Box border width</label>
+								<a href="javascript:void(0);" id="subtract" class="change_width"><img src="images/minus.png" alt="Reduce width by 1px" /></a>
+								<input type="text" id="marker_select_border_width" />
+								<a href="javascript:void(0);" id="add" class="change_width"><img src="images/plus.png" alt="Increase width by 1px" /></a><br />
+
+								<div class="clear-line"></div>
+								<input type="checkbox" id="box_bg_color_chk" data-val="icon_pack_1" />
+								<label class="marker_options_edit" style="display: inline;" for="box_bg_color_chk">Add box background color</label>
+
+
+								<div class="bg_color_show_hide" style="display:none; margin-left: 50px;">
+									<label class="marker_options_edit" for="marker_select_box_background">Box background color</label>
+									<input type="text" id="marker_select_box_background" class="jscolor" aria-describedby="hex_instruct" /><br />
+								</div>
+
+								<div class="clear-line"></div>
+								
+								<br /><span class="instructional">Example of a box</span><br />
+								<span class="border_width_example"></span>
+								<div class="clear-line"></div>
+							</span>
+						</div>
+						
+					<h3><a href="javascript:void(0);" class="default_options_a" aria-expanded="false">Change default pin options</a></h3>
+						<div class="default_group_toggle">	
+							<span class="instruct_span" role="group" aria-labelledby="marker-group-h2">
+								<h4>Default pin color</h4>
+								<a href="javascript:void(0);" id="red_button" data-val="red"><img src="images/pin_24_red.png" alt="Red button" /></a>
+								<a href="javascript:void(0);" id="pink_button" data-val="pink"><img src="images/pin_24_pink.png" alt="Pink button" /></a>
+								<a href="javascript:void(0);" id="orange_button" data-val="orange"><img src="images/pin_24_orange.png" alt="Orange button" /></a>
+								<a href="javascript:void(0);" id="yellow_button" data-val="yellow"><img src="images/pin_24_yellow.png" alt="Yellow button" /></a>
+								<a href="javascript:void(0);" id="plum_button" data-val="plum"><img src="images/pin_24_plum.png" alt="Plum button" /></a>
+
+								<a href="javascript:void(0);" id="blue_button" data-val="blue"><img src="images/pin_24_blue.png" alt="Blue button" /></a>
+								<a href="javascript:void(0);" id="aqua_button" data-val="aqua"><img src="images/pin_24_aqua.png" alt="Aqua button" /></a>
+								<a href="javascript:void(0);" id="bluegreengreen_button" data-val="bluegreen"><img src="images/pin_24_bluegreen.png" alt="Blue/green button" /></a>
+								<a href="javascript:void(0);" id="green_button" data-val="green"><img src="images/pin_24_green.png" alt="Green button" /></a>
+								<a href="javascript:void(0);" id="lime_button" data-val="lime"><img src="images/pin_24_lime.png" alt="Lime button" /></a>
+
+								<a href="javascript:void(0);" id="poop_button" data-val="poop"><img src="images/pin_24_poop.png" alt="Poop button" /></a>
+								<a href="javascript:void(0);" id="black_button" data-val="black"><img src="images/pin_24_black.png" alt="Black button" /></a>
+								<a href="javascript:void(0);" id="grey_button" data-val="grey"><img src="images/pin_24_grey.png" alt="Grey button" /></a>
+								<a href="javascript:void(0);" id="white_button" data-val="white"><img src="images/pin_24_white.png" alt="White button" /></a>
+
+								<!--label class="marker_options_edit" for="marker_text_size">Marker text size</label>
+								<input type="text" id="marker_text_size" /><br /-->
+
+								<fieldset class="marker">
+									<legend><h4>Default pin size</h4></legend>
+									<input type="radio" name="pin_size" id="pin_24_pix" data-val="24px" />
+									<label class="marker_options_edit" style="display: inline;" for="pin_24_pix">24 pixels
+										<img src="images/pin_24_red.png" style="width: 24px;" alt="24 pixels red pin" />
+										<br />
+									</label>
+									<div class="clear-line" style="border: 0;"></div>
+									<input type="radio" name="pin_size" id="pin_36_pix" data-val="36px" />
+									<label class="marker_options_edit" style="display: inline;" for="pin_36_pix">36 pixels
+										<img src="images/pin_24_blue.png" style="width: 36px;" alt="36 pixels blue pin" />
+										<br />
+									</label>
+									<div class="clear-line" style="border: 0;"></div>
+									<input type="radio" name="pin_size" id="pin_48_pix" data-val="48px" />
+									<label class="marker_options_edit" style="display: inline;" for="pin_48_pix">48 pixels
+										<img src="images/pin_24_black.png" style="width: 48px;" alt="48 pixels black pin" />
+										<br />
+									</label>
+									<div class="clear-line" style="border: 0;"></div>
+								</fieldset>
+
+								<div class="clear-line"></div>
+								<input type="checkbox" id="icon_pack_1" data-val="icon_pack_1" />
+								<label class="marker_options_edit" style="display: inline;" for="icon_pack_1">Include fun icons</label>	
+								<br />
+								<img src="images/icons.jpg" style="width: 195px;"  alt="" />
+								<div class="clear-line"></div>
+
+								<label class="marker_options_edit" for="marker_select_highlight_color">Highlight color</label>
+								<input type="text" id="marker_select_highlight_color" class="jscolor" aria-describedby="hex_instruct" /><br />										
+
+								<!--button class="marker_preset_save_btn" style="display:block; margin-top: 10px !important; width: 25%; margin-left: 0;" id="save_options">Save</button-->
+							</span>
+						</div>
+					
+					<h3><a href="javascript:void(0);" class="default_options_a" aria-expanded="false">Change reporting styles</a></h3>
+					<div class="default_group_toggle">
+						<span class="instruct_span" role="group">
+							<label class="marker_options_edit">Reporting color</label>
+						</span>
+					</div>
+					
+
+					<h3><a href="javascript:void(0);" class="default_options_a" aria-expanded="false">Change event options</a></h3>
+					<div class="default_group_toggle">
+						<span class="instruct_span" role="group">
+							<input type="checkbox" id="leftclick" /><label class="marker_options_edit" style="display: inline;" for="leftclick">Left click opens marker note</label><br />
+							<input type="checkbox" id="arrowprev" /><label class="marker_options_edit" style="display: inline;" for="arrowprev"><kbd class="marker">Ctrl</kbd> + <kbd class="marker">&larr;</kbd> - previous marker</label><br />
+							<input type="checkbox" id="arrownext" /><label class="marker_options_edit" style="display: inline;" for="arrownext"><kbd class="marker">Ctrl</kbd> + <kbd class="marker">&rarr;</kbd> - next marker</label>
+						</span>
+					</div>
+
+				</div>				
 
 			</div>
 
 
+			<div id="rec_show_hide" class="split">
+				
+				<p class="instruction">
+					
+					If you'd like to change the recommendations, you can do it here.<br /><br />
+					You can write HTML in here, or just leave it as plain text.  All CSS must be inline.<br />
+					To write code examples with carrots, use the hex value.<br />
+					<strong>For example...</strong>
+					<ol>
+						<li>When writing HTML examples, use the HTML character codes for the '<', '>', and '" (double quotes)'.  The codes are as follows:
+							<ul>
+								<li>Less than (<): </li>
+								<li>Greater than (>):</li>
+							</ul>
+						</li>
+					</ol>
+				</p>
+				<p class="instruction">
+					<a href="javascript:void(0);" id="add-new-req">Add new preset recommendation</a>
+				</p>
+				<div id="marker_index_options">
 
-			<h2>What is Marker?</h2>
-			<p class="instruction">
-				Marker is a Google Chrome extension developed to help expedite making annotations on designs for web accessibility.
-			</p>
-			<h2>Why was Marker created?</h2>
-			<p class="instruction">
-				After spending far too much time making annotations on designs and developed pages, writing the same text over and over and over and over again, I decided to create this extension to make this process easy, painless, consistent, and accurate. <br />
-				Using Marker ensures that the latest guidelines are followed and allows the user to quickly create documents to hand off to developers.
-			</p>
-			<h2>How does Marker work?</h2>
-			<p class="instruction">
-				With Marker, you are able to place pins on the page, highlight elements, and make annotations directly on the page.
-			</p>
-			<h2>Who should use Marker?</h2>
-			<p class="instruction">
-				Marker can be used by anyone!  Designers, developers, business analysts, or even less technically saavy users (e.g., I want someone to build me a website, but I want to make sure that it's accessible).
-			</p>
-			<h2>What types of pages does Marker work on?</h2>
-			<p class="instruction">
-				If you can load it in the browser, you can annotate it!
-			</p>
-			<h2>What am I supposed to do with the annotations?</h2>
-			<p class="instruction">
-				Once you've finished drawing your annotations on the page, you will be presented with a modal window that gives you accessibility recommendations.
-			</p>
-			<h2>What does Marker conform to?</h2>
-			<p class="instruction">
-				Marker uses WCAG 2.0 Level AA recommendations.  This is the most common set of guidelines followed by Web accessibility professionals.
-			</p>
-			<h2>What do I do when I'm finished making recommendations?</h2>
-			<p class="instruction">
-				When you've completed your annotations, click the 'Save' button and a PDF will be exported.
-			</p>
-			<h2 id="howTouse">How to use Marker</h2>
-			<p class="instruction">
-				When you first start Marker, you will be presented with a frame on the left side of the screen that looks like this:<br /><br />
-				<img src="images/marker_how_to_use_1.jpg" alt="" /><br /><br />
-				To begin placing markers (or pins) on the page, simply click the 'Pin' icon on the left. <br /><br />
-				<img src="images/marker_how_to_use_2.jpg" alt="" /><br /><br />
-				It will turn red once you've activated it.<br /><br />
-				<img src="images/marker_how_to_use_3.jpg" alt="" /><br /><br />
-				Once you've placed a marker on the page, you will see a new area show up in the Marker panel<br /><br />
-				<img src="images/marker_how_to_use_4.jpg" style="width: 800px;" alt="" /><br /><br />
-				Simply select the type of HTML element it should be marked up as and you will be given the associated recommendations!
-				<strong>Can I customize it at all?</strong><br /><br />
-				While you currently cannot customize the text that Marker gives you, you can add your own notes!  To do this, simply right click on any of the pins on the screen and a dialog will appear that gives you the option to add a note.<br /><br />
-				<img src="images/marker_how_to_use_5.jpg" alt="" /><br /><br />
-				From here you can either write a note and have it save to the Marker panel, or you can delete the pin.<br /><br />
-				<img src="images/marker_how_to_use_6.jpg" alt="" /><br /><br />
-				<strong>Tip:</strong>
-				Delete the last in that you've placed on the screen.  All of the pins are movable, but once you get the pins out of order they will be stuck that way.
-			</p>
-			<h2>Icon Attribution</h2>
-			<p class="instruction">
+				</div>
+				<button class="marker_preset_reset_btn" style="display:block;" id="reset_presets">Reset all presets</button>
+			</div>
+
+
+
+			<div role="group" id="os_show_hide" class="split">				
+				<div class="instruction" id="def_instrucs">
+					Contribute on Github
+					<div class="clear-line"></div>
+					<a href="https://github.com/svanlan1/Marker" target="_blank">https://github.com/svanlan1/Marker <span class="screen-reader-only"> Opens in a new window</span></a>
+				</div>				
+			</div>			
+
+
+
+			<div id="faq_hide_show" class="split">
+				<h3>What is Marker?</h3>
+				<p class="instruction">
+					Marker is a Google Chrome extension developed to help expedite making annotations on designs for web accessibility.
+				</p>
+
+
+				<h3 id="howTouse">How to use Marker</h3>
+				<p class="instruction">
+					Click on the 'Marker' icon in the upper right hand corner of Chrome<br />
+					<img src="images/s1.png" alt="" />
+				</p>
+				<p class="instruction">
+					The 'Marker Panel' will appear on the left side of your screen by default.  However, the panel is moveable and the position of the panel is stored.  That means that wherever you drop then panel is where it will continue to appear each time you start Marker, until you move it again.<br />
+					<img src="images/s2.png" alt="" />
+				</p>
+				<p class="instruction">
+					Each icon provides you with a different option.
+					<ul style="padding: 15px; list-style-type: none;">
+						<li><img src="images/select_24.png" alt="" /> - Draw a box on the screen</li>
+						<li><img src="images/pin_24_inactive.png" alt="" /> - Place a marker on the screen</li>
+						<li><img src="images/clear.png" alt="" /> - Removes all markers and boxes on the screen and resets the counter to zero</li>
+						<li><img src="images/save_24.png" alt="" /> - Appends your recommendations to the bottom of the page</li>
+					</ul>
+				</p>
+				<p class="instruction">
+					You can change the size and color of the box from the Marker Panel on any web page.<br />
+					<img src="images/s3.png" alt="" />
+				</p>
+				<p class="instruction">
+					Changing the size and color of the box from the Marker Panel only changes the settings for that individual session.<br />
+					To change the default color and box width, change the settings on the 'Options' page.<br />
+					<img src="images/s4.jpg" alt="" />
+				</p>
+				<p class="instruction">
+					You can also change the 'Marker' or 'Pin' color.<br />
+					<img src="images/s5.png" alt="" /><br />
+					Just like the box width and color, you can change the color on the 'Marker Panel' for that individual session, or change the default marker/pin color on the options page.<br />
+					<img src="images/s6.jpg" alt="" />
+				</p>
+
+
+				<h3>Why was Marker created?</h3>
+				<p class="instruction">
+					After spending far too much time making annotations on designs and developed pages, writing the same text over and over and over and over again, I decided to create this extension to make this process easy, painless, consistent, and accurate. <br />
+					Using Marker ensures that the latest guidelines are followed and allows the user to quickly create documents to hand off to developers.
+				</p>
+				<h3>How does Marker work?</h3>
+				<p class="instruction">
+					With Marker, you are able to place pins on the page, highlight elements, and make annotations directly on the page.
+				</p>
+				<h3>Who should use Marker?</h3>
+				<p class="instruction">
+					Marker can be used by anyone!  Designers, developers, business analysts, or even less technically saavy users (e.g., I want someone to build me a website, but I want to make sure that it's accessible).
+				</p>
+				<h3>What types of pages does Marker work on?</h3>
+				<p class="instruction">
+					Currently, Marker only works on HTML pages.  You do <strong>not</strong> need to be online in order to use Marker.
+				</p>
+				<h3>What am I supposed to do with the annotations?</h3>
+				<p class="instruction">
+					Once you've finished drawing your annotations on the page, press 'Save'.  This saves your notes and draws them on the bottom of the 'body' element.<br />
+					From here, for the foreseeable future, you can save the page by pressing 'Ctrl + S' to save the entire webpage.  This saves all of the notes and annotations in HTML format that you can then send along.
+				</p>
+				<h3>What Accessibility Guidelines does Marker conform to?</h3>
+				<p class="instruction">
+					Marker uses WCAG 2.0 Level AA recommendations.  This is the most common set of guidelines followed by Web accessibility professionals.
+				</p>
+
+				<div class="clear-line"></div>
+				<h3>Icon Attribution</h3>
+				<p class="instruction">
+					<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+				</p>			
+				<p>
+					<div>Icons made by <a href="http://www.flaticon.com/authors/nice-and-serious" title="Nice and Serious">Nice and Serious</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+				</p>
+				<p>
+					<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+				</p>
+				<p>
+					<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+				</p>
+				<p>
+					<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+				</p>
+				<p>
+					<div>Icons made by <a href="http://www.flaticon.com/authors/madebyoliver" title="Madebyoliver">Madebyoliver</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+				</p>
+				<p>
+					<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+				</p>
+
 				<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-			</p>			
-			<p>
-				<div>Icons made by <a href="http://www.flaticon.com/authors/nice-and-serious" title="Nice and Serious">Nice and Serious</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-			</p>			
+
+				<div>Icons made by <a href="http://www.flaticon.com/authors/zurb" title="Zurb">Zurb</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+				<div>Icons made by <a href="http://www.flaticon.com/authors/baianat" title="Baianat">Baianat</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+			
+				<div>Icons made by <a href="http://www.flaticon.com/authors/madebyoliver" title="Madebyoliver">Madebyoliver</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+			</div>			
 		</div>
 	</body>
 </html>
