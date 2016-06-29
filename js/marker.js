@@ -9,10 +9,15 @@
 var mif; // Marker iframe
 var mifBody; //Marker iframe body element
 var mCount = 1; // Running tally of how many flags have been placed on the page
+var issues = []; // Array of all of the failed items on the page from the Accessibility checker
+//Variable controls whether or not clicking in the page should place a flag.  Default = false
+localStorage.setItem('marker_place_flag', 'false'); // Do not place a Marker by default
+ localStorage.setItem('e_c', 'expanded');
+localStorage.setItem('draw', 'false'); // Do not draw a box by default
 
-/***********************************************************************************************************
+/****************************************************************************************************************
 *	run_marker() function sets up the iframe on the left and sets the original body element positioned right
-***********************************************************************************************************/
+****************************************************************************************************************/
 function run_marker(welcome) {
 	//Send message to background script letting it know that the application is currently active.
 	chrome.runtime.sendMessage({
@@ -20,392 +25,291 @@ function run_marker(welcome) {
 	});
 	mCount = 1;
 
-	//Variable controls whether or not clicking in the page should place a flag.  Default = false
-	localStorage.setItem('marker_place_flag', 'false');
-	localStorage.setItem('e_c', 'expanded');
-	localStorage.setItem('draw', 'false');
-
-	$('head').append('<link rel="stylesheet" type="text/css" type="print" href="'+ chrome.extension.getURL("css/print.css") +'" />');
-
-	//Wrap the original body element in a <DIV> and set the width appropriately
-	var width = $(window).width() - 270 + 'px';
-	$('body').wrapInner('<div id="marker_body_wrap" style="width:'+width+'; float:right;" />');
-	//$('body').prepend('<div id="shim"></div>');
-
-	//var marker_div_container = $('<div />').attr('id', 'marker_div_container').appendTo('html');
-	//Create the MARKER iframe and append it to the <HTML> element
-	$('<iframe />').attr({
-		'id': 'marker_iframe',
-		'class': 'marker'
-	}).appendTo('html');
-
-	//Set the global variables to their correct values
-	mif = $("#marker_iframe")[0].contentWindow.document;
-	mifBody = $(mif).find('body');
-
-	//Setting up <iframe> with CSS files and welcome text
-	$('<link />').attr({
-		'rel': 'stylesheet',
-		'type': 'text/css',
-		'href': chrome.extension.getURL('css/marker.css')
-	}).appendTo($(mif).find('head')).appendTo('head');
-
-	$('<link />').attr({
-		'rel': 'stylesheet',
-		'type': 'text/css',
-		'href': chrome.extension.getURL('css/railway.css')
-	}).appendTo($(mif).find('head'));
-
-	$('<link />').attr({
-		'rel': 'stylesheet',
-		'type': 'text/css',
-		'href':  chrome.extension.getURL('css/railway.css')
-	}).appendTo('head');
-
-	$('<link />').attr({
-		'rel': 'stylesheet',
-		'type': 'text/css',
-		'href': 'https://fonts.googleapis.com/css?family=Ubuntu'
-	}).appendTo($(mif).find('head'));	
-
-	$('<link />').attr({
-		'rel': 'stylesheet',
-		'type': 'text/css',
-		'href': 'https://fonts.googleapis.com/css?family=Ubuntu'
-	}).appendTo('head');		
-
-	$('<h1 />').attr('class', 'marker').html('Marker <img src="' + chrome.extension.getURL('images/marker_32.png') + '" alt="" />').appendTo(mifBody);
+	//Wrap the body element content in a div.  This is so that we can place the markers and draw the boxes on the correct spot on the page
+	$('body').wrapInner('<div id="marker_body_wrap" />');
+	$('<canvas />').attr('id', 'marker-canvas-element').appendTo('body');
 	
-	if(welcome === 'show') {
-		var slideDiv = $('<div />').attr('id', 'marker_welcome_text').addClass('welcome').appendTo(mifBody);
-		$('<a />').attr({
-			'href': 'javascript:void(0);',
-			'class': 'expand_collapse'
-		}).html('<span class="collapse">Collapse tips</span>').click(function(e) {
-			if($(this).find('.collapse').text() === "Collapse tips") {
-				$(this).find('.collapse').text('Expand tips');
-				$(slideDiv).find('.welcome').slideUp();
-			} else {
-				$(this).find('.collapse').text('Collapse tips');
-				$(slideDiv).find('.welcome').slideDown();
-			}
-			
-		}).appendTo(slideDiv);
-		
-		$('<input />').attr('type', 'checkbox').attr('id', 'dont_show_welcome').click(function() {
-			chrome.runtime.sendMessage({
-				greeting: 'welcome'
-			});
-			$(mifBody).find('.welcome').remove();
-		}).appendTo(slideDiv);
-		$('<label />').attr('for', 'dont_show_welcome').text('Never show this again').appendTo(slideDiv);
-		
-		$('<div />').attr({
-			'class': 'marker welcome'
-		}).text('a tool for making accessibility recommendations').appendTo(slideDiv);
-		$('<div />').attr({
-			'class': 'marker welcome'
-		}).text('To begin, select an option below to either place a flag or select an area that you\'d like to confine your annotations to.').appendTo(slideDiv);	
-		$('<div />').attr({
-			'class': 'marker welcome'
-		}).text('Once you place a flag, you will be able to choose what type of element you think it should be').appendTo(slideDiv);
+	//Add CSS to head of the document so Marker can access it
+	append_scripts_to_head('head');		
 
-		$('<div />').attr({
-			'class': 'marker welcome'
-		}).text('To add notes to or remove a flag, simply right click on it and choose your desired action').appendTo(slideDiv);	
+	//Add resize function.  Displays a flag when the window is resized
+	window.addEventListener("resize", resize_window);
+
+	//Create Marker panel which will be displayed
+	create_marker_panel();	
+	$('.marker_anchor').attr('href', 'javascript:void(0);');		
+}
+
+/*******************************************************
+*	Create the tools panel and place it on the screen
+*******************************************************/
+function create_marker_panel() {
+	//Create the panel for the Marker! tools
+	var left = localStorage.getItem('left'),
+		top = localStorage.getItem('top');
+
+	//Determine the location of the Marker panel.  If it is too close to the left or top of the screen, position it somewhere the user will be able to see it fully
+	if(left > $(window).width()) {
+		left = $(window).width - 100;
 	}
 
+	if(top > $(window).height()) {
+		top = $(window).height() - 200;
+	}
 
-	//getStarted() will draw the rest of the contents in the <iframe>.  Separating them to keep functions small and light.
-	getStarted();
-	window.addEventListener("resize", resize_window);
-	/*$(window).on('resize', function(e) {
-		
-	});	*/
+	//Create Marker panel div and make sure it's draggable
+	var div = $('<div />').attr({
+		'class': 'marker marker-controls',
+		'id': 'marker-control-panel'
+	}).draggable({
+      stop: function() {
+        $(this).css('position', 'fixed');
+		$('#marker-control-panel').css('height', 'auto');
+		localStorage.setItem('top', $(this).offset().top);
+		localStorage.setItem('left', $(this).offset().left);
+		sendUpdate();       
+      }
+    }).css({
+		'left': left + 'px',
+		'top': top + 'px',
+		'position': 'fixed',
+		'width': '164px'
+	}).appendTo('body');
 
-}
+    //Draw the Marker panel heading
+	$('<div />').attr({
+		'class': 'marker marker-panel-heading'
+	}).text('Marker!').appendTo(div);
 
-function resize_window() {
-	var winWidth = $(window).width() - 278;
-		$('#marker_body_wrap').css('width', winWidth + 'px');
-		if($('#marker_window_resize_msg').length === 0) {
-			$('<div />').attr({
-				'id': 'marker_window_resize_msg'
-			}).html('<strong>Alert!</strong> <span style="padding: 5px;">Resizing the window does not automatically readjust your markers on the page.  You may need to reposition them (but don\'t worry, they\'re all totally draggable)</span>').appendTo('#marker_body_wrap').fadeIn('slow');
-
-		} else {
-			$('#marker_window_resize_msg').show();
-		}
-		setTimeout(function() {
-			$('#marker_window_resize_msg').fadeOut('slow');
-		}, 4000)	
-}
-
-/******************************************************************************
-* getStarted() function draws the remaining startup UI elements in the <iframe>
-*******************************************************************************/
-function getStarted() {
-	
-	//Create <div> container for the actionable elements
-	var marker_options_div = $('<div />').attr('id', 'marker_options').appendTo(mifBody);
-
+	//Add the Select! button
 	$('<a />').attr({
-		'href': 'javascript:void(0);',
-		'id': 'place_marker',
-		'class': 'marker_option',
-		'title': 'Place markers on page'
-	}).html('<img src="' + chrome.extension.getURL('images/pin_24_inactive.png') + '" alt="Click to place marker on page" />').click(function() {
-		if(localStorage.getItem('marker_place_flag') == 'false') {
-			$(mifBody).find('#marker_draws').find('img').attr('src', chrome.extension.getURL('images/select_24.png'));
-			$(this).find('img').attr('src', chrome.extension.getURL('images/pin_24.png'));
-			localStorage.setItem('marker_place_flag', 'true');
-			localStorage.setItem('draw', 'false');
-			place_marker();	
-			stop_drawing_boxes(document.getElementById('marker_body_wrap'));
-		} else {
-			$(this).find('img').attr('src', chrome.extension.getURL('images/pin_24_inactive.png'));
-			localStorage.setItem('marker_place_flag', 'false');			
-			unplace_marker();
-		}
-
-	}).appendTo(marker_options_div);
-
-	$('<a />').attr({
-		'href': 'javascript:void(0);',
 		'id': 'marker_draws',
-		'class': 'marker_option',
+		'class': 'marker_option marker_anchor',
 		'title': 'Highlight an area of page'
-	}).html('<img src="' + chrome.extension.getURL('images/select_24.png') + '" alt="Click to select a section of the page" />').appendTo(marker_options_div).click(function(e) {
-		//alert('Select area of page functionality coming soon');
-		//initDraw(document.getElementById('marker_body_wrap'));
+	}).html('<img src="' + chrome.extension.getURL('images/select_24.png') + '" alt="Click to select a section of the page" />').appendTo(div).click(function(e) {
 		if(localStorage.getItem('draw') === 'false') {
 			unplace_marker();
+			draw_select_color_options();
 			localStorage.setItem('marker_place_flag', 'false');
-			$(mifBody).find('#place_marker').find('img').attr('src', chrome.extension.getURL('images/pin_24_inactive.png'));
-			
+			$('#place_marker').find('img').attr('src', chrome.extension.getURL('images/pin_24_inactive.png'));
 			$(this).find('img').attr('src', chrome.extension.getURL('images/select_24_active.jpg'));
 			localStorage.setItem('draw', 'true');
 			initDraw(document.getElementById('marker_body_wrap'));
 			$('body').attr('style', 'cursor: crosshair');
+			if(localStorage.getItem('show_tips') === 'true') {
+				draw_tips_panel('To draw a box around an area on the page, click once and let the mouse draw the box.  The box is resizable and draggable.  So if you don\'t get the box in the perfect location, do not fret.  You can adjust it later.  <strong>Do not attempt to draw the box with the left mouse button pressed.  It will not work</strong>');
+			}
 		} else {
 			$('#marker_body_wrap').css('cursor', 'default !important;');
 			localStorage.setItem('draw', 'false');
 			$(this).find('img').attr('src', chrome.extension.getURL('images/select_24.png'));
 			stop_drawing_boxes(document.getElementById('marker_body_wrap'));
-			$('body').attr('style', 'cursor: default');
+			$('body').removeAttr('style');
+			$('#marker-pin-colors-drawer').remove();
 		}
 		
 	});	
 
+	//Add the Pin! button
 	$('<a />').attr({
-		'href': 'javascript:void(0);',
+		'id': 'place_marker',
+		'class': 'marker_option marker_anchor',
+		'title': 'Place markers on page'
+	}).html('<img src="' + chrome.extension.getURL('images/pin_24_inactive.png') + '" alt="Click to place marker on page" />').click(function() {
+		if(localStorage.getItem('marker_place_flag') == 'false') {
+			$('#marker_draws').find('img').attr('src', chrome.extension.getURL('images/select_24.png'));
+			$(this).find('img').attr('src', chrome.extension.getURL('images/pin_24_'+localStorage.getItem('flag-color')+'.png'));
+			localStorage.setItem('marker_place_flag', 'true');
+			localStorage.setItem('draw', 'false');
+			place_marker();	
+			draw_new_marker_options();
+			stop_drawing_boxes(document.getElementById('marker_body_wrap'));
+			draw_tips_panel('To place a marker on the screen, simply select the pin you\'d like to place and click on the screen.  To edit the pin\'s note, "Right click" on the note.  <strong>Note:</strong> All pins are draggable.  You can reposition them anywhere on the page.<br />');
+		} else {
+			$(this).find('img').attr('src', chrome.extension.getURL('images/pin_24_inactive.png'));
+			localStorage.setItem('marker_place_flag', 'false');	
+			$('#marker-pin-colors-drawer').remove();		
+			unplace_marker();
+		}
+
+	}).appendTo(div);
+
+	//Add Clear! button
+	$('<a />').attr({
 		'id': 'marker_clear',
-		'class': 'marker_option',
+		'class': 'marker_option marker_anchor',
 		'title': 'Clear and start over'
-	}).html('<img src="' + chrome.extension.getURL('images/clear.png') + '" alt="Start Over" />').appendTo(marker_options_div).click(function(e) {
-		$('.marker_page_marker, .marker_context_menu, .rectangle').remove();
+	}).html('<img src="' + chrome.extension.getURL('images/clear.png') + '" alt="Start Over" />').appendTo(div).click(function(e) {
+		$('.marker_page_marker, .marker_context_menu, .rectangle, .marker-print-res-cont, #marker_window_resize_msg').remove();
 		$(mifBody).find('.marker_side_text_selection').remove();
 		mCount = 1;
 
 	});
 
+	//Add the Save! button
 	$('<a />').attr({
-		'href': 'javascript:void(0);',
 		'id': 'marker_saves',
-		'class': 'marker_option',
-		'title': 'Save to PDF'
-	}).html('<img src="' + chrome.extension.getURL('images/save_24.png') + '" alt="Save markings" />').appendTo(marker_options_div).click(function(e) {
+		'class': 'marker_option marker_anchor',
+		'title': 'Save markings'
+	}).html('<img src="' + chrome.extension.getURL('images/save_24.png') + '" alt="Save markings" />').appendTo(div).click(function(e) {
 		saveToPdf();
-		//alert('Save to PDF functionality coming');
-	});	
-
-	$('<a />').attr({
-		'href': 'javascript:void(0);',
-		'id': 'marker_expand',
-		'class': 'marker_option',
-		'title': 'Collapse All'
-	}).html('<img src="' + chrome.extension.getURL('images/collapse_24.png') + '" alt="Expand/Collapse All" />').appendTo(marker_options_div).click(function(e) {
-		if(localStorage.getItem('e_c') === 'expanded') {
-			$(mifBody).find('.marker_side_text_container').find('.marker_info').slideUp();
-			$(mifBody).find('.marker_side_text_container').find('.collapse').text('Expand');
-			$(this).attr('title', 'Expand All');
-			$(this).find('img').attr('src', chrome.extension.getURL('images/expand_24.png'));
-			localStorage.setItem('e_c', 'collapsed');			
-		} else {
-			$(mifBody).find('.marker_side_text_container').find('.marker_info').slideDown();
-			$(mifBody).find('.marker_side_text_container').find('.collapse').text('Collapse');
-			$(this).attr('title', 'Collapse All');
-			$(this).find('img').attr('src', chrome.extension.getURL('images/collapse_24.png'));
-			localStorage.setItem('e_c', 'expanded');		
-		}
-
-	});	
-	
-
-	$('<div />').attr('class', 'marker_side_text_container').attr('role', 'list').appendTo(mifBody);
-
-
-	$('<div />').addClass('screen-reader-only').html('<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>').appendTo(mifBody);
-	$('<div />').attr('class', 'screen-reader-only').html('<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>').appendTo(mifBody);
-	$('<div />').addClass('screen-reader-only').html('<div>Icons made by <a href="http://www.flaticon.com/authors/nice-and-serious" title="Nice and Serious">Nice and Serious</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>').appendTo(mifBody);
-	$('<div />').addClass('screen-reader-only').html('<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>').appendTo(mifBody);
-	$('<div />').addClass('screen-reader-only').html('<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>').appendTo(mifBody);
-	$('<div />').addClass('screen-reader-only').html('<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>').appendTo(mifBody);
-}
-
-
-function place_marker() {
-	$('#marker_body_wrap').css('cursor', 'pointer');
-	$('#marker_body_wrap, a, button').bind('click', function(e) {
-		e.preventDefault();
-		e.stopPropagation();
-		var x = e.pageX - 287,
-			y = e.pageY - 15;
-
-		var flag_wrap = $('<a />').attr('href', 'javascript:void(0);').attr('class', 'marker_page_marker').attr('data-marker-count', mCount).css({
-			'position': 'absolute',
-			'left': x + 'px',
-			'top': y + 'px'
-		}).bind('contextmenu', function(e) {
-			e.preventDefault();
-			createContextMenu($(this), e);
-		}).click(function(e) {
-			e.preventDefault();
-			$(mifBody).find('#marker_select_box_' + $(this).attr('data-marker-count')).focus();
-			return false;
-		}).appendTo('#marker_body_wrap').draggable({ helper: "original" });
-
-		//$('<div />').addClass('arrow-right').appendTo(flag_wrap);
-
-		var m = $('<img />').attr({
-			'src': chrome.extension.getURL('images/pin_24.png'),
-			'class': 'marker_page_marker',
-			'data-marker-count': mCount
-		}).attr('alt', 'Marker ' + mCount).appendTo(flag_wrap);
-
-		add_marker_text($(this));
-
-		mCount++;
-		return false;
 	});
+
+	//Add the links/options to the tool panel
+	//Add the Accessibility! button
+	/*This is currently disabled.  Once the flag gets set to 'a11y', the accessibility check options will be added.  This feature will be available in a later release.
+	if(localStorage.getItem('set') === 'a11y_hoorah') {
+		$('<a />').attr({
+			'href': 'javascript:void(0);',
+			'id': 'marker_a11y',
+			'class': 'marker_option',
+			'title': 'Accessibility Quick Check'
+		}).html('<img src="' + chrome.extension.getURL('images/check_24_inactive.png') + '" alt="Accessibility Quick Check" />').appendTo(div).click(function(e) {
+			check_a11y();
+			unplace_marker();
+			$('#marker-pin-colors-drawer').remove();
+			stop_drawing_boxes(document.getElementById('marker_body_wrap'));
+		});			
+	}*/	
+
+	//Display the Marker panel, fade in quickly
+	$(div).fadeIn('fast');
 }
 
-function unplace_marker() {
-	$('#marker_body_wrap, #marker_body_wrap a, #marker_body_wrap button').unbind('click');
-}
-
-function createContextMenu(el, e) {
-	var id = 'marker_context_menu' + $(el).attr('data-marker-count');
+function createContextMenu(el, e, val) {
+	var id = 'marker_context_menu' + $(el).attr('data-marker-count'),
+		top = $(el).css('top'),
+		winWidth = $(window).width(),
+		left;
 	if($('#' + id).length === 0) {
+		if((e.pageX + 427) > winWidth) {
+			left = winWidth - 450 + 'px';
+		} else {
+			left = e.pageX + 35 + 'px';
+		}
+		
 		var menu = $('<div />').addClass('marker_context_menu').css({
-			'left': e.pageX + 35 + 'px',
-			'top': $(el).css('top')
-		}).attr('role', 'dialog').attr('id', id).appendTo('body');
+			'left': left,
+			'top': top
+		}).attr('role', 'dialog').attr('id', id).attr('data-marker-dialog-count', $(el).attr('data-marker-count')).draggable({
+      		stop: function() {
+        		//$('.marker_context_menu').css('height', 'auto');
+      		}
+	    }).css('position', 'absolute').appendTo('body');
 
 		var close = $('<a />').attr({
 			'class': 'marker_context_close',
 			'href': 'javascript:void(0)'
 		}).html('<span class="screen-reader-only">Close context menu for number' + $(el).attr('data-marker-count') + '</span><img src="'+chrome.extension.getURL('images/close.png')+'" alt="" />').appendTo(menu);
 
+
+
 		$(close).click(function(e) {
 			hideMenu('marker_context_menu' + $(el).attr('data-marker-count'));
 		});
+		$('<h2 />').addClass('marker marker_drag').attr('tabindex', '-1').text('Add notes').appendTo(menu);
+		var iframediv = $('<div />').addClass('marker-context-menu-iframe-container').appendTo(menu);
 
-		$('<label />').addClass('marker').attr('for', 'marker_textarea_' + $(el).attr('data-marker-count')).text('Add notes').appendTo(menu);
-		$('<textarea />').addClass('marker marker_note').attr('id', 'marker_textarea_' + $(el).attr('data-marker-count')).appendTo(menu);
+		var iframe = $('<iframe />').css('display', 'none').addClass('marker-context-iframe').attr('id', 'marker-context-menu-' + $(el).attr('data-marker-count')).appendTo(iframediv);
+		var iframeStuff = $('#marker-context-menu-' + $(el).attr('data-marker-count'))[0].contentWindow.document;
+		var ifBody = $(iframeStuff).find('body');
+
+		//Add the CSS files to the results panel
+		append_scripts_to_head('', $(iframeStuff).find('head'));
+
+				
+		var infoDiv = $('<div />').addClass('marker marker_info').appendTo(ifBody);
+		if(localStorage.getItem('set') === 'a11y' || localStorage.getItem('set') === 'html') {
+			$('<label />').attr('for', 'marker_select_box_' + mCount).addClass('marker_required marker_label').text('Type of element?').appendTo(infoDiv);
+			add_marker_select_options(infoDiv, el, val);
+			$('<label />').attr('for', 'marker_textarea_' + mCount).addClass('marker_required marker_label').text('Notes').appendTo(infoDiv);
+			$('<textarea />').addClass('marker_textarea_notes').attr('id', 'marker_textarea)' + mCount).appendTo(infoDiv);
+			$('.marker-context-menu-iframe-container:visible').css('height', '390px');			
+		} else {
+			$('<label />').attr('for', 'marker_textarea_' + mCount).addClass('marker_required marker_label').text('Notes').appendTo(infoDiv);
+			$('<textarea />').addClass('marker_textarea_notes').attr('id', 'marker_textarea)' + mCount).appendTo(infoDiv);
+			var h = $(infoDiv).height();
+			var he = h + 85;
+			$('.marker-context-menu-iframe-container:visible').css('height', '305px');
+			$('.marker_context_menu:visible').css('height', '335px');				
+		}
+				
+
 		$('<button />').addClass('marker marker_fun_btn marker_save_note_btn').attr('value', 'Save Note').text('Save').click(function(e) {
-			var text = $('#marker_textarea_' + $(el).attr('data-marker-count')).val().replace('<', '&lt;').replace('<', '&gt;'),
-				side_box = $(mifBody).find('#marker_select_box_' + $(el).attr('data-marker-count')).parent();
-			if($(side_box).find('.marker_user_note_side').length > 0) {
-				$(side_box).find('.marker_user_note_side').remove();
-			}
-			$(side_box).append('<div class="marker marker_user_note_side"><strong>User note:</strong>' + text + '</div>');
-
-		}).appendTo(menu);
+			hideMenu('marker_context_menu' + $(el).attr('data-marker-count'));
+		}).appendTo(ifBody);
 		$('<button />').addClass('marker marker_fun_btn').attr('value', 'Delete').text('Delete this flag').click(function(e) {
 			$(el).remove();
 			$(mifBody).find('.marker_side_text_selection').eq($(mifBody).find('.marker_side_text_selection').length-1).remove();
 			$(menu).remove();
 			mCount--;
-		}).appendTo(menu);
+		}).appendTo(ifBody);
+		$('#' + id).find('iframe').ready(function() {
+			$('#' + id).find('iframe').fadeIn('fast');
+		});
 	} else {
-		showMenu(id);
+		showMenu(id, val);
+
 	}
-
 }
 
-function hideMenu(id) {
-	$('#' + id).hide();
-}
-
-function showMenu(id) {
-	$('#' + id).show();
-}
-
-function add_marker_text(el) {
-	var divItem = $('<div />').attr({
-		'class': 'marker_side_text_selection',
-		'data-marker-count': mCount,
-		'role': 'listitem'
-	}).appendTo($(mifBody).find('.marker_side_text_container'));
-
-	$('<a />').attr({
-		'href': 'javascript:void(0);',
-		'class': 'marker expand_collapse'
-	}).html('<span class="collapse">Collapse</span> <span class="screen-reader-only"> Flag Number' + mCount).click(function(e) {
-		if($(this).find('.collapse').text() === "Collapse") {
-			$(this).find('.collapse').text('Expand');
-			$(divItem).find('.marker_info').slideUp();
-		} else {
-			$(this).find('.collapse').text('Collapse');
-			$(divItem).find('.marker_info').slideDown();
-		}
-		
-	}).appendTo(divItem);
-	var h3 = $('<h3 />').text(mCount + ':').appendTo(divItem);
-	$('<span />').addClass('marker_ele_type').appendTo(h3);	
-	var infoDiv = $('<div />').addClass('marker marker_info').appendTo(divItem);
-	$('<label />').attr('for', 'marker_select_box_' + mCount).addClass('instruction marker_required').text('Type of element?').appendTo(infoDiv);
-	add_marker_select_options(infoDiv, el);
-}
-
-function add_marker_select_options(divItem, el) {
-	var options;
-	$.ajax({
-		url: chrome.extension.getURL('js/types.json'),
-		dataType: 'text',
-		'type': 'GET',
-		async: false,
-		crossDomain: false,
-		success: function(data) {
-			options = $.parseJSON(data);
-		}
-	});
+function add_marker_select_options(divItem, el, selVal) {
+	var options = getOptions();
 
 	var sel = $('<select />').attr('id', 'marker_select_box_' + mCount).attr('aria-required', 'true').appendTo(divItem);
-	var d = $('<div />').addClass('marker marker_recommendation').attr('id', 'marker_select_text_div_' + mCount).html('<strong class="recommendations">Recommendations</strong>').appendTo(divItem);
+	var d = $('<div />').addClass('marker marker_recommendation').attr('id', 'marker_select_text_div_' + mCount).appendTo(divItem);
+	var a = $('<a />').addClass('marker-a11y-rec-a marker_anchor').attr('aria-expanded', 'true').click(function(e) {
+		if($(this).attr('aria-expanded') === 'false') {
+			$(this).parent().find('.marker_recommendation_div').show();
+			$(this).attr('aria-expanded', 'true');
+		} else {
+			$(this).parent().find('.marker_recommendation_div').hide();
+			$(this).find('.marker-a11y-rec-note').text('[ collapsed ]');
+			$(this).attr('aria-expanded', 'false');
+		}
+		
+	}).appendTo(d);
+	var strong = $('<strong />').addClass('recommendations').text('Recommendation').css('display', 'none').appendTo(a);
+	var span = $('<span />').addClass('marker-a11y-rec-note').appendTo(strong);
 	$(options).each(function(i,v) {
 		$('<option />').attr('value', v.Value).attr('data-marker-rec', v.Rec).text(v.QuickName).appendTo(sel);
 	});
 
 	$(sel).change(function() {
 		var val = $(this).val();
-		$(this).find('option').each(function(i,v) {
-			if(val === $(v).attr('value')) {
-				var recDiv = $('<div />').addClass('marker marker_recommendation_div').html($(v).attr('data-marker-rec'));
-				$(this).parent(0).parent().parent().find('.marker_ele_type').text($(v).text());
-				$(this).parent().parent().find('.marker_recommendation_div').remove();
-				$(this).parent().parent().find('.marker_recommendation').append(recDiv);
-				return false;
-			}
-		});
+		if(val === "") {
+			$(strong).hide();
+		} else {
+			$(this).find('option').each(function(i,v) {
+				if(val === $(v).attr('value')) {
+					var recDiv = $('<div />').addClass('marker marker_recommendation_div').html($(v).attr('data-marker-rec'));
+					$(strong).show();
+					$(this).parent(0).parent().parent().find('.marker_ele_type').text($(v).text());
+					$(this).parent().parent().find('.marker_recommendation_div').remove();
+					$(this).parent().parent().find('.marker_recommendation').append(recDiv);
+					return false;
+				}
+			});			
+		}
+
+		var h = $(divItem).height();
+		var he = h + 95;
+		$('.marker-context-menu-iframe-container:visible').css('height', he + 'px');
+		$('.marker_context_menu:visible').css('height', he + 'px');		
 	});
 	var type = el.nodeName;
 	var text = $(el).text();
-	console.log(type);
+	if(selVal) {
+		$(sel).val(selVal);
+		$(sel).change();
+	}
 }
 
+/****************************************
+*	Function to save markings to PDF
+*****************************************/
 function saveToPdf() {
+	$('#marker-results-ifr').remove();
 	var modal = $('<div />').attr({
 		'id': 'marker-print-modal',
 		'class': 'marker'
@@ -414,7 +318,35 @@ function saveToPdf() {
 	var div = $('<div />').attr({
 		'id': 'marker-print-dialog',
 		'class': 'marker'
-	}).html('Thanks for using Marker!  In this initial release, saving to PDF will be done through Chrome\'s built in print functionality. <br /><br />When the dialog comes up (after you click Save to PDF), be sure to select the destination as "Save as PDF"<br /><br />').appendTo('body');
+	}).html('Thanks for using Marker!  In this initial release, there\'s no true "Save" feature.<br />Please close this dialog and press  <kbd>Ctrl</kbd> + <kbd>S</kbd> to save this as a .html file<br /><br />At the bottom of this page, you\'ll find all of the recommendations that you\'ve made.').appendTo('body');
+
+	var h = create_iframe('marker-results-ifr', 'body'),
+		bod = get_iframe_bod('marker-results-ifr'),
+		head = get_iframe_head('marker-results-ifr');			
+
+	append_scripts_to_head('', head);	
+
+	var res = $('<div />').addClass('marker-print-res-cont').appendTo(bod);
+
+	var new_div = $('<ol />').addClass('marker-res').appendTo(res);
+
+	$('.marker_context_menu').each(function(i,v) {
+		var id = $(v).find('iframe').attr('id');
+		var ifr = $('#' + id)[0].contentWindow.document,
+			ifrBody = $(ifr).find('body');
+
+		var seltext = $(ifrBody).find('select option:selected').text();
+		var li = $('<li />').addClass('marker-a11y-res-list-type').appendTo(new_div);
+		$('<div class="marker-res-type-issue" />').text(seltext).appendTo(li);
+		var strongtext = $(ifrBody).find('.marker_recommendation_div').html();
+		$('<strong class="recommendations" />').text('Recommendation').appendTo(li);
+		$('<div />').html(strongtext).appendTo(li);
+		//$(ifrBody).find('.marker_recommendation').clone().appendTo(li);
+		var noteTa = $(ifrBody).find('textarea').val();
+		if(noteTa !== "") {
+			$('<div />').html('<strong class="recommendations">User notes</strong><span class="marker_user_note">' + noteTa + '</span></div>').appendTo(li);
+		}
+	});
 
 	var btn = $('<button />').click(function() {
 		$(modal).remove();
@@ -428,208 +360,143 @@ function saveToPdf() {
 
 		});		
 		setTimeout(function() {
-			window.print();
+			e = jQuery.Event("keydown");        
+			e.which = 83;
+			e.ctrlKey = true;
+			$(this).trigger(e);
 			$(textDiv).remove();
 		}, 100);
-	}).addClass('marker-btn').text('Save to PDF').appendTo(div);
-
-	var cancelBtn = $('<button />').click(function() {
-		$(modal).remove();
-		$(div).remove();
-	}).addClass('marker-btn').text('Cancel').appendTo(div);
+	}).addClass('marker_fun_btn').css({
+		'border': '2px solid #000',
+		'color': '#000',
+		'width': '98%',
+		'font-size': '20px !important',
+		'font-weight': 'bold'
+	}).text('Ok!').appendTo(div);
 }
 
-function saveToPdf1() {
-	/*$('<iframe />').attr('id', 'results_iframe').appendTo('html');
-	var x = $('#results_iframe')[0].contentWindow.document,
-		xHead = $(x).find('head'),
-		xBody = $(x).find('body');
-	var pdfDiv = $('<div />').attr('id', 'marker_save_to_pdf');
-	$(xHead).append($('head').html());
-	$(pdfDiv).html($('body').html()).appendTo(xBody);
-	$(pdfDiv).append($(mifBody).find('.marker_side_text_container'));*/
-	var div = $('<div />').attr('id', 'marker_results_frame').appendTo('#marker_body_wrap');
-	$(div).css('width', $(window).width() - 336 + 'px');
+function draw_tips_panel(msg) {
+	$('.marker-tips-456').remove();
+	var pan = $('<div />');
+	$(pan).addClass('marker-tips-456').html(msg);
+	var chk = $('<input />').attr({
+		'type': 'checkbox',
+		'id': 'marker-welcome-tips-chk',
+		'style': 'width: auto;'
+	}).change(function() {
+		if($(this).prop('checked') === true) {
+			localStorage.setItem('show_tips', 'false');
+			sendUpdate();
+			$('#marker_window_resize_msg').slideUp('slow');
+			setTimeout(function() {
+				$('#marker_window_resize_msg').remove();
+			}, 5000);
 
-	var close = $('<a />').attr({
-		'id': 'marker_results_close',
-		'class': 'marker',
-		'href': 'javascript:void(0)'
-	}).html('<img src="' + chrome.extension.getURL('images/close.png') + '" alt="Close Results" />').css({
-		'float': 'right'
-	}).click(function() {
-		$(div).remove();
-	}).appendTo(div);
-	//$(div).html($('body').clone());
-	$('#marker_body_wrap').find('img').each(function(i,v) {
-		var preURL = absolute($(v).attr('src'));
-		var postURL = getBase64Image(preURL, div);
-		$(v).attr('src', postURL);
-	})
-	wrapUpResults(div);
+		}
+	}).appendTo(pan);
+	var lbl = $('<label />').attr({
+		'class': 'marker_options_edit',
+		'for': 'marker-welcome-tips-chk',
+		'style': 'display: inline;'
+	}).text('Don\'t show tips ever again!').appendTo(pan);
+
+	if(localStorage.getItem('show_tips') === 'true') {
+		resize_window(true, pan, true);
+	}
+	
+}
+
+function resize_window(tip, text, val) {
+	var time;
+	if($('#marker_window_resize_msg').length === 0) {
+		var d = $('<div />').attr({
+			'id': 'marker_window_resize_msg'
+		}).appendTo('#marker_body_wrap');
+
+		if(!val) {
+			$(d).html('<strong>Alert!</strong> <span style="padding: 5px;">Resizing the window does not automatically readjust your markers on the page.  You may need to reposition them.<br /><br />  All markers and moveable and boxes are moveable and resizable.</span>');
+		} else {
+			$(d).html(text);
+		}
+
+		$(d).slideDown('slow');
+
+	} else {
+		$('#marker_window_resize_msg').slideDown('fast');
+		if(val) {
+			$('#marker_window_resize_msg').html(text);			
+		} else {
+			$('#marker_window_resize_msg').html('<strong>Alert!</strong> <span style="padding: 5px;">Resizing the window does not automatically readjust your markers on the page.  You may need to reposition them.<br /><br />  All markers and moveable and boxes are moveable and resizable.</span>');
+		}
+	}
+	if(!val) {
+		time = 6000;	
+	} else {
+		time = 15000;
+	}
+
 	setTimeout(function() {
-
-	}, 100);
-	//$('#marker_body_wrap').append('<div id="body_shim"></div>');
+		$('#marker_window_resize_msg').slideUp('slow');
+	}, time);	
+	
 }
 
-function wrapUpResults(div) {
-	var notes = $(mifBody).find('.marker_side_text_selection');
-	$(notes).each(function(i,v) {
-		var title = $(v).find('h3').text(),
-			rec = $(v).find('.marker_recommendation').html(),
-			notes = $(v).find('marker_user_note_side').html();
-
-		$('<h2 />').addClass('marker').text(title).appendTo(div);
-		$('<p />').addClass('marker instruction').html(rec).appendTo(div);
-		$('<p />').addClass('marker instruction').html(notes).appendTo(div);
-	});
+function sendUpdate() {
+	chrome.runtime.sendMessage({
+		greeting: 'store',
+		show_tips: localStorage.getItem('show_tips'),
+		left: localStorage.getItem('left'),
+		top: localStorage.getItem('top')
+	});	
 }
+
 
 function stop_marker() {
 	console.log('stop marker!');
-	$('*').removeClass('marker_body_wrap')
-	$('#marker_iframe, .marker_context_menu, .marker_page_marker').remove();
+	$('*').removeClass('marker_body_wrap marker-flagged-issue marker-highlight-text')
+	$('#marker-control-panel, .marker_context_menu, .marker_page_marker, .rectangle').remove();
+	mCount = 0;
 	chrome.runtime.sendMessage({
 		greeting: 'stop'
 	});	
 }
 
-
-function initDraw(canvas) {
-    function setMousePosition(e) {
-        var ev = e || window.event; //Moz || IE
-        if (ev.pageX) { //Moz
-            mouse.x = ev.pageX - 270;
-            mouse.y = ev.pageY;
-        } else if (ev.clientX) { //IE
-            mouse.x = ev.clientX + document.body.scrollLeft;
-            mouse.y = ev.clientY + document.body.scrollTop;
-        }
-    };
-
-    var mouse = {
-        x: 0,
-        y: 0,
-        startX: 0,
-        startY: 0
-    };
-    var element = null;
-
-    if(localStorage.getItem('draw') === 'true') {
-    	canvas.onmousemove = function (e) {
-	        setMousePosition(e);
-	        if (element !== null) {
-	            element.style.width = Math.abs(mouse.x - mouse.startX) + 'px';
-	            element.style.height = Math.abs(mouse.y - mouse.startY) + 'px';
-	            element.style.left = (mouse.x - mouse.startX < 0) ? mouse.x + 'px' : mouse.startX + 'px';
-	            element.style.top = (mouse.y - mouse.startY < 0) ? mouse.y + 'px' : mouse.startY + 'px';
-	            //canvas.style.cursor = "crosshair";
-	        }
-	    }
-
-	    canvas.onclick = function (e) {
-	        if (element !== null) {
-	            element = null;
-	            //canvas.style.cursor = "default";
-	            console.log("finsihed.");
-	        } else {
-	            console.log("begun.");
-	            e.preventDefault();
-	            mouse.startX = mouse.x;
-	            mouse.startY = mouse.y;
-	            element = document.createElement('div');
-	            element.className = 'rectangle'
-	            element.style.left = mouse.x + 'px';
-	            element.style.top = mouse.y + 'px';
-	            canvas.appendChild(element)
-	            //canvas.style.cursor = "crosshair";
-	            $(element).draggable();
-	        	$(element).resizable({
-				  handles: "n, e, s, w",
-				  resize: function( event, ui ) {
-				  	stop_drawing_boxes(document.getElementById('marker_body_wrap'));
-				  },
-				  stop: function (event, ui ) {
-				  	initDraw(document.getElementById('marker_body_wrap'));
-				  }
-				}); 
-				return false;          
-	        }
-	    }    	
-    }
-
-}
-
-function stop_drawing_boxes(canvas) {
-    canvas.onmousemove = function (e) {
-        
-    }
-
-    canvas.onclick = function (e) {
-    	console.log('no longer drawing boxes :(')
-    }
-}
-
-function absolute(img) {
-	var link = document.createElement("img");
-	link.href = img;
-	return link.protocol+"//"+link.host+link.pathname+link.search+link.hash;
-}
-
-// Code taken from MatthewCrumley (http://stackoverflow.com/a/934925/298479)
-function getBase64Image(img,div) {
-    // Create an empty canvas element
-    var c = document.createElement("canvas");
-    $(c).appendTo(div);
-
-    if($(img).indexOf('http') == -1) {
-
-    }
-    //canvas.width = img.width;
-    //canvas.height = img.height;
-
-    // Copy the image contents to the canvas
-
-     //var c=document.getElementById("myCanvas");
-    var ctx=c.getContext("2d");
-    //var img=document.getElementById("scream");
-    //ctx.drawImage(img,10,10);   
-
-
-    // Get the data-URL formatted image
-    // Firefox supports PNG and JPEG. You could check img.src to guess the
-    // original format, but be aware the using "image/jpg" will re-encode the image.
-    var dataURL = c.toDataURL("image/jpg");
-
-    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-}
-
-function getDataUri(url, callback) {
-    var image = new Image();
-
-    image.onload = function () {
-        var canvas = document.createElement('canvas');
-        canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
-        canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
-
-        canvas.getContext('2d').drawImage(this, 0, 0);
-
-        // Get raw image data
-        callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
-
-        // ... or get as Data URI
-        callback(canvas.toDataURL('image/png'));
-    };
-
-    image.src = url;
-}
-
-
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-	if($('#marker_iframe').length == 0) {
-		run_marker(request.welcome);
-	} else {
-		stop_marker();
+	if(request.greeting === 'start_stop') {
+		if($('#marker-control-panel').length == 0) {
+			localStorage.setItem('left', request.left);
+			localStorage.setItem('top', request.top);
+			localStorage.setItem('set', request.set);
+			localStorage.setItem('box_color', request.box_color);
+			localStorage.setItem('marker-font-size', request.marker_font_size);
+			localStorage.setItem('flag-color', request.flag_color);
+			localStorage.setItem('box_width', request.box_width);
+			localStorage.setItem('first_time', request.first);
+			localStorage.setItem('icon_pack_1', request.icon_pack_1);
+			localStorage.setItem('highlight_color', request.highlight_color);
+			localStorage.setItem('box_bg_color', request.box_bg_color);
+			localStorage.setItem('pin_size', request.pin_size);
+			localStorage.setItem('show_tips', request.show_tips);
+			if(request.flag_color === 'undefined') {
+				localStorage.setItem('flag-color', 'red');
+			}
+
+			if(request.preset === '[]') {
+				get_select_options();
+			} else {
+				localStorage.setItem('preset', request.preset);
+			}
+			
+
+			run_marker(request.welcome);
+
+			if(request.first === 'true') {
+				console.log('first time running Marker after installation')
+			}
+		} else {
+			stop_marker();
+		}		
+	} else if (request.greeting === 'highlight') {
+		highlightSelection();
 	}
 });

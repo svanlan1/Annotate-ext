@@ -101,7 +101,7 @@
 								<!--label class="marker_options_edit" for="marker_text_size">Marker text size</label>
 								<input type="text" id="marker_text_size" /><br /-->
 
-								<fieldset class="marker">
+								<fieldset class="ubuntu">
 									<legend><h4>Default pin size</h4></legend>
 									<input type="radio" name="pin_size" id="pin_24_pix" data-val="24px" />
 									<label class="marker_options_edit" style="display: inline;" for="pin_24_pix">24 pixels
@@ -176,6 +176,60 @@
 						</li>
 					</ol>
 				</p>
+				<!--p class="instruction">
+					<a href="javascript:void(0);" id="change_rec_style" aria-expanded="false">Edit recommendation stylings</a>
+				</p-->
+				<div id="change_rec_style_div" class="instruction marker-print-res-cont" style="border-bottom: 2px solid #aaa;">
+					<strong>Sample styling</strong><br /><br />
+						<ol class="marker-res">
+							<li class="marker-a11y-res-list-type">
+								<div class="marker-res-type-issue">Anchor</div>
+
+								<div style="padding-left: 70px;">
+									<label class="marker_options_edit" for="heading_style">Heading</label>
+									<input type="text" id="heading_style" /><br /><br />
+									<strong>Current style</strong>
+									<span id="heading_style_current">
+										<ul class="css-list">
+
+										</ul>
+									</span>
+								</div>	
+
+
+								<strong class="recommendations" style="width: 98%;">Recommendation</strong>
+									<div style="padding-left: 70px;">
+										<label class="marker_options_edit" for="rec_style">Heading</label>
+										<input type="text" id="rec_style" /><br /><br />
+										<strong>Current style</strong>
+										<span id="rec_style_current">
+											<ul class="css-list">
+
+											</ul>
+										</span>
+									</div>									
+								<div>
+									<strong class="example" style="width: 98%;">Example</strong>
+										<div style="padding-left: 70px;">
+											<label class="marker_options_edit" for="example_style">Example</label>
+											<input type="text" id="example_style" /><br /><br />
+											<strong>Current style</strong>
+											<span id="example_style_current">
+												<ul class="css-list">
+
+												</ul>
+											</span>
+										</div>	
+
+								</div>
+								<div>
+									<strong class="recommendations" style="width: 98%;">User notes</strong>
+									<span class="marker_user_note">asdfasdfasdfasdfasdf</span>
+								</div>
+							</li>
+						</ol>
+				
+				</div>
 				<p class="instruction">
 					<a href="javascript:void(0);" id="add-new-req">Add new preset recommendation</a>
 				</p>

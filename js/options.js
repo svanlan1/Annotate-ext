@@ -15,6 +15,15 @@ function loadIndex() {
 
 	$('input[data-val=' + localStorage.getItem('pin_size') + ']').prop('checked', true);
 
+	var style = css($(".marker-res-type-issue"));
+	if(!localStorage.getItem('head-style')) {
+
+	}
+	//$("#heading_style_current").css(style);
+	for(var i in style) {
+		var li = $('<li />').html('<span class="css-prop">' + i + '</span>: <span class="css-val">' + style[i] + '</span>').appendTo('#heading_style_current ul');
+	}
+
 
 	if(localStorage.getItem('use_bg') === 'true') {
 		$('#box_bg_color_chk').prop('checked', true);
@@ -66,6 +75,20 @@ function loadIndex() {
 		}
 		
 	});
+
+	$('#change_rec_style').click(function() {
+		if($(this).attr('aria-expanded') === 'false') {
+			$('.default_options_a[aria-expanded=true]').attr('aria-expanded', 'false');
+			$('#change_rec_style_div').slideDown('fast');
+			$(this).attr('aria-expanded', 'true');
+		} else {
+			$('#change_rec_style_div').slideUp('slow');
+			$(this).attr('aria-expanded', 'false');
+		}
+		
+	});	
+
+	
 
 	$('input[name=pin_size]').click(function() {
 		localStorage.setItem('pin_size', $(this).attr('data-val'));
@@ -253,12 +276,12 @@ function loadOptions() {
 			$('<span />').addClass('marker_options_label').attr('data-for', 'marker_options_textarea' + i).text(v.QuickName).appendTo(a);
 
 			$('<label />').addClass('input-label').attr('for', 'input_' + v.Value).text('Field Value').appendTo(p);
-			$('<input [type=text] />').attr('id', 'input_' + v.Value).addClass('marker_options_input').val(v.QuickName).attr('data-val', v.Value).appendTo(p);
+			$('<input [type=text] />').attr('id', 'input_' + v.Value).addClass('marker_options_input marker').val(v.QuickName).attr('data-val', v.Value).appendTo(p);
 			$('<label />').addClass('input-label').attr('for', 'marker_options_textarea' + i).text('Field Recommendation').appendTo(p);
 			$('<textarea />').attr({
 				'id': 'marker_options_textarea' + i,
 				'aria-label': v.Value.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
-				'class': 'marker_options_input'
+				'class': 'marker_options_input marker'
 			}).val(v.Rec.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/<br \/>/g, '\n')).appendTo(p);
 			$('<button />').addClass('marker_preset_save_btn').text('Save').appendTo(p);
 			$('<button />').addClass('marker-remove-rec-link marker_preset_save_btn').attr('href', 'javascript:void(0);').css('display', 'none').text('*Remove this recommendation*').click(function() {
@@ -362,6 +385,38 @@ function resetPresets() {
 	localStorage.setItem('set', 'a11y');
 	localStorage.setItem('preset', localStorage.getItem('a11y_preset'));
 	
+}
+
+function css(a) {
+    var sheets = document.styleSheets, o = {};
+    for (var i in sheets) {
+        var rules = sheets[i].rules || sheets[i].cssRules;
+        for (var r in rules) {
+            if (a.is(rules[r].selectorText)) {
+                o = $.extend(o, css2json(rules[r].style), css2json(a.attr('style')));
+            }
+        }
+    }
+    return o;
+}
+
+function css2json(css) {
+    var s = {};
+    if (!css) return s;
+    if (css instanceof CSSStyleDeclaration) {
+        for (var i in css) {
+            if ((css[i]).toLowerCase) {
+                s[(css[i]).toLowerCase()] = (css[css[i]]);
+            }
+        }
+    } else if (typeof css == "string") {
+        css = css.split("; ");
+        for (var i in css) {
+            var l = css[i].split(": ");
+            s[l[0].toLowerCase()] = (l[1]);
+        }
+    }
+    return s;
 }
 
 $(document).ready(function() {

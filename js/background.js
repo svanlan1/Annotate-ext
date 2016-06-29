@@ -57,6 +57,13 @@ function setVars(req) {
 	localStorage.setItem('show_tips', req.show_tips);
 }
 
+function highlight() {
+	chrome.tabs.getSelected(null, function(tab) {
+		chrome.tabs.sendRequest(tab.id, {greeting: 'highlight'}, function(response) {});
+	})
+	
+}
+
 
 chrome.browserAction.onClicked.addListener(function(tab) {
 	if(!localStorage.getItem('version')) {
@@ -105,6 +112,13 @@ chrome.runtime.onMessage.addListener(
 			setVars(request);
 		}
 	});
+
+chrome.contextMenus.create({
+	title: 'Highlight with Marker',
+	contexts:["selection"],
+	onclick: highlight
+});
+
 
 chrome.runtime.onInstalled.addListener(
 	function(details) {
