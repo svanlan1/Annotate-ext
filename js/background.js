@@ -48,7 +48,7 @@ if(!localStorage.getItem("show_tips")) {
 	localStorage.setItem("show_tips", "true");
 }
 //if(!localStorage.getItem("default_icons")) {
-	var default_icons = ["Red","Pink","Orange","Plum","Blue","Aqua","Bluegreen","Green","Lime","Yellow","Poop","Black","Grey","White","Placeholder_red","Placeholder_blue","Dot_red","Dot_blue","Dot_green","Dot_black"];
+	var default_icons = ["Bright_Red","Red","Pink","Orange","Plum","Blue","Cobalt","Aqua","Bluegreen","Green","Lime","Yellow","Poop","Black","Grey","White","Placeholder_red","Placeholder_blue","Placeholder_green","Placeholder_gold","Dot_red","Dot_blue","Dot_green","Dot_black"];
 	localStorage.setItem("default_icons", JSON.stringify(default_icons));
 //}
 //if(!localStorage.getItem("fun_icons_1")) {
@@ -63,6 +63,7 @@ function setVars(req) {
 	localStorage.setItem("left", req.left);
 	localStorage.setItem("top", req.top);
 	localStorage.setItem("show_tips", req.show_tips);
+	localStorage.setItem('pin_size', req.pin_size);
 }
 
 function highlight() {

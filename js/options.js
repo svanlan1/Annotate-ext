@@ -28,7 +28,7 @@ function loadIndex() {
 	if(localStorage.getItem('use_bg') === 'true') {
 		$('#box_bg_color_chk').prop('checked', true);
 		$('.bg_color_show_hide').show();
-		$('.border_width_example').css({
+		$('.border_width_example div').css({
 			'background-color': localStorage.getItem('box_bg_color'),
 			'opacity': '.3'
 		});
@@ -185,7 +185,7 @@ function loadIndex() {
 
 	$("#marker_select_box_background").change(function() {
 		localStorage.setItem('box_bg_color', '#' + $(this).val());
-		$('.border_width_example').css({
+		$('.border_width_example div').css({
 			'background-color': localStorage.getItem('box_bg_color'),
 			'opacity': '.3'
 		});		

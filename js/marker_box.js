@@ -41,11 +41,8 @@ function initDraw(canvas) {
 	    canvas.onclick = function (e) {
 	        if (element !== null) {
 	            element = null;
-	            //canvas.style.cursor = "default";
-	            console.log("finsihed.");
 	            $('#marker_draws').click();
 	        } else {
-	            console.log("begun.");
 	            e.preventDefault();
 	            mouse.startX = mouse.x;
 	            mouse.startY = mouse.y;
@@ -56,7 +53,15 @@ function initDraw(canvas) {
 	            $(element).css('border-color', localStorage.getItem('box_color'));
 	            $(element).css('border-width', localStorage.getItem('box_width') + 'px');
 	            if(localStorage.getItem('box_bg_color') !== "") {
-	            	$(element).css('background-color', localStorage.getItem('box_bg_color')).css('opacity', '.3');
+	            	//$(element).css('background-color', localStorage.getItem('box_bg_color')).css('opacity', '.3');
+	            	$('<div />').css({
+	            		'width': '100%',
+	            		'height': '100%',
+	            		'display': 'block',
+	            		'background-color': localStorage.getItem('box_bg_color'),
+	            		'opacity': '.2'
+	            	}).appendTo(element);
+
 	            }
 	            canvas.appendChild(element);
 	            //canvas.style.cursor = "crosshair";
@@ -88,7 +93,6 @@ function stop_drawing_boxes(canvas) {
     };
 
     canvas.onclick = function (e) {
-    	console.log('Marker [no longer drawing boxes]');
 
     };
     $('#marker-box-colors-drawer').slideUp('slow');
@@ -109,7 +113,7 @@ function draw_select_color_options() {
 			}).addClass('change_width marker_anchor').html('<img src="' + chrome.extension.getURL('images/minus.png') + '" alt="Reduce border width by 1px" />').appendTo(widDiv);
 			var changeWid = $('<input />').attr({
 				'type': 'text',
-				'id': 'marker_box_width_select',
+				'class': 'marker_box_width_select',
 				'value': localStorage.getItem('box_width')
 			}).appendTo(widDiv);
 			var add = $('<a />').attr({

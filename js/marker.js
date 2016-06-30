@@ -125,8 +125,7 @@ function create_marker_panel() {
 			stop_drawing_boxes(document.getElementById('marker_body_wrap'));
 			draw_tips_panel('To place a marker on the screen, simply select the pin you\'d like to place and click on the screen.  To edit the pin\'s note, "Right click" on the note.  <strong>Note:</strong> All pins are draggable.  You can reposition them anywhere on the page.<br />');
 		} else {
-			$(this).find('img').attr('src', chrome.extension.getURL('images/pins/pin_24_inactive.png'));
-			localStorage.setItem('marker_place_flag', 'false');			
+			$(this).find('img').attr('src', chrome.extension.getURL('images/pins/pin_24_inactive.png'));		
 			unplace_marker();
 		}
 
@@ -318,15 +317,18 @@ function sendUpdate() {
 		greeting: 'store',
 		show_tips: localStorage.getItem('show_tips'),
 		left: localStorage.getItem('left'),
-		top: localStorage.getItem('top')
+		top: localStorage.getItem('top'),
+		pin_size: localStorage.getItem('pin_size')
 	});	
 }
 
 
 function stop_marker() {
-	console.log('stop marker!');
-	$('*').removeClass('marker_body_wrap marker-flagged-issue marker-highlight-text')
+	unplace_marker();
+	$('*').removeClass('marker_body_wrap marker-flagged-issue');
+	$('.marker-highlight-text').removeAttr('style');
 	$('#marker-control-panel, .marker_context_menu, .marker_page_marker, .rectangle').remove();
+
 	mCount = 0;
 	chrome.runtime.sendMessage({
 		greeting: 'stop'
@@ -351,6 +353,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 			localStorage.setItem('show_tips', request.show_tips);
 			localStorage.setItem('default_icons', request.default_icons);
 			localStorage.setItem('fun_icons_1', request.fun_icons_1);
+			localStorage.setItem('rotate_marker', 'false');
 			if(request.flag_color === 'undefined') {
 				localStorage.setItem('flag-color', 'red');
 			}
