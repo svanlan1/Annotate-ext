@@ -65,7 +65,7 @@ function initDraw(canvas) {
 				  handles: "n, e, s, w, ne, nw, se, sw",
 				  resize: function( event, ui ) {
 				  	stop_drawing_boxes(document.getElementById('marker_body_wrap'));
-					$('#place_marker').find('img').attr('src', chrome.extension.getURL('images/pin_24_inactive.png'));
+					$('#place_marker').find('img').attr('src', chrome.extension.getURL('images/pins/pin_24_inactive.png'));
 					localStorage.setItem('marker_place_flag', 'false');	
 					$('#marker-pin-colors-drawer').remove();		
 					unplace_marker();				  	
@@ -89,50 +89,57 @@ function stop_drawing_boxes(canvas) {
 
     canvas.onclick = function (e) {
     	console.log('Marker [no longer drawing boxes]');
+
     };
+    $('#marker-box-colors-drawer').slideUp('slow');
 }
 
 function draw_select_color_options() {
-	$('#marker-pin-colors-drawer').remove();
-	var div = $('<div />').attr('id', 'marker-pin-colors-drawer').appendTo('#marker-control-panel');
-
-	$('<strong />').addClass('marker').text('Change box width').appendTo(div);
-	var widDiv = $('<div />').css({
-		'margin': '10px'
-	}).appendTo(div);
-	var sub = $('<a />').attr({
-		'id': 'marker_sub_box_change'
-	}).addClass('change_width marker_anchor').html('<img src="' + chrome.extension.getURL('images/minus.png') + '" alt="Reduce border width by 1px" />').appendTo(widDiv);
-	var changeWid = $('<input />').attr({
-		'type': 'text',
-		'id': 'marker_box_width_select',
-		'value': localStorage.getItem('box_width')
-	}).appendTo(widDiv);
-	var add = $('<a />').attr({
-		'id': 'marker_add_box_change'
-	}).addClass('change_width marker_anchor').html('<img src="' + chrome.extension.getURL('images/plus.png') + '" alt="Increase border width by 1px" />').appendTo(widDiv);
-
-	$('<strong />').addClass('marker').text('Change box color').appendTo(div);
-	var input = document.createElement('INPUT');
-	$(input).attr('type', 'text');
-	$(input).attr('id', 'marker_color_select').attr('style', 'z-index: 2147483635').addClass('jscolor').val(localStorage.getItem('box_color').substring(1, localStorage.getItem('box_color').length)).appendTo(div);
-	var picker = new jscolor(input);
-	
-	$('.change_width').click(function() {
-		var val = $('#marker_box_width_select').val();
-		if($(this).attr('id') === 'marker_sub_box_change') {
-			val = val - 1;
+		if($('#marker-box-colors-drawer').length > 0) {
+			$('#marker-box-colors-drawer').slideDown('slow');
 		} else {
-			val = parseInt(val) + 1;
-		}
-		$('#marker_box_width_select').val(val);
-		localStorage.setItem('box_width', val);
-	});
+			var div = $('<div />').attr('id', 'marker-box-colors-drawer').appendTo('#marker-control-panel');
 
-	$('#marker_color_select').change(function() {
-		localStorage.setItem('box_color', '#' + $('#marker_color_select').val());
-	}).appendTo(div);
-	$('.marker_anchor').attr('href', 'javascript:(0);');
+			$('<strong />').addClass('marker').text('Change box width').appendTo(div);
+			var widDiv = $('<div />').css({
+				'margin': '10px'
+			}).appendTo(div);
+			var sub = $('<a />').attr({
+				'id': 'marker_sub_box_change'
+			}).addClass('change_width marker_anchor').html('<img src="' + chrome.extension.getURL('images/minus.png') + '" alt="Reduce border width by 1px" />').appendTo(widDiv);
+			var changeWid = $('<input />').attr({
+				'type': 'text',
+				'id': 'marker_box_width_select',
+				'value': localStorage.getItem('box_width')
+			}).appendTo(widDiv);
+			var add = $('<a />').attr({
+				'id': 'marker_add_box_change'
+			}).addClass('change_width marker_anchor').html('<img src="' + chrome.extension.getURL('images/plus.png') + '" alt="Increase border width by 1px" />').appendTo(widDiv);
+
+			$('<strong />').addClass('marker').text('Change box color').appendTo(div);
+			var input = document.createElement('INPUT');
+			$(input).attr('type', 'text');
+			$(input).attr('id', 'marker_color_select').attr('style', 'z-index: 2147483635').addClass('jscolor').val(localStorage.getItem('box_color').substring(1, localStorage.getItem('box_color').length)).appendTo(div);
+			var picker = new jscolor(input);
+			
+			$('.change_width').click(function() {
+				var val = $('#marker_box_width_select').val();
+				if($(this).attr('id') === 'marker_sub_box_change') {
+					val = val - 1;
+				} else {
+					val = parseInt(val) + 1;
+				}
+				$('#marker_box_width_select').val(val);
+				localStorage.setItem('box_width', val);
+			});
+
+			$('#marker_color_select').change(function() {
+				localStorage.setItem('box_color', '#' + $('#marker_color_select').val());
+			}).appendTo(div);
+			$('.marker_anchor').attr('href', 'javascript:(0);');
+			$(div).slideDown('slow');		
+		}
+
 }
 
 function draw_highlight_color_options() {

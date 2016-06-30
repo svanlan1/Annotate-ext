@@ -91,7 +91,7 @@ function create_marker_panel() {
 			unplace_marker();
 			draw_select_color_options();
 			localStorage.setItem('marker_place_flag', 'false');
-			$('#place_marker').find('img').attr('src', chrome.extension.getURL('images/pin_24_inactive.png'));
+			$('#place_marker').find('img').attr('src', chrome.extension.getURL('images/pins/pin_24_inactive.png'));
 			$(this).find('img').attr('src', chrome.extension.getURL('images/select_24_active.jpg'));
 			localStorage.setItem('draw', 'true');
 			initDraw(document.getElementById('marker_body_wrap'));
@@ -105,7 +105,6 @@ function create_marker_panel() {
 			$(this).find('img').attr('src', chrome.extension.getURL('images/select_24.png'));
 			stop_drawing_boxes(document.getElementById('marker_body_wrap'));
 			$('body').removeAttr('style');
-			$('#marker-pin-colors-drawer').remove();
 		}
 		
 	});	
@@ -115,10 +114,10 @@ function create_marker_panel() {
 		'id': 'place_marker',
 		'class': 'marker_option marker_anchor',
 		'title': 'Place markers on page'
-	}).html('<img src="' + chrome.extension.getURL('images/pin_24_inactive.png') + '" alt="Click to place marker on page" />').click(function() {
+	}).html('<img src="' + chrome.extension.getURL('images/pins/pin_24_inactive.png') + '" alt="Click to place marker on page" />').click(function() {
 		if(localStorage.getItem('marker_place_flag') == 'false') {
 			$('#marker_draws').find('img').attr('src', chrome.extension.getURL('images/select_24.png'));
-			$(this).find('img').attr('src', chrome.extension.getURL('images/pin_24_'+localStorage.getItem('flag-color')+'.png'));
+			$(this).find('img').attr('src', chrome.extension.getURL('images/pins/pin_24_'+localStorage.getItem('flag-color')+'.png'));
 			localStorage.setItem('marker_place_flag', 'true');
 			localStorage.setItem('draw', 'false');
 			place_marker();	
@@ -126,9 +125,8 @@ function create_marker_panel() {
 			stop_drawing_boxes(document.getElementById('marker_body_wrap'));
 			draw_tips_panel('To place a marker on the screen, simply select the pin you\'d like to place and click on the screen.  To edit the pin\'s note, "Right click" on the note.  <strong>Note:</strong> All pins are draggable.  You can reposition them anywhere on the page.<br />');
 		} else {
-			$(this).find('img').attr('src', chrome.extension.getURL('images/pin_24_inactive.png'));
-			localStorage.setItem('marker_place_flag', 'false');	
-			$('#marker-pin-colors-drawer').remove();		
+			$(this).find('img').attr('src', chrome.extension.getURL('images/pins/pin_24_inactive.png'));
+			localStorage.setItem('marker_place_flag', 'false');			
 			unplace_marker();
 		}
 
@@ -174,136 +172,10 @@ function create_marker_panel() {
 
 	//Display the Marker panel, fade in quickly
 	$(div).fadeIn('fast');
+	draw_tips_panel('Thanks for using Marker!  In this area, you\'ll find tips as you navigate your way through the page<br />');
 }
 
-function createContextMenu(el, e, val) {
-	var id = 'marker_context_menu' + $(el).attr('data-marker-count'),
-		top = $(el).css('top'),
-		winWidth = $(window).width(),
-		left;
-	if($('#' + id).length === 0) {
-		if((e.pageX + 427) > winWidth) {
-			left = winWidth - 450 + 'px';
-		} else {
-			left = e.pageX + 35 + 'px';
-		}
-		
-		var menu = $('<div />').addClass('marker_context_menu').css({
-			'left': left,
-			'top': top
-		}).attr('role', 'dialog').attr('id', id).attr('data-marker-dialog-count', $(el).attr('data-marker-count')).draggable({
-      		stop: function() {
-        		//$('.marker_context_menu').css('height', 'auto');
-      		}
-	    }).css('position', 'absolute').appendTo('body');
 
-		var close = $('<a />').attr({
-			'class': 'marker_context_close',
-			'href': 'javascript:void(0)'
-		}).html('<span class="screen-reader-only">Close context menu for number' + $(el).attr('data-marker-count') + '</span><img src="'+chrome.extension.getURL('images/close.png')+'" alt="" />').appendTo(menu);
-
-
-
-		$(close).click(function(e) {
-			hideMenu('marker_context_menu' + $(el).attr('data-marker-count'));
-		});
-		$('<h2 />').addClass('marker marker_drag').attr('tabindex', '-1').text('Add notes').appendTo(menu);
-		var iframediv = $('<div />').addClass('marker-context-menu-iframe-container').appendTo(menu);
-
-		var iframe = $('<iframe />').css('display', 'none').addClass('marker-context-iframe').attr('id', 'marker-context-menu-' + $(el).attr('data-marker-count')).appendTo(iframediv);
-		var iframeStuff = $('#marker-context-menu-' + $(el).attr('data-marker-count'))[0].contentWindow.document;
-		var ifBody = $(iframeStuff).find('body');
-
-		//Add the CSS files to the results panel
-		append_scripts_to_head('', $(iframeStuff).find('head'));
-
-				
-		var infoDiv = $('<div />').addClass('marker marker_info').appendTo(ifBody);
-		if(localStorage.getItem('set') === 'a11y' || localStorage.getItem('set') === 'html') {
-			$('<label />').attr('for', 'marker_select_box_' + mCount).addClass('marker_required marker_label').text('Type of element?').appendTo(infoDiv);
-			add_marker_select_options(infoDiv, el, val);
-			$('<label />').attr('for', 'marker_textarea_' + mCount).addClass('marker_required marker_label').text('Notes').appendTo(infoDiv);
-			$('<textarea />').addClass('marker_textarea_notes').attr('id', 'marker_textarea)' + mCount).appendTo(infoDiv);
-			$('.marker-context-menu-iframe-container:visible').css('height', '390px');			
-		} else {
-			$('<label />').attr('for', 'marker_textarea_' + mCount).addClass('marker_required marker_label').text('Notes').appendTo(infoDiv);
-			$('<textarea />').addClass('marker_textarea_notes').attr('id', 'marker_textarea)' + mCount).appendTo(infoDiv);
-			var h = $(infoDiv).height();
-			var he = h + 85;
-			$('.marker-context-menu-iframe-container:visible').css('height', '305px');
-			$('.marker_context_menu:visible').css('height', '335px');				
-		}
-				
-
-		$('<button />').addClass('marker marker_fun_btn marker_save_note_btn').attr('value', 'Save Note').text('Save').click(function(e) {
-			hideMenu('marker_context_menu' + $(el).attr('data-marker-count'));
-		}).appendTo(ifBody);
-		$('<button />').addClass('marker marker_fun_btn').attr('value', 'Delete').text('Delete this flag').click(function(e) {
-			$(el).remove();
-			$(mifBody).find('.marker_side_text_selection').eq($(mifBody).find('.marker_side_text_selection').length-1).remove();
-			$(menu).remove();
-			mCount--;
-		}).appendTo(ifBody);
-		$('#' + id).find('iframe').ready(function() {
-			$('#' + id).find('iframe').fadeIn('fast');
-		});
-	} else {
-		showMenu(id, val);
-
-	}
-}
-
-function add_marker_select_options(divItem, el, selVal) {
-	var options = getOptions();
-
-	var sel = $('<select />').attr('id', 'marker_select_box_' + mCount).attr('aria-required', 'true').appendTo(divItem);
-	var d = $('<div />').addClass('marker marker_recommendation').attr('id', 'marker_select_text_div_' + mCount).appendTo(divItem);
-	var a = $('<a />').addClass('marker-a11y-rec-a marker_anchor').attr('aria-expanded', 'true').click(function(e) {
-		if($(this).attr('aria-expanded') === 'false') {
-			$(this).parent().find('.marker_recommendation_div').show();
-			$(this).attr('aria-expanded', 'true');
-		} else {
-			$(this).parent().find('.marker_recommendation_div').hide();
-			$(this).find('.marker-a11y-rec-note').text('[ collapsed ]');
-			$(this).attr('aria-expanded', 'false');
-		}
-		
-	}).appendTo(d);
-	var strong = $('<strong />').addClass('recommendations').text('Recommendation').css('display', 'none').appendTo(a);
-	var span = $('<span />').addClass('marker-a11y-rec-note').appendTo(strong);
-	$(options).each(function(i,v) {
-		$('<option />').attr('value', v.Value).attr('data-marker-rec', v.Rec).text(v.QuickName).appendTo(sel);
-	});
-
-	$(sel).change(function() {
-		var val = $(this).val();
-		if(val === "") {
-			$(strong).hide();
-		} else {
-			$(this).find('option').each(function(i,v) {
-				if(val === $(v).attr('value')) {
-					var recDiv = $('<div />').addClass('marker marker_recommendation_div').html($(v).attr('data-marker-rec'));
-					$(strong).show();
-					$(this).parent(0).parent().parent().find('.marker_ele_type').text($(v).text());
-					$(this).parent().parent().find('.marker_recommendation_div').remove();
-					$(this).parent().parent().find('.marker_recommendation').append(recDiv);
-					return false;
-				}
-			});			
-		}
-
-		var h = $(divItem).height();
-		var he = h + 95;
-		$('.marker-context-menu-iframe-container:visible').css('height', he + 'px');
-		$('.marker_context_menu:visible').css('height', he + 'px');		
-	});
-	var type = el.nodeName;
-	var text = $(el).text();
-	if(selVal) {
-		$(sel).val(selVal);
-		$(sel).change();
-	}
-}
 
 /****************************************
 *	Function to save markings to PDF
@@ -477,6 +349,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 			localStorage.setItem('box_bg_color', request.box_bg_color);
 			localStorage.setItem('pin_size', request.pin_size);
 			localStorage.setItem('show_tips', request.show_tips);
+			localStorage.setItem('default_icons', request.default_icons);
+			localStorage.setItem('fun_icons_1', request.fun_icons_1);
 			if(request.flag_color === 'undefined') {
 				localStorage.setItem('flag-color', 'red');
 			}
