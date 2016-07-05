@@ -2,148 +2,296 @@
 	{
 		"Value": "",
 		"QuickName": "",
-		"Rec": ""
+		"Recommendation": "",
+		"Example": ""
 	},{
 		"Value": "a",
 		"QuickName": "Anchor",
-		"Rec": "Hyperlink"
+		"Recommendation": "Hyperlink",
+		"Example": ""
 	},	{
 		"Value": "abbr",
 		"QuickName": "Abbr",
-		"Rec": "Abbreviation"
+		"Recommendation": "Abbreviation",
+		"Example": ""
 	},	{
 		"Value": "address",
 		"QuickName": "Address",
-		"Rec": "Contact information"
+		"Recommendation": "Contact information",
+		"Example": ""
 	},	{
 		"Value": "area",
 		"QuickName": "Area",
-		"Rec": "image-map hyperlink"
+		"Recommendation": "image-map hyperlink",
+		"Example": ""
 	},	{
 		"Value": "article",
 		"QuickName": "Article",
-		"Rec": "Standard article"
+		"Recommendation": "Standard article",
+		"Example": ""
 	},	{
 		"Value": "aside",
 		"QuickName": "Aside",
-		"Rec": "Tangenital content"
+		"Recommendation": "Tangenital content",
+		"Example": ""
 	},	{
 		"Value": "audio",
 		"QuickName": "Audio",
-		"Rec": "Audio stream"
+		"Recommendation": "Audio stream"
 	},	{
 		"Value": "b",
 		"QuickName": "B",
-		"Rec": "Offset text conventionally styled in bold"
+		"Recommendation": "Offset text conventionally styled in bold",
+		"Example": ""
 	},	{
 		"Value": "base",
 		"QuickName": "Base",
-		"Rec": "base URL"
+		"Recommendation": "base URL",
+		"Example": ""
 	},{
 		"Value": "bdi",
 		"QuickName": "BDI",
-		"Rec": "BiDi isolate"
+		"Recommendation": "BiDi isolate",
+		"Example": ""
 	},	{
 		"Value": "blockquote",
 		"QuickName": "Blockquote",
-		"Rec": "Block quotation"
+		"Recommendation": "Block quotation",
+		"Example": ""
 	},	{
 		"Value": "body",
 		"QuickName": "Body",
-		"Rec": "Document Body"
+		"Recommendation": "Document Body",
+		"Example": ""
 	},	{
 		"Value": "br",
 		"QuickName": "Br",
-		"Rec": "Line Break"
+		"Recommendation": "Line Break",
+		"Example": ""
 	},	{
 		"Value": "button",
 		"QuickName": "Button",
-		"Rec": "Button element"
+		"Recommendation": "Button element",
+		"Example": ""
 	},	{
 		"Value": "canvas",
 		"QuickName": "Canvas",
-		"Rec": "Canvas for dynamic graphics"
+		"Recommendation": "Canvas for dynamic graphics",
+		"Example": ""
 	},	{
 		"Value": "caption",
 		"QuickName": "Caption",
-		"Rec": "Table title"
+		"Recommendation": "Table title",
+		"Example": ""
 	},	{
 		"Value": "code",
 		"QuickName": "Code",
-		"Rec": "Code fragment"
+		"Recommendation": "Code fragment",
+		"Example": ""
 	},{
 		"Value": "dd",
 		"QuickName": "dd",
-		"Rec": "Definition list description or value"
+		"Recommendation": "Definition list description or value",
+		"Example": ""
 	},	{
 		"Value": "dl",
 		"QuickName": "dl",
-		"Rec": "Definition List"
+		"Recommendation": "Definition List",
+		"Example": ""
 	},	{
 		"Value": "dt",
 		"QuickName": "dt",
-		"Rec": "Definition list term or name"
+		"Recommendation": "Definition list term or name",
+		"Example": ""
 	},	{
 		"Value": "embed",
 		"QuickName": "Embed",
-		"Rec": "Integration point for plugins"
+		"Recommendation": "Integration point for plugins",
+		"Example": ""
 	},	{
 		"Value": "footer",
 		"QuickName": "Footer",
-		"Rec": "Footer element"
+		"Recommendation": "Footer element",
+		"Example": ""
 	},	{
 		"Value": "form",
 		"QuickName": "Form",
-		"Rec": "User-submittable form"
+		"Recommendation": "User-submittable form",
+		"Example": ""
 	},	{
 		"Value": "h1",
 		"QuickName": "h1",
-		"Rec": "Heading level 1"
+		"Recommendation": "Heading level 1",
+		"Example": ""
 	},	{
 		"Value": "h2",
 		"QuickName": "h2",
-		"Rec": "Heading level 2"
+		"Recommendation": "Heading level 2",
+		"Example": ""
 	},{
 		"Value": "h3",
 		"QuickName": "h3",
-		"Rec": "Heading level 3"
+		"Recommendation": "Heading level 3",
+		"Example": ""
 	},	{
 		"Value": "h4",
 		"QuickName": "h4",
-		"Rec": "Heading level 4"
+		"Recommendation": "Heading level 4",
+		"Example": ""
 	},	{
 		"Value": "h5",
 		"QuickName": "h5",
-		"Rec": "Heading level 5"
+		"Recommendation": "Heading level 5",
+		"Example": ""
 	},	{
 		"Value": "h6",
 		"QuickName": "h6",
-		"Rec": "Heading level 6"
+		"Recommendation": "Heading level 6",
+		"Example": ""
 	},	{
 		"Value": "header",
 		"QuickName": "Header",
-		"Rec": "Header element"
+		"Recommendation": "Header element",
+		"Example": ""
 	},	{
 		"Value": "i",
 		"QuickName": "I",
-		"Rec": "Offset text conventionally styled in Italic"
+		"Recommendation": "Offset text conventionally styled in Italic",
+		"Example": ""
 	},	{
 		"Value": "iframe",
 		"QuickName": "Iframe",
-		"Rec": "Nested browsing context (inline frame)"
+		"Recommendation": "Nested browsing context (inline frame)",
+		"Example": ""
 	},	{
 		"Value": "img",
 		"QuickName": "Img",
-		"Rec": "Image"
+		"Recommendation": "Image",
+		"Example": ""
 	},{
 		"Value": "input",
 		"QuickName": "Input",
-		"Rec": "Input control"
-	},	{
+		"Recommendation": "Input control",
+		"Example": ""
+	},{
 		"Value": "input type=text",
 		"QuickName": "Input type=text",
-		"Rec": "Text input field"
-	}		
-	
-
+		"Recommendation": "Text input field",
+		"Example": ""
+	},{
+		"Value": "input type=password",
+		"QuickName": "Input type=password",
+		"Recommendation": "Password input field",
+		"Example": ""
+	},{
+		"Value": "input type=checkbox",
+		"QuickName": "Input type=checkbox",
+		"Recommendation": "Checkbox",
+		"Example": ""
+	},{
+		"Value": "input type=radio",
+		"QuickName": "Input type=radio",
+		"Recommendation": "Radio button",
+		"Example": ""
+	},{
+		"Value": "input type=submit",
+		"QuickName": "Input type=submit",
+		"Recommendation": "Submit button",
+		"Example": ""
+	},{
+		"Value": "input type=reset",
+		"QuickName": "Input type=reset",
+		"Recommendation": "Reset button",
+		"Example": ""
+	},{
+		"Value": "input type=file",
+		"QuickName": "Input type=file",
+		"Recommendation": "File upload control",
+		"Example": ""
+	},{
+		"Value": "input type=email",
+		"QuickName": "Input type=email",
+		"Recommendation": "E-mail address input control",
+		"Example": ""
+	},{
+		"Value": "kbd",
+		"QuickName": "kbd",
+		"Recommendation": "User input",
+		"Example": ""
+	},{
+		"Value": "label",
+		"QuickName": "Label",
+		"Recommendation": "Label for a form control",
+		"Example": ""
+	},{
+		"Value": "legend",
+		"QuickName": "Legend",
+		"Recommendation": "Title or explanatory caption",
+		"Example": ""
+	},{
+		"Value": "li",
+		"QuickName": "li",
+		"Recommendation": "List item",
+		"Example": ""
+	},{
+		"Value": "nav",
+		"QuickName": "Nav",
+		"Recommendation": "Group of navigational links",
+		"Example": ""
+	},{
+		"Value": "ol",
+		"QuickName": "ol",
+		"Recommendation": "Ordered list",
+		"Example": ""
+	},{
+		"Value": "p",
+		"QuickName": "p",
+		"Recommendation": "Paragraph",
+		"Example": ""
+	},{
+		"Value": "span",
+		"QuickName": "Span",
+		"Recommendation": "Generic span",
+		"Example": ""
+	},{
+		"Value": "strong",
+		"QuickName": "Strong",
+		"Recommendation": "Strong importance",
+		"Example": ""
+	},{
+		"Value": "table",
+		"QuickName": "Table",
+		"Recommendation": "Table",
+		"Example": ""
+	},{
+		"Value": "td",
+		"QuickName": "td",
+		"Recommendation": "Table cell",
+		"Example": ""
+	},{
+		"Value": "textarea",
+		"QuickName": "Textarea",
+		"Recommendation": "Text input area",
+		"Example": ""
+	},{
+		"Value": "th",
+		"QuickName": "th",
+		"Recommendation": "Table header cell",
+		"Example": ""
+	},{
+		"Value": "title",
+		"QuickName": "Title",
+		"Recommendation": "Document title",
+		"Example": ""
+	},{
+		"Value": "ul",
+		"QuickName": "ul",
+		"Recommendation": "Unordered list",
+		"Example": ""
+	},{
+		"Value": "video",
+		"QuickName": "Video",
+		"Recommendation": "Video",
+		"Example": ""
+	}
 ]

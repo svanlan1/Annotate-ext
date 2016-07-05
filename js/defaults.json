@@ -1,0 +1,29 @@
+[
+	{
+		"welcome": "show",
+		"left": "50",
+		"top": "50",
+		"set": "blank",
+		"box_color": "#c00",
+		"box_width": "2",
+		"marker-font-size": "16px",
+		"flag-color": "red",
+		"icon_pack_1": "true",
+		"highlight_color": "#e6f16a",
+		"font_color": "e6f16a",
+		"box_bg_color": "",
+		"pin_size": "24px",
+		"font_size": "12px",
+		"show_tips": "true",
+		"font_outline": "",
+		"font_bg": "",
+		"default_icons": ["Bright_Red","Red","Pink","Orange","Plum","Blue","Cobalt","Aqua","Bluegreen","Green","Lime","Yellow","Poop","Black","Grey","White","Placeholder_red","Placeholder_blue","Placeholder_green","Placeholder_gold","Dot_red","Dot_blue","Dot_green","Dot_black"],
+		"fun_icons": ["HTML", "CSS", "Scissors", "Notepad", "Brackets", "Dung", "Goldstar", "Wrong", "Happy", "Laughing", "Sad", "Sick", "Heart", "Mag", "Jason", "Freddy"],
+		"rotate_marker": "false",
+		"addText": "false|true",
+		"text_shadow_color": "#aaaaaa",
+		"text_h_shadow": "2px",
+		"text_v_shadow": "3px",
+		"text_blur_radius": "2px"
+	}
+]

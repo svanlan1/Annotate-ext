@@ -101,7 +101,7 @@ function add_marker_select_options(divItem, el, selVal) {
 	var strong = $('<strong />').addClass('recommendations').text('Recommendation').css('display', 'none').appendTo(a);
 	var span = $('<span />').addClass('marker-a11y-rec-note').appendTo(strong);
 	$(options).each(function(i,v) {
-		$('<option />').attr('value', v.Value).attr('data-marker-rec', v.Rec).text(v.QuickName).appendTo(sel);
+		$('<option />').attr('value', v.Value).attr('data-marker-rec', v.Recommendation).attr('data-marker-example', v.Example).text(v.QuickName).appendTo(sel);
 	});
 
 	$(sel).change(function() {
@@ -112,10 +112,16 @@ function add_marker_select_options(divItem, el, selVal) {
 			$(this).find('option').each(function(i,v) {
 				if(val === $(v).attr('value')) {
 					var recDiv = $('<div />').addClass('marker marker_recommendation_div').html($(v).attr('data-marker-rec'));
+					var exDiv = $('<div />').addClass('marker marker_recommendation_div').text($(v).attr('data-marker-example'));
 					$(strong).show();
+					$(example_strong).show();
 					$(this).parent(0).parent().parent().find('.marker_ele_type').text($(v).text());
-					$(this).parent().parent().find('.marker_recommendation_div').remove();
+					$(this).parent().parent().find('.marker_recommendation_div, .marker-rec-ex').remove();
 					$(this).parent().parent().find('.marker_recommendation').append(recDiv);
+					var example_strong = $('<strong />').addClass('recommendations marker-rec-ex').text('Example');
+					$(this).parent().parent().find('.marker_recommendation').append(example_strong);
+					$(this).parent().parent().find('.marker_recommendation').append(exDiv);
+
 					return false;
 				}
 			});			

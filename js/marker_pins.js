@@ -11,15 +11,49 @@
 ************************************************/
 function place_marker() {
 
-	$('#marker_body_wrap').css('cursor', 'pointer');
+	$('#marker_body_wrap').attr('style', 'cursor: url("'+chrome.extension.getURL('images/cursor_pin.png'+'"), default;'));
 	$('#marker_body_wrap, #marker_body_wrap a, #marker_body_wrap button').bind('click', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
-		var x = e.pageX - 23,
-			y = e.pageY - 22;
+		var val = parseInt(localStorage.getItem('pin_size').split('p')[0]);
+		var l_diff;//val - 4;		
+		var t_diff;//val - 4;
+		
+		var pin_array = JSON.parse(localStorage.getItem('pin_array_icons')),
+			cur_pin = localStorage.getItem('flag-color').toLowerCase();
+		for (var i in pin_array) {
+			
+			if(pin_array[i].toLowerCase() === cur_pin) {
+				t_diff = val - 4;
+				l_diff = val - 4;
+				break;
+			}  else {
+				var temp_t = (val * .839);
+				t_diff = val - temp_t;
+				var temp_t = (val * .55);
+				l_diff = val - temp_t;
+			}
+		}		
+
+		console.log('l_diff: ' + l_diff + ', e.pageX: ' + e.pageX);
+		console.log('t_diff ' + t_diff + ', e.pageY: ' + e.pageY);
+		console.log('Icon size: ' + val);
+		var x = e.pageX - l_diff,
+			y = e.pageY - t_diff;
+
 		place_ind_marker(x,y);
 
 		return false;
+	});
+
+	$('<div />').attr({
+		'id': 'marker_pin_mouse_position_div',
+		'class': 'marker',
+		'style': 'display: none;'
+	}).appendTo('body');
+
+	$(document).bind('mouseover', function(e) {
+		$('#marker_pin_mouse_position_div').show().html('<span class="marker-pos-x">Axis X: ' + e.pageX + '</span><span class="marker-pos-y">Axis Y:' + e.pageY + '</span>');
 	});
 }
 
@@ -27,7 +61,7 @@ function place_marker() {
 *	Place the actual marker on the page
 ************************************************/
 function place_ind_marker(x,y,val) {
-	var flag_wrap = $('<a />').addClass('marker_page_marker marker_anchor').attr('data-marker-count', mCount).css({
+	var flag_wrap = $('<a />').addClass('marker_page_marker marker_anchor').css({
 		'position': 'absolute',
 		'left': x + 'px',
 		'top': y + 'px'
@@ -40,6 +74,10 @@ function place_ind_marker(x,y,val) {
 			e.preventDefault();			
 		}
 		return false;
+	}).attr({
+		'data-marker-count': mCount,
+		'data-marker_pin_size': localStorage.getItem('pin_size'),
+		'data_marker_flag_color': localStorage.getItem('flag-color')
 	}).appendTo('#marker_body_wrap').draggable({
   		stop: function() {
     		hideMenu('marker_context_menu' + $(this).attr('data-marker-count'));
@@ -61,6 +99,8 @@ function place_ind_marker(x,y,val) {
 		$(flag_wrap).find('img').addClass('marker_page_marker_rotate');
 	}
 
+		
+
 	mCount++;	
 }
 
@@ -68,10 +108,12 @@ function place_ind_marker(x,y,val) {
 *	Remove all pins placed on the screen
 ************************************************/
 function unplace_marker() {
+	$('#marker-pin-colors-drawer').slideUp('fast');
 	localStorage.setItem('marker_place_flag', 'false');	
 	localStorage.setItem('rotate_marker', 'false');
 	$('#marker_body_wrap, #marker_body_wrap a, #marker_body_wrap button').unbind('click');
-	$('#marker-pin-colors-drawer').slideUp('slow');
+	$('#marker_pin_mouse_position_div').remove();
+	
 	$('#marker_body_wrap').removeAttr('style');
 
 }
@@ -103,13 +145,13 @@ function draw_new_marker_options() {
 			$('<a />').attr('data-val', v.toLowerCase()).addClass('marker_option marker_anchor').html('<img src="' + chrome.extension.getURL('images/pins/pin_24_'+v.toLowerCase()+'.png') + '" alt="'+v+' marker" />').appendTo(ifbody);
 		});
 
-		if(localStorage.getItem('icon_pack_1') === 'true') {
-			var fun_icons = JSON.parse(localStorage.getItem('fun_icons_1'));//['HTML', 'CSS', 'Scissors', 'Notepad', 'Brackets', 'Dung', 'Goldstar', 'Wrong', 'Happy', 'Laughing', 'Sad', 'Sick', 'Heart', 'Mag', 'Jason', 'Freddy'];
+		if(localStorage.getItem('pack_1') === 'true') {
+			var fun_icons = JSON.parse(localStorage.getItem('fun_icons'));//['HTML', 'CSS', 'Scissors', 'Notepad', 'Brackets', 'Dung', 'Goldstar', 'Wrong', 'Happy', 'Laughing', 'Sad', 'Sick', 'Heart', 'Mag', 'Jason', 'Freddy'];
 			$(fun_icons).each(function(i,v) {
 				$('<a />').attr('data-val', v.toLowerCase()).addClass('marker_option marker_anchor').html('<img src="' + chrome.extension.getURL('images/pins/pin_24_'+v.toLowerCase()+'.png') + '" alt="'+v+' marker" />').appendTo(ifbody);
 			});
 		} else {
-			$('#marker-pin-colors-iframe').css('height', '320px');
+			$('#marker-pin-colors-iframe').css('height', '275px');
 		}
 
 		draw_pin_options(ifbody);
@@ -140,6 +182,20 @@ function draw_pin_options(ifbody) {
 
 	var opt_div = $('<div />').css('display', 'none').appendTo(ifbody);
 
+	$('<a />').css({
+		'color': '#000',
+		'font-weight': 'bold',
+		'text-decoration': 'underline',
+		'font-size': '12px',
+		'display': 'block',
+		'margin-top': '-15px',
+		'border-bottom': 'solid 1px #ccc',
+		'padding': '8px'
+	}).addClass('default_options_a marker').text('Change default options').click(function() {
+		var url = chrome.extension.getURL('index.html');
+		window.open(url);
+	});//.appendTo(opt_div);	
+
 	var lab_size = $('<label />').attr({
 		'for': 'marker_size_option',
 		'class': 'ubuntu marker_options_edit',
@@ -166,13 +222,40 @@ function draw_pin_options(ifbody) {
 	}).addClass('change_width_pin marker_anchor').html('<img src="' + chrome.extension.getURL('images/plus.png') + '" alt="Increase border width by 1px" />').appendTo(opt_div);
 
 
+	$(inp_size).keydown(function(e) {
+		if(e.which === 38) {
+			if($(this).val() < 96) {
+				localStorage.setItem('pin_size', parseInt($(this).val()) + 1 + 'px');
+				$(this).val(parseInt($(this).val()) + 1);				
+			} 
+		} else if(e.which === 40) {
+			if($(this).val() > 0) {
+				localStorage.setItem('pin_size', $(this).val() - 1 + 'px');
+				$(this).val($(this).val() - 1);					
+			}
+		}
+	}).bind('mousewheel', function(e){
+        e.preventDefault();
+        if(e.originalEvent.wheelDelta /120 > 0) {
+			if($(this).val() < 96) {
+				localStorage.setItem('pin_size', parseInt($(this).val()) + 1 + 'px');
+				$(this).val(parseInt($(this).val()) + 1);				
+			}
+        }
+        else{
+			if($(this).val() > 0) {
+				localStorage.setItem('pin_size', $(this).val() - 1 + 'px');
+				$(this).val($(this).val() - 1);					
+			}
+        }
+    });
 
 	$('<div class="clear-line" />').appendTo(opt_div);	
 
 	var inp = $('<input />').attr({
 		'id': 'marker_flip_option',
 		'type': 'checkbox',
-		'class': 'marker_box_width_select'
+		'class': 'marker_text_size_select'
 	}).css({
 		'height': '20px',
 	    'line-height': '10px',
@@ -190,6 +273,7 @@ function draw_pin_options(ifbody) {
 		}
 	}).appendTo(opt_div);
 
+
 	var lab = $('<label />').attr({
 		'for': 'marker_flip_option',
 		'class': 'ubuntu marker_options_edit',
@@ -201,10 +285,10 @@ function draw_pin_options(ifbody) {
 		'text-decoration': 'none'
 	}).click(function() {
 		if($(opt_div).css('display') === 'none') {
-			if(localStorage.getItem('icon_pack_1') === 'true') {
-				$('#marker-pin-colors-iframe').css('height', '580px');
+			if(localStorage.getItem('pack_1') === 'true') {
+				$('#marker-pin-colors-iframe').css('height', '490px');
 			} else {
-				$('#marker-pin-colors-iframe').css('height', '420px');
+				$('#marker-pin-colors-iframe').css('height', '375px');
 			}
 			
 			$(opt_div).fadeIn('fast');
@@ -214,14 +298,18 @@ function draw_pin_options(ifbody) {
 			$(opt_div).css('display', 'none');
 			$(this).find('.marker_collapse_1').remove();
 			
-			if(localStorage.getItem('icon_pack_1') === 'true') {
-				$('#marker-pin-colors-iframe').css('height', '465px');
+			if(localStorage.getItem('pack_1') === 'true') {
+				$('#marker-pin-colors-iframe').css('height', '390px');
 			} else {
-				$('#marker-pin-colors-iframe').css('height', '320px');
+				$('#marker-pin-colors-iframe').css('height', '275px');
 			}				
 			
 		}
 	}).appendTo(s);	
+
+
+
+
 
 	$(opt_div).find('.change_width_pin').click(function() {
 		var val = $(inp_size).val();

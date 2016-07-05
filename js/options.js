@@ -7,7 +7,9 @@ function loadIndex() {
 	$('#marker_select_border_color').val(localStorage.getItem('box_color'));
 	$('#marker_select_border_width').val(localStorage.getItem('box_width'));
 	$('#marker_select_box_background').val(localStorage.getItem('box_bg_color'));
-	$('#' + localStorage.getItem('flag-color') + '_button').addClass('marker-flag-selected');
+	$('#marker_username').val(localStorage.getItem('user'));
+	
+	$('#marker_select_pin_width').val(localStorage.getItem('pin_size').split('p')[0]);
 	$('#marker_select_highlight_color').val(localStorage.getItem('highlight_color'));
 	$('.border_width_example').css({
 		'border': localStorage.getItem('box_width') + 'px solid ' +localStorage.getItem('box_color')
@@ -23,6 +25,20 @@ function loadIndex() {
 	for(var i in style) {
 		var li = $('<li />').html('<span class="css-prop">' + i + '</span>: <span class="css-val">' + style[i] + '</span>').appendTo('#heading_style_current ul');
 	}
+
+	var def_ic = $.parseJSON(localStorage.getItem('default_icons')),
+		fun_ic = $.parseJSON(localStorage.getItem('fun_icons_1'));
+
+	$(def_ic).each(function(i,v) {
+		$('<a />').attr({
+			'id': v.toLowerCase() + '_button',
+			'data-val': v.toLowerCase(),
+			'href': 'javascript:void(0);'
+		}).html('<img src="' + chrome.extension.getURL('images/pins/pin_24_'+v.toLowerCase()+'.png') + '" alt="'+v+' marker" />').appendTo('.default_markers');
+	});
+
+	$('#' + localStorage.getItem('flag-color') + '_button').addClass('marker-flag-selected');
+	$('#default_pin').attr('src', 'images/pins/pin_24_' + localStorage.getItem('flag-color') + '.png').css('width', localStorage.getItem('pin_size'));
 
 
 	if(localStorage.getItem('use_bg') === 'true') {
@@ -65,10 +81,12 @@ function loadIndex() {
 
 	$('.default_options_a').click(function() {
 		$('.default_group_toggle').slideUp('fast').attr('aria-expanded', 'false');
+		$('*').removeClass('options_a_selected');
 		if($(this).attr('aria-expanded') === 'false') {
 			$('.default_options_a[aria-expanded=true]').attr('aria-expanded', 'false');
 			$(this).parent().next().slideDown('fast');
 			$(this).attr('aria-expanded', 'true');
+			$(this).addClass('options_a_selected');
 		} else {
 			$(this).parent().next().slideUp('slow');
 			$(this).attr('aria-expanded', 'false');
@@ -123,10 +141,11 @@ function loadIndex() {
 		//}
 	});
 
-	$('.instruct_span a').click(function(e) {
+	$('.default_markers a').click(function(e) {
 		$('*').removeClass('marker-flag-selected');
 		$(this).addClass('marker-flag-selected');
 		localStorage.setItem('flag-color', $(this).attr('data-val'));
+		$('#default_pin').attr('src', 'images/pins/pin_24_' + localStorage.getItem('flag-color') + '.png').css('width', localStorage.getItem('pin_size'));
 		savePresets();
 	});
 
@@ -155,20 +174,60 @@ function loadIndex() {
 	});
 
 	$('.change_width').click(function() {
-		var val = $('#marker_select_border_width').val();
-		if($(this).attr('id') === 'subtract') {
+		//var val = $('#marker_select_border_width').val();
+		var val = $(this).parent().find('input').val();
+		if($(this).hasClass('subtract')) {
 			val = val - 1;
 		} else {
 			val = parseInt(val) + 1;
 		}
-		localStorage.setItem('box_width', val);
-		$('.border_width_example').css({
-			'border': localStorage.getItem('box_width') + 'px solid ' +localStorage.getItem('box_color')
-		});
-		$('#marker_select_border_width').val(val);
+		
+		if($(this).parent().find('input').attr('id') === 'marker_select_border_width') {
+			localStorage.setItem('box_width', val);
+			$('.border_width_example').css({
+				'border': localStorage.getItem('box_width') + 'px solid ' +localStorage.getItem('box_color')
+			});			
+		} else {
+			$('#default_pin').css('width', val + 'px');
+			localStorage.setItem('pin_size', val + 'px');
+		}
+
+		$(this).parent().find('input').val(val);
 		showAlert();
 		
 	});
+
+	$('#marker_select_pin_width').change(function() {
+		localStorage.setItem('pin_size', $(this).val() + 'px');
+		$('#default_pin').css('width', localStorage.getItem('pin_size'));
+	}).keydown(function(e) {
+		if(e.which === 38) {
+			if($(this).val() < 96) {
+				localStorage.setItem('pin_size', parseInt($(this).val()) + 1 + 'px');
+				$(this).val(parseInt($(this).val()) + 1);				
+			} 
+		} else if(e.which === 40) {
+			if($(this).val() > 0) {
+				localStorage.setItem('pin_size', $(this).val() - 1 + 'px');
+				$(this).val($(this).val() - 1);					
+			}
+		}
+		$('#default_pin').css('width', localStorage.getItem('pin_size'));
+	}).bind('mousewheel', function(e){
+        e.preventDefault();
+        if(e.originalEvent.wheelDelta /120 > 0) {
+			if($(this).val() < 96) {
+				localStorage.setItem('pin_size', parseInt($(this).val()) + 1 + 'px');
+				$(this).val(parseInt($(this).val()) + 1);				
+			}
+        }
+        else{
+			if($(this).val() > 0) {
+				localStorage.setItem('pin_size', $(this).val() - 1 + 'px');
+				$(this).val($(this).val() - 1);					
+			}
+        }
+    });
 
 	$('#marker_select_border_color').change(function() {
 		localStorage.setItem('box_color', '#' + $(this).val());
@@ -193,7 +252,7 @@ function loadIndex() {
 
 	$('#add-new-req ').click(function() {
 		user_submitted++;
-		var new_req = $('#marker_index_options p').eq(0).clone();
+		var new_req = $('#marker_index_options p').eq(1).clone();
 		$(new_req).find('a').text('User submitted rule').click(function() {
 			if($(this).attr('aria-expanded') === 'false') {
 				$(this).parent().find('input, textarea, button').show();
@@ -202,8 +261,10 @@ function loadIndex() {
 			}
 			
 		});
-		$(new_req).find('input, textarea').removeAttr('data-val').val('');
-		$(new_req).find('textarea').attr('id', 'marker_options_textarea_usersubmitted_' + user_submitted)
+		//$(new_req).find('input').attr('data-val').;
+		$(new_req).find('input, textarea').attr('id', 'marker_options_textarea_usersubmitted_' + user_submitted).val('').css('display', 'block');
+		$(new_req).find('label').attr('for', 'marker_options_textarea_usersubmitted_' + user_submitted).css('display', 'block');
+		$(new_req).find('button').css('display', 'block');
 		$(new_req).prependTo('#marker_index_options');
 		$(new_req).find('button').click(function() {
 			savePresets();
@@ -211,6 +272,9 @@ function loadIndex() {
 		
 	});
 
+	$('#marker_username').change(function() {
+		localStorage.setItem('user', $(this).val());
+	});
 }
 
 function loadOptions() {
@@ -253,81 +317,92 @@ function loadOptions() {
 
 
 	$(options).each(function(i,v) {
-		if(v.Value !== "") {
-			var p = $('<p />').appendTo($('#marker_index_options'));
-			var a = $('<a />').attr({
-				'href': 'javascript:void(0);',
-				'class': 'marker_options_label_anchor',
-				'aria-expanded': 'false'
-			}).click(function() {
-				var id = $(this).find('span').attr('data-for');
-				$('.marker_options_input, .marker_preset_save_btn').hide();
-				if($(this).attr('aria-expanded') === 'false') {
-					$('#' + id).show();
-					$(this).parent().find('input, button, a, label').css('display', 'block');
-					$(this).attr('aria-expanded', 'true');
-				} else {
-					$('#' + id).hide();
-					$(this).parent().find('input, button, .marker-remove-rec-link, label').css('display', 'none');
-					$(this).attr('aria-expanded', 'false');
-				}
-				
-			}).appendTo(p);
-			$('<span />').addClass('marker_options_label').attr('data-for', 'marker_options_textarea' + i).text(v.QuickName).appendTo(a);
+		var p = $('<p />').appendTo($('#marker_index_options'));
+		var a = $('<a />').attr({
+			'href': 'javascript:void(0);',
+			'class': 'marker_options_label_anchor',
+			'aria-expanded': 'false'
+		}).click(function() {
+			var id = $(this).find('span').attr('data-for');
+			$('.marker_options_input, .marker_preset_save_btn').hide();
+			if($(this).attr('aria-expanded') === 'false') {
+				$('#' + id).show();
+				$('#marker_index_options p').find('input, textarea, button, label').css('display', 'none');
+				$(this).parent().find('input, textarea, button, a, label').css('display', 'block');
+				$(this).attr('aria-expanded', 'true');
+			} else {
+				$('#' + id).hide();
+				$(this).parent().find('input, textarea, label, button, .marker-remove-rec-link, label').css('display', 'none');
+				$(this).attr('aria-expanded', 'false');
+			}
+			
+		}).appendTo(p);	
 
-			$('<label />').addClass('input-label').attr('for', 'input_' + v.Value).text('Field Value').appendTo(p);
-			$('<input [type=text] />').attr('id', 'input_' + v.Value).addClass('marker_options_input marker').val(v.QuickName).attr('data-val', v.Value).appendTo(p);
-			$('<label />').addClass('input-label').attr('for', 'marker_options_textarea' + i).text('Field Recommendation').appendTo(p);
-			$('<textarea />').attr({
-				'id': 'marker_options_textarea' + i,
-				'aria-label': v.Value.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
-				'class': 'marker_options_input marker'
-			}).val(v.Rec.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/<br \/>/g, '\n')).appendTo(p);
-			$('<button />').addClass('marker_preset_save_btn').text('Save').appendTo(p);
-			$('<button />').addClass('marker-remove-rec-link marker_preset_save_btn').attr('href', 'javascript:void(0);').css('display', 'none').text('*Remove this recommendation*').click(function() {
-				var tempDiv = $('<div />').text('Are you sure you want to remove this recommendation?  It\'s permanent.' ).addClass('marker-save-msg').prependTo('body');
-				var butDiv = $('<div />').css('margin-top', '15px').appendTo(tempDiv);
-				$('<button />').css('margin-left', '15%').addClass('marker_fun_btn marker_save_note_btn').text('Yes').click(function() {
-					$(p).remove();
-					$(tempDiv).remove();
-					$('#marker-print-modal').remove();
-					savePresets();
-				}).appendTo(butDiv);
-				$('<button />').addClass('marker_fun_btn').text('No').click(function() {
-					$(tempDiv).remove();
-					$('#marker-print-modal').remove();
-				}).appendTo(butDiv);
+		$('<span />').addClass('marker_options_label').attr('data-for', 'marker_options_' + i + '_' + i).text(v.QuickName).appendTo(a);
+		for (var x in v) {
+			
+			var field_label = $('<label />').addClass('input-label').attr('for', 'marker_options_' + x + '_' + i).text(x).appendTo(p);
+			if(x === 'Value') {
+				$('<input />').attr({
+					'id': 'marker_options_' + x + '_' + i,
+					'aria-label': x.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+					'class': 'marker_options_input marker'
+				}).val(v[x].replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/<br \/>/g, '\n')).appendTo(p);					
+			} else {
+				$('<textarea />').attr({
+					'id': 'marker_options_' + x + '_' + i,
+					'aria-label': x.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+					'class': 'marker_options_input marker',
+					'data-type': x
+				}).val(v[x].replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/<br \/>/g, '\n')).appendTo(p);	
 
-				$('<div />').attr('id', 'marker-print-modal').css('background-color', '#eee').appendTo('body');
-				
-			}).appendTo(p);						
+							
+			}
 		}
 
+		$('<button />').attr('id', 'marker_save_btn_' + i).addClass('marker_preset_save_btn').text('Save').click(function() {
+			savePresets();
+		}).appendTo(p);
+		$('<button />').addClass('marker-remove-rec-link marker_preset_save_btn').attr('href', 'javascript:void(0);').css('display', 'none').text('*Remove this recommendation*').click(function() {
+			var tempDiv = $('<div />').text('Are you sure you want to remove this recommendation?  It\'s permanent.' ).addClass('marker-save-msg').prependTo('body');
+			var butDiv = $('<div />').css('margin-top', '15px').appendTo(tempDiv);
+			$('<button />').css('margin-left', '15%').addClass('marker_fun_btn marker_save_note_btn').text('Yes').click(function() {
+				$(p).remove();
+				$(tempDiv).remove();
+				$('#marker-print-modal').remove();
+				savePresets();
+			}).appendTo(butDiv);
+			$('<button />').addClass('marker_fun_btn').text('No').click(function() {
+				$(tempDiv).remove();
+				$('#marker-print-modal').remove();
+			}).appendTo(butDiv);
+
+			$('<div />').attr('id', 'marker-print-modal').css('background-color', '#eee').appendTo('body');
+		}).appendTo(p);
 	});	
 
-	$('.marker_preset_save_btn').click(function() {
-		savePresets();
-	});		
+	
 }
 
 function savePresets() {
 		var obj = [];
 		var new_obj = {};
-		new_obj.Value = "";
-		new_obj.QuickName = "";
-		new_obj.Rec = "";
-		obj.push(new_obj);		
 		$('#marker_index_options p').each(function(i,v) {
 			var new_obj = {};
+
 			if($(v).find('input').attr('data-val')) {
 				new_obj.Value = $(v).find('input').attr('data-val').toLowerCase();
 			} else {
 				new_obj.Value = $(v).find('input').val();
 			}
 			
-			new_obj.QuickName = $(v).find('input').val();
-			new_obj.Rec = $(v).find('textarea').val().replace(/\n/g, '<br />');
+			
+			var rec = $(v).find('textarea[data-type=Recommendation]').val();
+			new_obj.QuickName = $(v).find('textarea[data-type=QuickName]').val();
+			new_obj.Recommendation = rec.replace(/\n/g, '<br />');
+			new_obj.Example = $(v).find('textarea[data-type=Example]').val();
 			obj.push(new_obj);
+			
 		});
 		var preset = JSON.stringify(obj);
 		if(localStorage.getItem('set') === 'a11y') {
@@ -337,6 +412,8 @@ function savePresets() {
 			localStorage.setItem('html_preset', preset);
 			localStorage.setItem('preset', preset);
 		}
+
+		
 
 		/*var msg = $('<div />').attr({
 			'class': 'marker marker-save-msg'

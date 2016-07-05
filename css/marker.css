@@ -7,10 +7,10 @@
 
 .marker{font-family:'Raleway',sans-serif}
 
-.marker-save-msg{position:absolute; top:50%; left:50%; padding:15px; -ms-transform:translateX(-50%) translateY(-50%); -webkit-transform:translate(-50%,-50%); transform:translate(-50%,-50%); background-color:#fff; padding:25px; font-size:16px; font-weight:bold; border:3px solid #000; box-shadow:rgb(136,136,136) 6px 6px 10px 0px; z-index:2147483635; text-align:center; border-radius:5px; min-width:200px}
+.marker-save-msg{position:fixed; top:50%; left:50%; padding:15px; -ms-transform:translateX(-50%) translateY(-50%); -webkit-transform:translate(-50%,-50%); transform:translate(-50%,-50%); background-color:#fff; padding:25px; font-size:16px; font-weight:bold; border:3px solid #000; box-shadow:rgb(136,136,136) 6px 6px 10px 0px; z-index:2147483635; text-align:center; border-radius:5px; min-width:200px}
 
 /* Original Page Style Manipulation */
-#marker_window_resize_msg{border:3px solid #000; border-top:0; position:fixed; top:0; display:block; right:10px;  background-color:#ffe;  z-index:21454122578;  height:160px;  font-family:'Raleway',sans-serif;  color:#000; box-shadow:rgb(136,136,136) 6px 6px 10px 0px; border-radius:0 0 10px 10px; font-size:14px !important;  text-align:left;  width:300px;  padding:10px;  height:auto;  display:none}
+#marker_window_resize_msg{border:3px solid #000; border-top:0; position:fixed; top:0; display:block; right:10px;  background-color:#ffe;  z-index:2147483630;  height:160px;  font-family:'Raleway',sans-serif;  color:#000; box-shadow:rgb(136,136,136) 6px 6px 10px 0px; border-radius:0 0 10px 10px; font-size:14px !important;  text-align:left;  width:300px;  padding:10px;  height:auto;  display:none}
 
 #marker_window_resize_msg span{font-family:'Ubuntu',sans-serif}
 
@@ -50,7 +50,7 @@ button{margin-top:0 !important; vertical-align:initial}
 .marker_option:focus, .marker_option:hover{outline:1px dotted #000}
 
 /* Original page injections */
-a.marker_page_marker{color:#000; text-decoration:none !important; z-index:2147483635; transition:all .2s ease-in-out}
+a.marker_page_marker{color:#000; text-decoration:none !important; z-index:2147483634; transition:all .2s ease-in-out}
 
 a.marker_page_marker:hover{transform:scale(1.3); outline:0}
 
@@ -158,7 +158,7 @@ strong.aria{border-bottom:2px solid #0d5e05; width:100%; display:block; backgrou
 /* Results <iframe />styles */
 #marker-print-modal{width:100%; height:100%; background-color:#000; opacity:.6; position:fixed; z-index:2147483634; top:0}
 
-#marker-print-dialog{position:absolute; top:50%; left:50%; padding:15px; -ms-transform:translateX(-50%) translateY(-50%); -webkit-transform:translate(-50%,-50%); transform:translate(-50%,-50%); background-color:#fff; padding:25px; font-size:16px; font-weight:bold; border:3px solid #000; box-shadow:rgb(136,136,136) 6px 6px 10px 0px; z-index:2147483635; text-align:center; border-radius:5px; min-width:200px}
+#marker-print-dialog{position:fixed; top:50%; left:50%; padding:15px; -ms-transform:translateX(-50%) translateY(-50%); -webkit-transform:translate(-50%,-50%); transform:translate(-50%,-50%); background-color:#fff; padding:25px; font-size:16px; font-weight:bold; border:3px solid #000; box-shadow:rgb(136,136,136) 6px 6px 10px 0px; z-index:2147483635; text-align:center; border-radius:5px; min-width:200px}
 
 .marker-btn{margin-left:25px; border-radius:3px; font-size:14px; line-height:18px; font-weight:bold}
 
@@ -166,7 +166,7 @@ strong.aria{border-bottom:2px solid #0d5e05; width:100%; display:block; backgrou
 
 #body_shim{position:absolute; bottom:0; height:200px; width:100%; display:block}
 
-.rectangle{ border:2px solid #F00;  position:absolute;  z-index:2147483634;  position:absolute !important}
+.rectangle{ border:2px solid #F00;  position:absolute;  z-index:2147483632;  position:absolute !important}
 
 .marker-text-bottom-div{padding-left:100px}
 
@@ -178,7 +178,7 @@ strong.aria{border-bottom:2px solid #0d5e05; width:100%; display:block; backgrou
 /***************************
 New styles
 ****************************/
-#marker-control-panel{height:auto; width:auto; max-width:305px; min-height:85px; border:2px solid #000; background-color:#e9e9e9; position:fixed; top:50px; left:50px; z-index:21454122578; background-color:#fff; box-shadow:rgb(136,136,136) 3px 3px 5px 0px; display:none}
+#marker-control-panel{height:auto; width:auto; max-width:305px; min-height:85px; border:2px solid #000; background-color:#e9e9e9; position:fixed; top:50px; left:50px; z-index:2147483635; background-color:#fff; box-shadow:rgb(136,136,136) 3px 3px 5px 0px; display:none}
 
 #marker-a11y-results-iframe{border:0; min-height:250px}
 
@@ -228,13 +228,13 @@ New styles
 
 #marker_saves{padding-right:10px}
 
-#marker-pin-colors-drawer, #marker-box-colors-drawer { display: none; }
+#marker-pin-colors-drawer, #marker-box-colors-drawer, #marker-box-text-drawer { display: none; }
 
 .marker-context-iframe{display:block; overflow-x:hidden; border:0; height:100%; width:427px}
 
 #marker-results-ifr{display:block; border:0; width:100%; height:100% !important; background-color:#fff; position:absolute}
 
-#marker-pin-colors-iframe{display:block; border:0; overflow-x:hidden; height:465px; max-width:164px}
+#marker-pin-colors-iframe{display:block; border:0; overflow-x:hidden; height:390px; max-width:210px}
 
 #marker-pin-colors-iframe .marker_option{display:inline-block; padding:2px; margin-left:10px; margin-top:10px}
 
@@ -244,9 +244,68 @@ New styles
 
 strong.marker{font-family:'Raleway',sans-serif; font-weight:bold; font-size:14px; padding-left:5px; display:block; margin-top:10px; border-bottom:1px solid #ccc; width:100%;  position:initial;  height:auto;  line-height:initial;  text-align:left;  color:#000;  margin:10px 0}
 
-input#marker_color_select{border-radius:3px; line-height:25px; height:30px; font-size:14px; font-weight:bold; font-family:'Raleway',sans-serif; border:1px solid #000; padding-left:10px; width:80%; margin:10px}
+input#marker_color_select, input#marker_text_color_select, input#marker_text_outline_select, input#marker_text_color, input#marker_text_shadow_color, input#marker_text_box_bg_color, input#marker_bg_color_select{border-radius:3px; line-height:25px; height:30px; font-size:14px; font-weight:bold; font-family:'Raleway',sans-serif; border:1px solid #000; padding-left:10px; width:80%; margin:10px}
 
-input.marker_box_width_select{border-radius:3px; line-height:25px; height:30px; text-indent: 0; box-shadow: rgba(34,34,34,0.3) 0 2px 6px inset; font-size:18px; font-weight:bold; font-family:'Raleway',sans-serif; border:1px solid #000; width:30px; padding-left: 15px; margin-left:20px; margin-right:20px; display:inline}
+input.marker_text_size_select {
+	border-radius:3px; 
+	line-height:25px; 
+	text-indent: 0; 
+	box-shadow: rgba(34,34,34,0.3) 0 2px 6px inset; 
+	font-size:18px; 
+	font-weight:bold; 
+	font-family:'Raleway',sans-serif; 
+	border:1px solid #000; 
+	padding-left: 15px; 
+	margin-left:20px; 
+	margin-right:20px; 
+	display:inline;
+}
+
+input.marker_box_width_select {
+	border-radius:3px !important; 
+	line-height:25px !important; 
+	height:30px !important; 
+	text-indent: 0 !important; 
+	box-shadow: rgba(34,34,34,0.3) 0 2px 6px inset !important; 
+	font-size:18px !important !important; 
+	font-weight:bold !important; 
+	font-family:'Raleway',sans-serif !important; 
+	border:1px solid #000; 
+	width:55px !important; 
+	padding-left: 15px !important; 
+	margin-left:20px !important; 
+	margin-right:20px !important; 
+	display:inline !important;	
+}
+
+.marker_note_image:hover {
+	outline: dotted 1px #000;
+}
+
+.marker_note_hover_change_div {
+	position: absolute;
+	width: 300px;
+	height: 50px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	box-shadow: #222 0 2px 6px 2px;
+	display: none;
+	margin: 0;
+	padding: 0;
+	top: -56px;
+	left: 8px;
+	opacity: .8;
+}
+
+.marker_note_hover_change_div:hover {
+	opacity: 1.0;
+}
+
+.marker_note_hover_change_button {
+	border: 1px solid #ccc;
+	height: 50px;
+	width: 50px;
+}
 
 #marker_sub_box_change, #marker_add_box_change{vertical-align:baseline; border-bottom:1px}
 
@@ -261,6 +320,109 @@ kbd.marker{padding:10px; background-color:#eee; border:1px solid #666; display:i
 .alert{padding:15px; border:3px solid #128715; width:96%; height:35px; display:none; font-family:'Ubuntu',sans-serif}
 
 .marker-tips{width:380px; position:fixed; top:155px; left:20px; background-color:#ffe; padding:5px; font-size:12px; border-style:solid; border-width:1px; border-color:#ccc}
+
+#marker_pin_mouse_position_div {
+	position: fixed;
+	bottom: 0;
+	right: 25px;
+	height: 25px;
+	border-radius: 5px;
+	background-color: #fff;
+	color: #000;
+	border: solid 1px #000;
+	padding: 10px;
+}
+
+.marker-pos-x, .marker-pos-y { font-size: 12px; display: block; line-height: initial;}
+
+/* Marker text note styles */
+.marker_text_note_marker {
+	position: absolute;
+	display:block;
+	background-color: none;
+	border-radius: 5px;
+	z-index:2147483633;
+
+}
+
+.marker_text_note_marker_textarea:hover, .marker_text_note_marker_textarea:focus {
+	outline: none;
+	background: none;
+
+}
+
+.marker_text_note_marker_textarea {
+	border: 0;
+	position:absolute;
+	font-family: 'Rock Salt', cursive;
+	font-weight: bold;
+	background:none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    padding-left: 10px;
+	width: 99%;
+    height: 94%;
+    bottom: 2px;    
+}
+
+.marker_text_hover_color {
+	z-index: 2147483635;
+    height: 47px !important;
+    width: 50px !important;
+    color: #fff;
+    border: solid 1px #ccc !important;
+    font-size: 0 !important;
+    cursor: default !important;
+    margin: 0 0 0 0 !important;
+    padding: 0 !important;
+    display: inline !important;
+}
+
+.marker_text_options_checkboxes {
+	display: inline-block;
+	position: absolute;
+	padding-left: 5px;
+}
+
+.marker_text_options_checkboxes label {
+	display: inline-block;
+	font-family: 'Raleway', sans-serif;
+	font-size: 13px;
+}
+
+.marker-text-checkbox {
+	margin-left: 10px !important;
+	display: inline !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	width: auto !important;
+}
+
+.marker_window_resize_anchor {
+	position: absolute;
+	top: 4px;
+	right: 5px;
+	display: block;
+}
+
+.marker_window_resize_anchor:hover {
+	outline: dotted 1px #000;
+}
+
+.marker_window_resize_panel_anchor {
+	display: block;
+	text-decoration: none;
+	padding: 5px;
+	color: black;
+}
+
+.marker_window_resize_panel_anchor:hover {
+	outline: dotted 1px #000;
+	color: #666;
+	background-color: #ddd;
+	font-weight: bold;
+}
 
 /*Options pages styles  */
 body{margin:0 auto; padding:0; overflow-x:hidden}
@@ -319,7 +481,7 @@ fieldset.ubuntu legend{margin-top:20px; font-weight:bold; font-size:14px; displa
 
 #heading_style_current{font-family:'Ubuntu',sans-serif; font-size:14px; font-color:#333}
 
-.default_group_toggle{display:none}
+.default_group_toggle{display:none; border: solid 2px #ccc; margin-top: -16px; padding-bottom: 10px;}
 
 .instruct_span{padding-left:20px; padding-right:20px; width:97%; display:block}
 
@@ -363,6 +525,31 @@ a.change_width img, a.change_width_pin img{height:auto !important; width:auto !i
 	display: block;
 	height: 100%;
 	width: 100%;
+}
+
+.options_a_selected { background-color: #eee; border-top: solid 2px #ccc; }
+
+.default_markers a {
+	display: inline-block !important;
+	border-left: 0;
+	padding-left: 5px !important;
+}
+
+.prev-title {
+	font-size: 14px;
+	font-weight: normal;
+	display: inline-block;
+}
+
+.marker-display-timestamp {
+	display: inline-block;
+	font-size: 12px;
+	margin-left: 28px;
+	padding: 10px;
+}
+
+.prev-box-settings {
+
 }
 
 /*  Marker Panel styles /*

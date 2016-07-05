@@ -1,69 +1,59 @@
-if(!localStorage.getItem("welcome")) {
-	localStorage.setItem("welcome", "show");
-}
-if(!localStorage.getItem("left")) {
-	localStorage.setItem("left", "50");
-}
-if(!localStorage.getItem("top")) {
-	localStorage.setItem("top", "50");
-}
+function setInitial() {
+	var obj = 	{
+		"greeting": "start_stop",
+		"welcome": "show",
+		"left": "50",
+		"top": "50",
+		"set": "blank",
+		"box_color": "#c00",
+		"box_width": "2",
+		"marker-font-size": "16px",
+		"flag-color": "bright_red",
+		"pack_1": "true",
+		"highlight_color": "#e6f16a",
+		"font_color": "#000",
+		"box_bg_color": "",
+		"pin_size": "24px",
+		"font_size": "24px",
+		"show_tips": "true",
+		"font_outline": "",
+		"font_bg": "",
+		"default_icons": ["Bright_Red","Red","Pink","Orange","Plum","Blue","Cobalt","Aqua","Bluegreen","Green","Lime","Yellow","Poop","Black","Grey","White","Placeholder_red","Placeholder_blue","Placeholder_green","Placeholder_gold","Dot_red","Dot_blue","Dot_green","Dot_black"],
+		"fun_icons": ["HTML", "CSS", "Scissors", "Notepad", "Brackets", "Dung", "Goldstar", "Wrong", "Happy", "Laughing", "Sad", "Sick", "Heart", "Mag", "Jason", "Freddy"],
+		"pin_array_icons": ["Bright_Red","Red","Pink","Orange","Plum","Blue","Cobalt","Aqua","Bluegreen","Green","Lime","Yellow","Poop","Black","Grey","White"],
+		"rotate_marker": "false",
+		"addText": "false",
+		"text_shadow_color": "#aaaaaa",
+		"text_h_shadow": "2px",
+		"text_v_shadow": "3px",
+		"text_background": "#ffffee",
+		"text_blur_radius": "2px",
+		"user": ""
+	}
 
-if(!localStorage.getItem("set")) {
-	localStorage.setItem("set", "blank");
+	for (var i in obj) {
+		if(!localStorage.getItem(i)) {
+			if(i.indexOf('icon') > -1){
+				localStorage.setItem(i, JSON.stringify(obj[i]));
+			} else {
+				localStorage.setItem(i, obj[i]);
+			}
+		}
+		if(i === 'addText') {
+			localStorage.setItem(i, obj[i]);
+		}
+
+		if(i === 'greeting') {
+			localStorage.setItem(i, 'start_stop');
+		}		
+	}
 }
-
-if(!localStorage.getItem("box_color")) {
-	localStorage.setItem("box_color", "#c00");
-}
-
-if(!localStorage.getItem("box_width")) {
-	localStorage.setItem("box_width", "2");
-}
-
-if(!localStorage.getItem("marker-font-size")) {
-	localStorage.setItem("marker-font-size", "16px");
-}
-
-if(!localStorage.getItem("flag-color")) {
-	localStorage.setItem("flag-color", "red");
-}
-
-if(!localStorage.getItem("icon_pack_1")) {
-	localStorage.setItem("icon_pack_1", "true");
-}
-
-if(!localStorage.getItem("highlight_color")) {
-	localStorage.setItem("highlight_color", "#e6f16a");
-}
-
-if(!localStorage.getItem("box_bg_color")) {
-	localStorage.setItem("box_bg_color", "");
-}
-
-if(!localStorage.getItem("pin_size")) {
-	localStorage.setItem("pin_size", "24px");
-}
-
-if(!localStorage.getItem("show_tips")) {
-	localStorage.setItem("show_tips", "true");
-}
-//if(!localStorage.getItem("default_icons")) {
-	var default_icons = ["Bright_Red","Red","Pink","Orange","Plum","Blue","Cobalt","Aqua","Bluegreen","Green","Lime","Yellow","Poop","Black","Grey","White","Placeholder_red","Placeholder_blue","Placeholder_green","Placeholder_gold","Dot_red","Dot_blue","Dot_green","Dot_black"];
-	localStorage.setItem("default_icons", JSON.stringify(default_icons));
-//}
-//if(!localStorage.getItem("fun_icons_1")) {
-	var fun_icons = ["HTML", "CSS", "Scissors", "Notepad", "Brackets", "Dung", "Goldstar", "Wrong", "Happy", "Laughing", "Sad", "Sick", "Heart", "Mag", "Jason", "Freddy"];
-	localStorage.setItem("fun_icons_1", JSON.stringify(fun_icons));
-//}
-
-
 
 
 function setVars(req) {
-	localStorage.setItem("left", req.left);
-	localStorage.setItem("top", req.top);
-	localStorage.setItem("show_tips", req.show_tips);
-	localStorage.setItem('pin_size', req.pin_size);
+	for(var i in req) {
+		localStorage.setItem(i, req[i]);
+	}
 }
 
 function highlight() {
@@ -74,7 +64,7 @@ function highlight() {
 
 
 chrome.browserAction.onClicked.addListener(function(tab) {
-
+	setInitial();
 	if(localStorage.getItem("set") === "a11y") {
 		if(localStorage.getItem("a11y_preset")) {
 			var preset = localStorage.getItem("a11y_preset");
@@ -97,27 +87,8 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 	} else {
 		var install_flag = "false";
 	}
-	chrome.tabs.sendRequest(tab.id, {
-		greeting: "start_stop", 
-			"welcome": localStorage.getItem("welcome"), 
-			show_tips: localStorage.getItem("show_tips"), 
-			pin_size: localStorage.getItem("pin_size"), 
-			box_bg_color: localStorage.getItem("box_bg_color"), 
-			install: install_flag, 
-			box_color: localStorage.getItem("box_color"), 
-			icon_pack_1: localStorage.getItem("icon_pack_1"), 
-			marker_font_size: localStorage.getItem("marker-font-size"), 
-			preset: preset, 
-			set: localStorage.getItem("set"), 
-			flag_color: localStorage.getItem("flag-color"), 
-			left: localStorage.getItem("left"), 
-			top: localStorage.getItem("top"), 
-			box_width: localStorage.getItem("box_width"), 
-			highlight_color: localStorage.getItem("highlight_color"),
-			default_icons: localStorage.getItem("default_icons"),
-			fun_icons_1: localStorage.getItem("fun_icons_1"), 
-			clicked: "icon"
-		}, function(response) {});
+
+	chrome.tabs.sendRequest(tab.id, localStorage, function(response) {});
 });
 
 chrome.runtime.onMessage.addListener(
@@ -146,13 +117,22 @@ chrome.contextMenus.create({
 });
 
 
-chrome.runtime.onInstalled.addListener(
-	function(details) {
-			if(details.reason === "install") {
-				localStorage.setItem("version", chrome.runtime.getManifest().version);
-			}
-		}
-	)
-
-
-
+// Credit to Alvin Wong
+// http://stackoverflow.com/questions/2399389/detect-chrome-extension-first-run-update
+chrome.runtime.onInstalled.addListener(function(details){
+    if(details.reason == "install"){
+		chrome.tabs.getSelected(null, function(tab) {
+				chrome.browserAction.setBadgeText({text : 'NEW'});
+				chrome.browserAction.setBadgeBackgroundColor({color : '#dd8127'});
+		});
+		localStorage.setItem('version', chrome.runtime.getManifest().version);  
+    } else if(details.reason == "update"){
+       if(localStorage.getItem('version') > details.previousVersion) {
+			chrome.tabs.getSelected(null, function(tab) {
+					chrome.browserAction.setBadgeText({text : 'NEW'});
+					chrome.browserAction.setBadgeBackgroundColor({color : '#055803'});
+			}); 
+			localStorage.setItem('version', chrome.runtime.getManifest().version);       	
+       }
+    }
+});

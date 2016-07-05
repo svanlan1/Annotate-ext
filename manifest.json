@@ -1,10 +1,10 @@
 {
   "name": "Marker!",
-  "version": "0.5",
+  "version": "0.5.5",
   "manifest_version": 2,
   "author": "Shea VanLaningham",
   "options_page": "index.html",
-  "description": "An extension for annotating webpages",
+  "description": "Quickly and easily add notes and annotations to any webpage and share with others.",
   "background": {
     "scripts": ["js/background.js"],
     "persistent": true
@@ -12,8 +12,8 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["js/jscolor.min.js", "js/helper.js", "js/marker_context.js", "js/marker_pins.js", "js/marker_box.js", "js/marker_highlight.js", "js/marker_a11y.js", "js/test_anchors.js", "js/test_html.js", "js/test_images.js", "js/marker.js", "js/jquery.js", "js/jquery-ui.js"],
-      "css": ["css/architects_daughter.css", "css/marker.css", "css/jquery-ui.structure.min.css"],
+      "js": ["js/jscolor.js", "js/html2canvas.js", "js/helper.js", "js/marker_text.js", "js/marker_context.js", "js/marker_pins.js", "js/marker_box.js", "js/marker_highlight.js", "js/marker_a11y.js", "js/test_anchors.js", "js/test_html.js", "js/test_images.js", "js/marker.js", "js/jquery.js", "js/jquery-ui.js"],
+      "css": ["css/architects_daughter.css", "css/rocksalt.css", "css/marker.css", "css/jquery-ui.structure.min.css"],
       "run_at" : "document_start"
     }
   ],
@@ -33,6 +33,9 @@
     "js/options.json",
     "js/jscolor.js",
     "js/types.json",
+    "images/add_text_24_inactive.png",
+    "images/add_text_24.png",
+    "images/alarm.png",
     "images/check_24_inactive.png",
     "images/check_24_error.png",
     "images/check_24_pass.png",
@@ -44,9 +47,14 @@
     "images/flag_24_inactive.png",
     "images/highlight_24.png",
     "images/highlight_24_inactive.png",
+    "images/marker_16_new.png",
     "images/marker_32.png",
     "images/marker_64.png",
+    "images/notes.png",
     "images/paint_32.png",
+    "images/cursor_pin.png",
+    "images/cursor_draw.png",
+    "images/minimize.png",
 
     "images/pins/pin_24_aqua.png",
     "images/pins/pin_24_black.png",
@@ -98,6 +106,9 @@
     "images/save_24.png",
     "images/select_24.png",
     "images/select_24_active.jpg",
-    "images/select_32.png"
+    "images/select_32.png",
+    "images/options_24.png",
+    "images/window_resize.png",
+    "images/window_resize_active.png"
     ]
 }
