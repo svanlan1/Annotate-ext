@@ -12,7 +12,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["js/jscolor.js", "js/html2canvas.js", "js/helper.js", "js/marker_text.js", "js/marker_context.js", "js/marker_pins.js", "js/marker_box.js", "js/marker_highlight.js", "js/marker_a11y.js", "js/test_anchors.js", "js/test_html.js", "js/test_images.js", "js/marker.js", "js/jquery.js", "js/jquery-ui.js"],
+      "js": ["js/jscolor.js", "js/helper.js", "js/marker_text.js", "js/marker_context.js", "js/marker_pins.js", "js/marker_box.js", "js/marker_highlight.js", "js/marker_a11y.js", "js/test_anchors.js", "js/test_html.js", "js/test_images.js", "js/marker.js", "js/jquery.js", "js/jquery-ui.js"],
       "css": ["css/architects_daughter.css", "css/rocksalt.css", "css/marker.css", "css/jquery-ui.structure.min.css"],
       "run_at" : "document_start"
     }
