@@ -99,7 +99,7 @@ function stop_drawing_boxes(canvas) {
 
     };
     $('#marker-box-colors-drawer').slideUp('fast');
-    $('#marker_body_wrap').removeAttr('style');
+    $('#marker_body_wrap').css('cursor', '');
 }
 
 function draw_select_color_options() {

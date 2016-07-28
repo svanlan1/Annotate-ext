@@ -1,7 +1,7 @@
 /***********************************************************************************************************
 *	Filename: 	helper.js
 *	Author: 	Shea VanLaningham
-*	Website: 	https://github.com/svanlan1/Marker
+*	Website: 	https://github.com/svanlan1/Annotate
 *	Purpose: 	This file contains all of the helper functions that create, append, remove, return, etc.
 *
 ************************************************************************************************************/
@@ -150,6 +150,7 @@ function update_marker_page_obj(obj) {
 	obj.win_h = h;
 
 	for(var i in pageJson) {
+		var len = pageJson[i][window.location.href];
 		if(pageJson[i][sess_id]) {
 			pageJson[i][sess_id].push(obj);
 		}
@@ -207,6 +208,125 @@ function timeStamp() {
   return date.join("/") + " " + time.join(":") + " " + suffix;
 }
 
+function returnDate(date) {
+	var val = date.split('/');
+	var temp = '';
+	switch(val[0]) {
+		case '1':
+			temp += 'January ';
+			break;
+		case '2':
+			temp += 'February ';
+			break;
+		case '3':
+			temp += 'March ';
+			break;
+		case '4':
+			temp += 'April ';
+			break;
+		case '5':
+			temp += 'May ';
+			break;
+		case '6':
+			temp += 'June ';
+			break;
+		case '7':
+			temp += 'July ';
+			break;
+		case '8':
+			temp += 'August ';
+			break;
+		case '9':
+			temp += 'September ';
+			break;
+		case '10':
+			temp += 'October ';
+			break;
+		case '11':
+			temp += 'November ';
+			break;
+		case '12':
+			temp += 'December ';
+			break;
+		default:
+			break;
+	}
+
+	temp += val[1] + ', ' + val[2];
+	return temp;
+}
+
+function display_previous_annotations(ob) {
+	console.log(ob);
+	
+	$('.rectangle, .marker_page_marker, .marker_text_note_marker').remove();
+
+	var val = ob.val;
+	$(ob[val]).each(function(i,v) {
+		var type = v.type;
+		switch (type) {
+			case 'box':
+				var div = $('<div class="rectangle" />').css({
+					'border-width': v.box_width,
+					'border-color': v.box_color,
+					'width': v.width,
+					'height': v.height,
+					'position': 'absolute',
+					'left': v.left,
+					'top': v.top
+				}).appendTo('#marker_body_wrap');
+
+				var inside_div = $('<div />').css({
+					'background-color': v.box_bg_color,
+					'opacity': '.3',
+					'width': '100%',
+					'height': '100%'
+				}).appendTo(div);
+	            $(div).draggable();
+	        	$(div).resizable({
+				  containment: "parent",
+				  handles: "n, e, s, w, ne, nw, se, sw",
+				  resize: function( event, ui ) {
+				  	stop_drawing_boxes(document.getElementById('marker_body_wrap'));
+					$('#place_marker').find('img').attr('src', chrome.extension.getURL('images/pins/pin_24_inactive.png'));
+					localStorage.setItem('marker_place_flag', 'false');	
+					$('#marker-pin-colors-drawer').remove();		
+					unplace_marker();				  	
+				  },
+				  stop: function (event, ui ) {
+				  	initDraw(document.getElementById('marker_body_wrap'));
+				  }
+				});	
+		    	$('.rectangle').bind('contextmenu',function(e) {
+		    		e.preventDefault();
+		    		$(this).remove();
+		    	});								
+				break;
+			case 'pin':
+				var a = $('<a />').addClass('marker_page_marker marker_anchor').attr({
+					'data-marker-count': v['data-marker-count'],
+					'href': 'javascript:void(0);'
+				}).css({
+					'position': 'absolute',
+					'top': v.top,
+					'left': v.left
+				}).appendTo('#marker_body_wrap');
+
+				var img = $('<img />').attr({
+					'src': chrome.extension.getURL('images/pins/pin_24_' + v['flag-color']+ '.png'),
+					'alt': v['flag-color'] + ' pin'
+				}).css({
+					'width': v['pin_size'] + 'px'
+				}).appendTo(a);
+				break;
+			case 'note':
+				break
+			default:
+				break;
+		}
+	})
+}
+
 function display_previous() {
 	var url = window.location.href;
 	for (var i in pageJson) {
@@ -214,9 +334,41 @@ function display_previous() {
 			var val = pageJson[i]['val'];
 			var len = pageJson[i][val].length;
 			if(len > 0) {
-				$('.marker-panel-heading').prepend('<img style="padding-right: 5px;" src="' + chrome.extension.getURL('images/alarm.png') + '" title="You have previous markings on this page!" />');
+				$('.marker-panel-heading').prepend('<a href="javascript:void(0);"><img id="ann-alarm" style="padding-right: 5px; vertical-align: baseline; width: 20px;" src="' + chrome.extension.getURL('images/alarm.png') + '" title="You have previous markings on this page!" /></a>');
+				var img = $('#ann-alarm').parent();
+				$(img).click(function() {
+					//display_previous_annotations(pageJson[i]);
+					if($('.ann-prev-list-cont').length === 0) {
+						show_previous_dialog();
+					} else {
+						$('.ann-prev-list-cont').remove();
+					}
+					
+				});
+				
 				break;				
 			}
 		}
 	}
+}
+
+function show_previous_dialog() {
+	var temp = [],
+		container = $('<div />').addClass('ann-prev-list-cont').appendTo('.marker-panel-heading');
+	$(pageJson).each(function(i,v) {
+		var val = v.val;
+		if(v.url === window.location.href) {
+			var div = $('<div />').addClass('ann-prev-list-item').appendTo(container);
+			var a = $('<a />').attr('href', 'javascript:void(0);').attr('data-ann-val', val).html(returnDate(v.date_time) + '<br /><span class="small">' + v[val].length + ' annotations</span>').appendTo(div);
+			var click_val = v;
+			$(a).click(function(e) {
+				$('.ann-prev-list-cont').remove();
+				display_previous_annotations(click_val);
+			});
+		}
+	});
+
+	$('#marker_body_wrap').click(function() {
+		$('.ann-prev-list-cont').remove();
+	})
 }

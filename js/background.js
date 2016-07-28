@@ -2,8 +2,8 @@ function setInitial() {
 	var obj = 	{
 		"greeting": "start_stop",
 		"welcome": "show",
-		"left": "50",
-		"top": "50",
+		"left": "auto",
+		"top": "auto",
 		"set": "blank",
 		"box_color": "#c00",
 		"box_width": "2",
@@ -12,11 +12,11 @@ function setInitial() {
 		"pack_1": "true",
 		"highlight_color": "#e6f16a",
 		"font_color": "#000",
-		"box_bg_color": "",
+		"box_bg_color": "#e6f16a",
 		"pin_size": "24px",
 		"font_size": "24px",
 		"show_tips": "true",
-		"font_outline": "",
+		"font_outline": "#333",
 		"font_bg": "",
 		"default_icons": ["Bright_Red","Red","Pink","Orange","Plum","Blue","Cobalt","Aqua","Bluegreen","Green","Lime","Yellow","Poop","Black","Grey","White","Placeholder_red","Placeholder_blue","Placeholder_green","Placeholder_gold","Dot_red","Dot_blue","Dot_green","Dot_black"],
 		"fun_icons": ["HTML", "CSS", "Scissors", "Notepad", "Brackets", "Dung", "Goldstar", "Wrong", "Happy", "Laughing", "Sad", "Sick", "Heart", "Mag", "Jason", "Freddy"],
@@ -26,8 +26,9 @@ function setInitial() {
 		"text_shadow_color": "#aaaaaa",
 		"text_h_shadow": "2px",
 		"text_v_shadow": "3px",
-		"text_background": "#ffffee",
+		"text_background": "#444",
 		"text_blur_radius": "2px",
+		"text_bg_opacity": "10",
 		"user": ""
 	}
 
@@ -110,11 +111,11 @@ chrome.runtime.onMessage.addListener(
 		}
 	});
 
-chrome.contextMenus.create({
-	title: "Highlight with Marker",
+/*chrome.contextMenus.create({
+	title: "Highlight with Annotate!",
 	contexts:["selection"],
 	onclick: highlight
-});
+});*/
 
 
 // Credit to Alvin Wong
@@ -127,12 +128,12 @@ chrome.runtime.onInstalled.addListener(function(details){
 		});
 		localStorage.setItem('version', chrome.runtime.getManifest().version);  
     } else if(details.reason == "update"){
-       if(localStorage.getItem('version') > details.previousVersion) {
+       if(localStorage.getItem('version') !== details.previousVersion) {
 			chrome.tabs.getSelected(null, function(tab) {
 					chrome.browserAction.setBadgeText({text : 'NEW'});
 					chrome.browserAction.setBadgeBackgroundColor({color : '#055803'});
-			}); 
-			localStorage.setItem('version', chrome.runtime.getManifest().version);       	
+			});
+			localStorage.setItem('version', chrome.runtime.getManifest().version);
        }
     }
 });

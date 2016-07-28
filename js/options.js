@@ -253,22 +253,69 @@ function loadIndex() {
 	$('#add-new-req ').click(function() {
 		user_submitted++;
 		var new_req = $('#marker_index_options p').eq(1).clone();
-		$(new_req).find('a').text('User submitted rule').click(function() {
-			if($(this).attr('aria-expanded') === 'false') {
-				$(this).parent().find('input, textarea, button').show();
-			} else {
-				$(this).parent().find('input, textarea, button').hide();
-			}
-			
-		});
-		//$(new_req).find('input').attr('data-val').;
-		$(new_req).find('input, textarea').attr('id', 'marker_options_textarea_usersubmitted_' + user_submitted).val('').css('display', 'block');
-		$(new_req).find('label').attr('for', 'marker_options_textarea_usersubmitted_' + user_submitted).css('display', 'block');
-		$(new_req).find('button').css('display', 'block');
-		$(new_req).prependTo('#marker_index_options');
-		$(new_req).find('button').click(function() {
-			savePresets();
-		})
+		if(new_req.length > 0) {
+			$(new_req).find('a').text('User submitted rule').click(function() {
+				if($(this).attr('aria-expanded') === 'false') {
+					$(this).parent().find('input, textarea, button').show();
+				} else {
+					$(this).parent().find('input, textarea, button').hide();
+				}
+				
+			});
+			//$(new_req).find('input').attr('data-val').;
+			$(new_req).find('input, textarea').attr('id', 'marker_options_textarea_usersubmitted_' + user_submitted).val('').css('display', 'block');
+			$(new_req).find('label').attr('for', 'marker_options_textarea_usersubmitted_' + user_submitted).css('display', 'block');
+			$(new_req).find('button').css('display', 'block');
+			$(new_req).prependTo('#marker_index_options');
+			$(new_req).find('button').click(function() {
+				savePresets();
+			});
+		} else {
+			//<a href="javascript:void(0);" class="marker_options_label_anchor" aria-expanded="true" style="display: block;">User submitted rule</a>
+			var a = $('<a />').attr('href', 'javascript:void(0);').addClass('marker_options_label_anchor').attr('aria-expanded', 'true').css('display', 'block').text('User submitted rule ' + user_submitted).appendTo('#marker_index_options');
+			var lname = $('<label />').attr('for', 'marker_options_input_add' + user_submitted).addClass('input-label').text('Value').appendTo('#marker_index_options').css('display', 'block');
+			var name = $('<input />').addClass('marker_options_input marker').attr('id', 'marker_options_input_add' + user_submitted).attr('type', 'text').appendTo('#marker_index_options').css('display', 'block');
+
+			var qNameL = $('<label />').addClass('input-label').css('display', 'block').attr('for', 'marker_options_textarea_usersubmitted_' + user_submitted).text('QuickName').appendTo('#marker_index_options');
+			var qNameT = $('<textarea />').addClass('marker_options_input marker').attr({
+				'aria-label': 'Quickname',
+				'data-type': 'QuickName',
+				'style': 'display: block;',
+				'id': 'marker_options_textarea_usersubmitted_' + user_submitted
+			}).appendTo('#marker_index_options');
+
+			var recL = $('<label />').addClass('input-label').css('display', 'block').attr('for', 'marker_options_textarea_rec_usersubmitted_' + user_submitted).text('Recommendation').appendTo('#marker_index_options');
+			var recT = $('<textarea />').addClass('marker_options_input marker').attr({
+				'aria-label': 'Recommendation',
+				'data-type': 'Recommendation',
+				'style': 'display: block;',
+				'id': 'marker_options_textarea_rec_usersubmitted_' + user_submitted
+			}).appendTo('#marker_index_options');
+
+			var exL = $('<label />').addClass('input-label').css('display', 'block').attr('for', 'marker_options_ex_textarea_usersubmitted_' + user_submitted).text('Example').appendTo('#marker_index_options');
+			var exR = $('<textarea />').addClass('marker_options_input marker').attr({
+				'aria-label': 'Example',
+				'data-type': 'Example',
+				'style': 'display: block;',
+				'id': 'marker_options_ex_textarea_usersubmitted_' + user_submitted
+			}).appendTo('#marker_index_options');
+
+			//<button id="marker_save_btn_1" class="marker_preset_save_btn" style="display: block;">Save</button>
+			var but = $('<button />').attr({
+				'id': 'user_submitted_rule_save_btn_' + user_submitted,
+				'class': 'marker_preset_save_btn',
+				'style': 'display: block;'
+			}).text('Save').click(function(e) {
+				savePresets();
+			}).appendTo('#marker_index_options');
+
+			var butCan = $('<button />').attr({
+				'id': 'user_submitted_rule_cancel_btn_' + user_submitted,
+				'class': 'marker-remove-rec-link marker_preset_save_btn',
+				'style': 'display: block;'
+			}).text('Cancel').appendTo('#marker_index_options');					
+
+		}
 		
 	});
 

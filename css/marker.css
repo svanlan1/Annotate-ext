@@ -3,6 +3,10 @@
 *Website:http://www.sheavanlaningham.com
 ***********************************************/
 /* Global styles */
+
+#marker_body_wrap{ width:100%; height: z-index: 2147483634 !important; position: absolute; top: 0; display: block;}
+
+
 .ubuntu{font-family:'Ubuntu',sans-serif}
 
 .marker{font-family:'Raleway',sans-serif}
@@ -35,8 +39,6 @@ h1.marker{padding:2px; border-bottom:1px solid #666; text-align:center; -webkit-
 h2.marker{padding:2px; font-weight:normal; text-align:left; color:#000; font-size:13px !important; line-height:20px;  padding:5px;  margin:0;  background-color:#eee;  position:initial;  width:auto;  height:auto}
 
 h2.marker_drag:active{background-color:#888}
-
-div.marker{color:#000 !important}
 
 button{margin-top:0 !important; vertical-align:initial}
 
@@ -172,9 +174,9 @@ strong.aria{border-bottom:2px solid #0d5e05; width:100%; display:block; backgrou
 
 @media print{ #marker_iframe{ display:none}
 
- #marker_body_wrap{ width:50%}
-}
 
+
+}
 /***************************
 New styles
 ****************************/
@@ -198,7 +200,7 @@ New styles
 
 #marker-a11y-panel-h2:hover{cursor:move}
 
-.marker-panel-heading{font-size:14px !important; display:block !important; background-color:#eaeaea !important; font-weight:bold !important; font-family:'Raleway',sans-serif !important; padding:6px !important; color:#000 !important; max-width:305px !important; position:initial !important;  margin:0 !important;  /* padding:0; */ width:auto !important;  height:auto !important;  line-height:initial !important;  font-size:16px !important;  text-align:left !important}
+.marker-panel-heading{font-size:14px !important; display:block !important; background-color:#eaeaea !important; font-weight:bold !important; font-family:'Raleway',sans-serif !important; padding:6px !important; color: #000 !important; max-width:305px !important; position:initial !important;  margin:0 !important;  /* padding:0; */ width:auto !important;  height:auto !important;  line-height:initial !important;  font-size:16px !important;  text-align:left !important}
 
 .marker-panel-heading:hover{cursor:move}
 
@@ -232,7 +234,7 @@ New styles
 
 .marker-context-iframe{display:block; overflow-x:hidden; border:0; height:100%; width:427px}
 
-#marker-results-ifr{display:block; border:0; width:100%; height:100% !important; background-color:#fff; position:absolute}
+#marker-results-ifr{display:block; border:0; height:100% !important; background-color:#fff; position:absolute; z-index: 21455456;}
 
 #marker-pin-colors-iframe{display:block; border:0; overflow-x:hidden; height:390px; max-width:210px}
 
@@ -294,11 +296,10 @@ input.marker_box_width_select {
 	padding: 0;
 	top: -56px;
 	left: 8px;
-	opacity: .8;
 }
 
 .marker_note_hover_change_div:hover {
-	opacity: 1.0;
+
 }
 
 .marker_note_hover_change_button {
@@ -342,7 +343,10 @@ kbd.marker{padding:10px; background-color:#eee; border:1px solid #666; display:i
 	background-color: none;
 	border-radius: 5px;
 	z-index:2147483633;
+}
 
+.marker_text_note_marker:hover {
+	outline: dotted 1px #000;
 }
 
 .marker_text_note_marker_textarea:hover, .marker_text_note_marker_textarea:focus {
@@ -354,22 +358,21 @@ kbd.marker{padding:10px; background-color:#eee; border:1px solid #666; display:i
 .marker_text_note_marker_textarea {
 	border: 0;
 	position:absolute;
-	font-family: 'Rock Salt', cursive;
+	font-family: 'Rock Salt', cursive !important;
 	font-weight: bold;
 	background:none;
     padding: 0;
     margin: 0;
     overflow: hidden;
     padding-left: 10px;
-	width: 99%;
     height: 94%;
     bottom: 2px;    
 }
 
 .marker_text_hover_color {
 	z-index: 2147483635;
-    height: 47px !important;
-    width: 50px !important;
+    height: 97% !important;
+    width: 25px !important;
     color: #fff;
     border: solid 1px #ccc !important;
     font-size: 0 !important;
@@ -383,11 +386,12 @@ kbd.marker{padding:10px; background-color:#eee; border:1px solid #666; display:i
 	display: inline-block;
 	position: absolute;
 	padding-left: 5px;
+	padding-top: 4px;
 }
 
 .marker_text_options_checkboxes label {
 	display: inline-block;
-	font-family: 'Raleway', sans-serif;
+	font-family: 'Raleway', sans-serif !important;
 	font-size: 13px;
 }
 
@@ -509,6 +513,10 @@ a.change_width, a.change_width_pin{display:inline !important; border:0 !importan
 
 a.change_width img, a.change_width_pin img{height:auto !important; width:auto !important; display:inline !important}
 
+a.change_op, a.change_op_pin{display:inline !important; border:0 !important; padding:0 !important; vertical-align:-webkit-baseline-middle}
+
+a.change_op img, a.change_op_pin img{height:auto !important; width:auto !important; display:inline !important}
+
 .clear-line{border-bottom:1px solid #ccc; display:block; width:100%; height:10px; margin-top:5px; margin-bottom:5px}
 
 .input-label{margin-top:20px; font-size:14px; font-weight:bold; display:none; margin-left:8px}
@@ -550,6 +558,36 @@ a.change_width img, a.change_width_pin img{height:auto !important; width:auto !i
 
 .prev-box-settings {
 
+}
+
+.annotate-highlight-panel {
+	box-shadow:#c00 3px 3px 50px 1px !important;
+}
+
+.ann-prev-list-cont {
+	position: absolute;
+	top: 10;
+	left: 20;
+	height: auto;
+	background-color: #fff;
+	border: solid 2px #000;
+}
+
+.ann-prev-list-cont a {
+	display: block;
+	color: #000;
+	text-decoration: none;
+	border-bottom: solid 1px #666;
+}
+
+.ann-prev-list-cont a:hover, .ann-prev-list-cont a:focus {
+	background: #666;
+	color: #fff;
+}
+
+span.small {
+	font-size: .8rem;
+	color: #333;
 }
 
 /*  Marker Panel styles /*

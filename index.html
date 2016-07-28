@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Marker!</title>
+		<title>Annotate!</title>
 		<link href='css/railway.css' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu" />
 		<link rel="stylesheet" type="text/css" href="css/marker.css" />
 		<script src="js/jquery.js" type="text/javascript"></script>
 		<script src="js/jquery-ui.js" type="text/javascript"></script>
-		<script src="js/jscolor.min.js" type="text/javascript"></script>
+		<script src="js/jscolor.js" type="text/javascript"></script>
 		<script src="js/options.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div class="body marker">
-			<h1 class="pretty">Marker!</h1>
+			<h1 class="pretty">Annotate!</h1>
 			<span class="tabs" role="tablist">			
 				<h2 id="marker-group-h2">
-					<a href="javascript:void(0);" class="tab tab-selected" aria-controls="def_show_hide" aria-expanded="true" id="def_ops">Change default Marker options <span class="screen-reader-only"> click to show changable options</span></a></h2>
+					<a href="javascript:void(0);" class="tab tab-selected" aria-controls="def_show_hide" aria-expanded="true" id="def_ops">Change default annotation options <span class="screen-reader-only"> click to show changable options</span></a></h2>
 				<h2>
 					<a href="javascript:void(0);" class="tab" aria-controls="rec_show_hide" aria-expanded="false" id="change_recs">Change the preset recommendations <span class="screen-reader-only"> click to change preset recommendation text</span></a></h2>	
 				<h2>
@@ -23,7 +23,7 @@
 				<h2>
 					<a href="javascript:void(0);" class="tab" aria-controls="faq_hide_show" aria-expanded="false" id='show_faq'>FAQ <span class="screen-reader-only"> click to read Frequently Asked Questions</span></a></h2>
 			</span>							
-			<div class="alert" tabindex="-1"><img src="images/check_24_pass.jpg" alt="Success!" />Your settings have been saved.  These settings will take effect on the next new instance of Marker.</div>
+			<div class="alert" tabindex="-1"><img src="images/check_24_pass.jpg" alt="Success!" />Your settings have been saved.  These settings will take effect on the next new instance of Annotate.</div>
 			<div  id="def_show_hide" class="split">				
 				<div class="instruction" id="def_instrucs">
 				<p class="instruction">
@@ -32,25 +32,7 @@
 						<input type="text" id="marker_username" placeholder="Enter your name" />
 					</span>
 				</p>					
-					<h3><a href="javascript:void(0);" class="default_options_a" aria-expanded="false">Change preset grouping</a></h3>
-						<div class="default_group_toggle">
-						<span class="instructional">
-							These are the options that will load on each new instance of Marker.  You can change these options at the page level, but they will not persist.  The only way to get the preset recommendations, color, width, and pin color to persist is through these options.
-						</span>					
-						<span style="padding-left: 20px; padding-right: 20px; width: 97%; display:block;" role="group" aria-labelledby="marker-group-h2">
-						
-							<input type="radio" name="def" id="a11y" /><label for="a11y">Accessibility</label><br />
-							<input type="radio" name="def" id="html" /><label for="html">HTML</label><br />
-							<input type="radio" name="def" id="blank" /><label for="blank">Blank (Notes Only)</label><br />	
-							<div class="clear-line"></div>					
-							<strong>Accessibility</strong> will give you the ability to place accessibility recommendations throughout the page.  Additionally, it also has a 'Quick-check' button that will analyze the current HTML of the page and place markers on all of the elements that it takes issue with.  Running the 'Accessibility Quick-check' tool will also pre-populate the recommendations area.<div class="clear-line"></div>
-							<strong>HTML</strong> will give you the ability to place HTML element recommendations on the current HTML page.<div class="clear-line"></div>
-							<strong>Blank</strong> will simply give you a textarea field for each marker.<div class="clear-line"></div>
-							<strong>COMING SOON</strong> entering your own preset recommendations on 'Blank'<div class="clear-line"></div>
-							<input type="checkbox" id="show_tips-chk" /><label for="show_tips_chk" class="marker_options_edit" style="display: inline;">Show tips</label>
-						</span>
-					</div>
-					<h3><a href="javascript:void(0);" class="default_options_a" aria-expanded="false">Change default box options</a></h3>
+				<h3><a href="javascript:void(0);" class="default_options_a" aria-expanded="false">Change default box options</a></h3>
 						<div class="default_group_toggle">
 							<span class="instruct_span" role="group" aria-labelledby="marker-group-h2">
 								<label class="marker_options_edit" for="marker_select_border_color">Box color</label>
@@ -116,18 +98,18 @@
 								<img src="images/icons.jpg" style="width: 195px;"  alt="" />
 								<div class="clear-line"></div>
 
-								<label class="marker_options_edit" for="marker_select_highlight_color">Highlight color</label>
+								<!--label class="marker_options_edit" for="marker_select_highlight_color">Highlight color</label>
 								<input type="text" id="marker_select_highlight_color" class="jscolor" aria-describedby="hex_instruct" /><br />	
-								<span class="instructional">Highlighting is accomplished by selecting text on the page, 'Right clicking', and selecting 'Highlight with Marker!'</span>									
+								<span class="instructional">Highlighting is accomplished by selecting text on the page, 'Right clicking', and selecting 'Highlight with Annotate!'</span-->									
 
 								<!--button class="marker_preset_save_btn" style="display:block; margin-top: 10px !important; width: 25%; margin-left: 0;" id="save_options">Save</button-->
 							</span>
 						</div>
 					
-					<h3><a href="javascript:void(0);" class="default_options_a" aria-expanded="false">Change reporting styles</a></h3>
+					<!--h3><a href="javascript:void(0);" class="default_options_a" aria-expanded="false">Change reporting styles</a></h3>
 					<div class="default_group_toggle">
 
-					</div>
+					</div-->
 					
 
 					<!--h3><a href="javascript:void(0);" class="default_options_a" aria-expanded="false">Change event options</a></h3>
@@ -144,7 +126,24 @@
 
 
 			<div id="rec_show_hide" class="split">
-				
+				<h3><a href="javascript:void(0);" class="default_options_a" aria-expanded="false">Change preset grouping</a></h3>
+				<div class="default_group_toggle">
+					<span class="instructional">
+						These are the options that will load on each new instance of Marker.  You can change these options at the page level, but they will not persist.  The only way to get the preset recommendations, color, width, and pin color to persist is through these options.
+					</span>					
+					<span style="padding-left: 20px; padding-right: 20px; width: 97%; display:block;" role="group" aria-labelledby="marker-group-h2">
+					
+						<input type="radio" name="def" id="a11y" /><label for="a11y">Accessibility</label><br />
+						<input type="radio" name="def" id="html" /><label for="html">HTML</label><br />
+						<input type="radio" name="def" id="blank" /><label for="blank">Blank (Notes Only)</label><br />	
+						<div class="clear-line"></div>					
+						<strong>Accessibility</strong> will give you the ability to place accessibility recommendations throughout the page. <div class="clear-line"></div>
+						<strong>HTML</strong> will give you the ability to place HTML element recommendations on the current HTML page.<div class="clear-line"></div>
+						<strong>Blank</strong> will simply give you a textarea field for each marker.<div class="clear-line"></div>
+						<strong>COMING SOON</strong> entering your own preset recommendations on 'Blank'<div class="clear-line"></div>
+						<input type="checkbox" id="show_tips-chk" /><label for="show_tips_chk" class="marker_options_edit" style="display: inline;">Show tips</label>
+					</span>
+				</div>				
 				<p class="instruction">
 					
 					If you'd like to change the recommendations, you can do it here.<br /><br />
@@ -215,7 +214,7 @@
 				
 				</div>
 				<p class="instruction">
-					<a href="javascript:void(0);" id="add-new-req">Add new preset recommendation</a>
+					<a href="#" id="add-new-req">Add new preset recommendation</a>
 				</p>
 				<div id="marker_index_options">
 
@@ -236,70 +235,70 @@
 
 
 			<div id="faq_hide_show" class="split">
-				<h3>What is Marker?</h3>
+				<h3>What is Annotate?</h3>
 				<p class="instruction">
-					Marker is a Google Chrome extension developed to help expedite making annotations on designs for web accessibility.
+					Annotate is a Google Chrome extension developed to help expedite making notes and annotations on designs for web accessibility.
 				</p>
 
 
-				<h3 id="howTouse">How to use Marker</h3>
+				<h3 id="howTouse">How to use Annotate</h3>
 				<p class="instruction">
-					Click on the 'Marker' icon in the upper right hand corner of Chrome<br />
+					Click on the 'Annotate' icon in the upper right hand corner of Chrome<br />
 					<img src="images/s1.png" alt="" />
 				</p>
 				<p class="instruction">
-					The 'Marker Panel' will appear on the left side of your screen by default.  However, the panel is moveable and the position of the panel is stored.  That means that wherever you drop then panel is where it will continue to appear each time you start Marker, until you move it again.<br />
+					The 'Annotation Panel' will appear on the left side of your screen by default.  However, the panel is moveable and the position of the panel is stored.  That means that wherever you drop then panel is where it will continue to appear each time you start Annotate, until you move it again.<br />
 					<img src="images/s2.png" alt="" />
 				</p>
 				<p class="instruction">
 					Each icon provides you with a different option.
 					<ul style="padding: 15px; list-style-type: none;">
 						<li><img src="images/select_24.png" alt="" /> - Draw a box on the screen</li>
-						<li><img src="images/pins/pin_24_inactive.png" style="width: 24px;" alt="" /> - Place a marker on the screen</li>
-						<li><img src="images/clear.png" alt="" /> - Removes all markers and boxes on the screen and resets the counter to zero</li>
+						<li><img src="images/pins/pin_24_inactive.png" style="width: 24px;" alt="" /> - Place a pin on the screen</li>
+						<li><img src="images/clear.png" alt="" /> - Removes all pins and boxes on the screen and resets the counter to zero</li>
 						<li><img src="images/save_24.png" alt="" /> - Appends your recommendations to the bottom of the page</li>
 					</ul>
 				</p>
 				<p class="instruction">
-					You can change the size and color of the box from the Marker Panel on any web page.<br />
+					You can change the size and color of the box from the Annotation Panel on any web page.<br />
 					<img src="images/s3.png" alt="" />
 				</p>
 				<p class="instruction">
-					Changing the size and color of the box from the Marker Panel only changes the settings for that individual session.<br />
+					Changing the size and color of the box from the Annotation Panel only changes the settings for that individual session.<br />
 					To change the default color and box width, change the settings on the 'Options' page.<br />
 					<img src="images/s4.jpg" alt="" />
 				</p>
 				<p class="instruction">
-					You can also change the 'Marker' or 'Pin' color.<br />
+					You can also change the pin color.<br />
 					<img src="images/s5.png" alt="" /><br />
-					Just like the box width and color, you can change the color on the 'Marker Panel' for that individual session, or change the default marker/pin color on the options page.<br />
+					Just like the box width and color, you can change the color on the 'Annotation Panel' for that individual session, or change the default marker/pin color on the options page.<br />
 					<img src="images/s6.jpg" alt="" />
 				</p>
 
 
-				<h3>Why was Marker created?</h3>
+				<h3>Why was Annotate created?</h3>
 				<p class="instruction">
 					After spending far too much time making annotations on designs and developed pages, writing the same text over and over and over and over again, I decided to create this extension to make this process easy, painless, consistent, and accurate. <br />
-					Using Marker ensures that the latest guidelines are followed and allows the user to quickly create documents to hand off to developers.
+					Using Annotate ensures that the latest guidelines are followed and allows the user to quickly create documents to hand off to developers.
 				</p>
-				<h3>How does Marker work?</h3>
+				<h3>How does Annotate work?</h3>
 				<p class="instruction">
-					With Marker, you are able to place pins on the page, highlight elements, and make annotations directly on the page.
+					With Annotate, you are able to place pins on the page, highlight elements, and make annotations directly on the page.
 				</p>
-				<h3>Who should use Marker?</h3>
+				<h3>Who should use Annotate?</h3>
 				<p class="instruction">
-					Marker can be used by anyone!  Designers, developers, business analysts, or even less technically saavy users (e.g., I want someone to build me a website, but I want to make sure that it's accessible).
+					Annotate can be used by anyone!  Designers, developers, business analysts, or even less technically saavy users (e.g., I want someone to build me a website, but I want to make sure that it's accessible).
 				</p>
 				<h3>What types of pages does Marker work on?</h3>
 				<p class="instruction">
-					Currently, Marker only works on HTML pages.  You do <strong>not</strong> need to be online in order to use Marker.
+					Currently, Annotate only works on HTML pages.  You do <strong>not</strong> need to be online in order to use Annotate.
 				</p>
 				<h3>What am I supposed to do with the annotations?</h3>
 				<p class="instruction">
 					Once you've finished drawing your annotations on the page, press 'Save'.  This saves your notes and draws them on the bottom of the 'body' element.<br />
 					From here, for the foreseeable future, you can save the page by pressing 'Ctrl + S' to save the entire webpage.  This saves all of the notes and annotations in HTML format that you can then send along.
 				</p>
-				<h3>What Accessibility Guidelines does Marker conform to?</h3>
+				<h3>What Accessibility Guidelines does Annotate conform to?</h3>
 				<p class="instruction">
 					Marker uses WCAG 2.0 Level AA recommendations.  This is the most common set of guidelines followed by Web accessibility professionals.
 				</p>

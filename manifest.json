@@ -1,6 +1,7 @@
 {
-  "name": "Marker!",
-  "version": "0.5.5",
+  "name": "Annotate!",
+  "short_name": "Page annotation made easy.",
+  "version": "0.6.31",
   "manifest_version": 2,
   "author": "Shea VanLaningham",
   "options_page": "index.html",
@@ -12,7 +13,16 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["js/jscolor.js", "js/helper.js", "js/marker_text.js", "js/marker_context.js", "js/marker_pins.js", "js/marker_box.js", "js/marker_highlight.js", "js/marker_a11y.js", "js/test_anchors.js", "js/test_html.js", "js/test_images.js", "js/marker.js", "js/jquery.js", "js/jquery-ui.js"],
+      "js": ["js/jscolor.js", 
+        "js/helper.js", 
+        "js/marker_text.js", 
+        "js/marker_context.js", 
+        "js/marker_pins.js", 
+        "js/marker_box.js", 
+        "js/marker_highlight.js",
+        "js/marker.js", 
+        "js/jquery.js", 
+        "js/jquery-ui.js"],
       "css": ["css/architects_daughter.css", "css/rocksalt.css", "css/marker.css", "css/jquery-ui.structure.min.css"],
       "run_at" : "document_start"
     }
@@ -36,6 +46,7 @@
     "images/add_text_24_inactive.png",
     "images/add_text_24.png",
     "images/alarm.png",
+    "images/arrow_24.png",
     "images/check_24_inactive.png",
     "images/check_24_error.png",
     "images/check_24_pass.png",

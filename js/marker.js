@@ -29,7 +29,12 @@ function run_marker(welcome) {
 	mCount = 1;
 
 	//Wrap the body element content in a div.  This is so that we can place the markers and draw the boxes on the correct spot on the page
-	$('body').wrapInner('<div id="marker_body_wrap" />');
+	$('body').append('<div id="marker_body_wrap" />');
+	$('#marker_body_wrap').css({
+		'height': $(document).height() + 'px',
+		'width': $(document).width() + 'px',
+		'z-index': '2147483629'
+	});
 	$('<canvas />').attr('id', 'marker-canvas-element').appendTo('body');
 	
 	//Add CSS to head of the document so Marker can access it
@@ -44,18 +49,25 @@ function run_marker(welcome) {
 
 	//Get pageJson object.  This object determines if previous markings have been made on the page.
 	//This feature will not do much until the paid version of this is released.
-	//get_page_json();
+	get_page_json();
 
-	//display_previous();
+	display_previous();
 }
 
 /*******************************************************
 *	Create the tools panel and place it on the screen
 *******************************************************/
 function create_marker_panel() {
-	//Create the panel for the Marker! tools
+	//Create the panel for the Annotate! tools
 	var left = localStorage.getItem('left'),
 		top = localStorage.getItem('top');
+
+	var panelCss = {
+		'left': left + 'px',
+		'top': top + 'px',
+		'position': 'fixed',
+		'width': '210px'
+	}
 
 	//Determine the location of the Marker panel.  If it is too close to the left or top of the screen, position it somewhere the user will be able to see it fully
 	if(parseInt(left) > $(window).width()) {
@@ -81,34 +93,37 @@ function create_marker_panel() {
 	}).draggable({
       containment: 'parent',
       stop: function() {
+        $(this).removeClass('annotate-highlight-panel');
         $(this).css('position', 'fixed');
 		$('#marker-control-panel').css('height', 'auto');
 		localStorage.setItem('top', $(this).offset().top);
 		localStorage.setItem('left', $(this).offset().left);
 		sendUpdate();       
       }
-    }).css({
-		'left': left + 'px',
-		'top': top + 'px',
-		'position': 'fixed',
-		'width': '210px'
-	}).appendTo('body');
+    }).css(panelCss).appendTo('body');
+
+    if(localStorage.getItem('show_tips') === 'true') {
+    	$(div).addClass('annotate-highlight-panel');
+    	$(div).click(function() {
+    		$(div).removeClass('annotate-highlight-panel');
+    	})
+    }
 
     //Draw the Marker panel heading
 	var h = $('<div />').attr({
 		'class': 'marker marker-panel-heading'
-	}).text('Marker!').appendTo(div);
+	}).text('Annotate!').appendTo(div);
 
 	var res_a = $('<a />').attr({
 		'href': 'javascript:void(0);',
-		'title': 'Hide Marker!',
+		'title': 'Hide Annotate!',
 		'aria-selected': 'false',
 		'class': 'marker_window_resize_anchor'
 	}).appendTo(div);
 
 	var res_a_img = $('<img />').attr({
 		'src': chrome.extension.getURL('images/minimize.png'),
-		'alt': 'Hide Marker!'
+		'alt': 'Hide Annotate!'
 	}).appendTo(res_a);
 
 	$(res_a).click(function() {
@@ -129,20 +144,17 @@ function create_marker_panel() {
 		if(localStorage.getItem('draw') === 'false') {
 			unplace_marker();
 			stop_writing_text();
-			
 			localStorage.setItem('marker_place_flag', 'false');
 			$('#place_marker').find('img').attr('src', chrome.extension.getURL('images/pins/pin_24_inactive.png'));
 			$(this).find('img').attr('src', chrome.extension.getURL('images/select_24_active.jpg'));
 			localStorage.setItem('draw', 'true');
 			initDraw(document.getElementById('marker_body_wrap'));
-			//$('#marker_body_wrap').attr('style', 'cursor: url("'+chrome.extension.getURL('images/cursor_draw.png'+'"), default;'));
-			$('#marker_body_wrap').attr('style', 'cursor: copy');
+			$('#marker_body_wrap').css('cursor', 'copy');
 			if(localStorage.getItem('show_tips') === 'true') {
 				draw_tips_panel('To draw a box around an area on the page, click once and let the mouse draw the box.  The box is resizable and draggable.  So if you don\'t get the box in the perfect location, do not fret.  You can adjust it later.  <strong>Do not attempt to draw the box with the left mouse button pressed.  It will not work</strong>');
 			}
 			draw_select_color_options();
 		} else {
-			$('#marker_body_wrap').css('cursor', 'default !important;');
 			localStorage.setItem('draw', 'false');
 			$(this).find('img').attr('src', chrome.extension.getURL('images/select_24.png'));
 			stop_drawing_boxes(document.getElementById('marker_body_wrap'));
@@ -164,7 +176,8 @@ function create_marker_panel() {
 			localStorage.setItem('draw', 'false');
 			stop_writing_text();
 			stop_drawing_boxes(document.getElementById('marker_body_wrap'));
-			place_marker();	
+			place_marker();
+			$('#marker_body_wrap').css('cursor', 'pointer');	
 			draw_new_marker_options();
 			draw_tips_panel('To place a marker on the screen, simply select the pin you\'d like to place and click on the screen.  To edit the pin\'s note, "Right click" on the note.  <strong>Note:</strong> All pins are draggable.  You can reposition them anywhere on the page.<br />');
 		} else {
@@ -187,8 +200,7 @@ function create_marker_panel() {
 			$(this).find('img').attr('src', chrome.extension.getURL('images/add_text_24.png'));
 			localStorage.setItem('addText', 'true');
 			localStorage.setItem('draw', 'false');
-
-			$('#marker_body_wrap').css('cursor', 'default !important;');
+			$('#marker_body_wrap').css('cursor', 'text');
 			$('#marker_draws img').attr('src', chrome.extension.getURL('images/select_24.png'));
 			$('#place_marker img').attr('src', chrome.extension.getURL('images/pins/pin_24_inactive.png'))
 			draw_text_options();	
@@ -240,9 +252,9 @@ function create_marker_panel() {
 		});			
 	}*/	
 
-	//Display the Marker panel, fade in quickly
+	//Display the Annotate panel, fade in quickly
 	$(div).fadeIn('fast');
-	draw_tips_panel('Thanks for using Marker!  In this area, you\'ll find tips as you navigate your way through the page<br />');
+	draw_tips_panel('Thanks for using Annotate!  In this area, you\'ll find tips as you navigate your way through the page<br />');
 }
 
 
@@ -252,7 +264,7 @@ function create_marker_panel() {
 *****************************************/
 function saveToPdf() {
 	
-	//update_page_json();
+	update_page_json();
 
 
 	$('#marker-results-ifr').remove();
@@ -264,7 +276,7 @@ function saveToPdf() {
 	var div = $('<div />').attr({
 		'id': 'marker-print-dialog',
 		'class': 'marker'
-	}).html('Thanks for using Marker!  In this initial release, there\'s no true "Save" feature.<br />Please close this dialog and press  <kbd>Ctrl</kbd> + <kbd>S</kbd> to save this as a .html file<br /><br />At the bottom of this page, you\'ll find all of the recommendations that you\'ve made.').appendTo('body');
+	}).html('Thanks for using Annotate!  In this initial release, there\'s no true "Save" feature.<br />Please close this dialog and press  <kbd>Ctrl</kbd> + <kbd>S</kbd> to save this as a .html file<br /><br />At the bottom of this page, you\'ll find all of the recommendations that you\'ve made.').appendTo('body');
 
 	var h = create_iframe('marker-results-ifr', 'body'),
 		bod = get_iframe_bod('marker-results-ifr'),
@@ -276,7 +288,7 @@ function saveToPdf() {
 	if(localStorage.getItem('user') !== '') {
 		var user = localStorage.getItem('user');
 	} else {
-		var user = ' [ no username set!  set username in Marker! options. ] '
+		var user = ' [ no username set!  set username in Annotate! options. ] '
 	}
 	$('<div />').addClass(' marker marker-display-timestamp').html('<strong>Created by: </strong>' + user).appendTo(res);
 	$('<div />').addClass(' marker marker-display-timestamp').html(timeStamp()).appendTo(res);
@@ -367,6 +379,13 @@ function resize_window(tip, text, val) {
 
 	var cur_wid = $(window).width()
 	var time;
+
+	$('#marker_body_wrap').css({
+		'height': $(document).height() + 'px',
+		'width': $(document).width() + 'px'
+	})
+
+
 	if($('#marker_window_resize_msg').length === 0) {
 		var d = $('<div />').attr({
 			'id': 'marker_window_resize_msg'
@@ -426,6 +445,8 @@ function sendUpdate() {
 		font_color: localStorage.getItem('font_color'),
 		font_outline: localStorage.getItem('font_outline'),
 		text_shadow_color: localStorage.getItem('text_shadow_color'),
+		text_background: localStorage.getItem('text_background'),
+		text_bg_opacity: localStorage.getItem('text_bg_opacity'),
 		text_h_shadow: localStorage.getItem('h_shadow'),
 		text_v_shadow: localStorage.getItem('v_shadow'),
 		text_blur_radius: localStorage.getItem('text_blur_radius'),
@@ -441,7 +462,7 @@ function stop_marker() {
 	unplace_marker();
 	$('*').removeClass('marker_body_wrap marker-flagged-issue');
 	$('.marker-highlight-text').removeAttr('style');
-	$('#marker-control-panel, .marker_context_menu, .marker_page_marker, .rectangle').remove();
+	$('#marker-control-panel, .marker_context_menu, .marker_page_marker, .rectangle, #marker_body_wrap').remove();
 
 	mCount = 0;
 	chrome.runtime.sendMessage({

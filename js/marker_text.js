@@ -1,5 +1,4 @@
 function add_note() {
-	$('#marker_body_wrap').attr('style', 'cursor: text; ');
 	$('#marker_body_wrap, #marker_body_wrap a, #marker_body_wrap button').bind('click', function(e) {
 		var x = e.pageX,
 			y = e.pageY,
@@ -20,7 +19,13 @@ function add_note() {
 
 		var div = $('<div />').resizable({
 	  		handles: "n, e, s, w, ne, nw, se, sw",
-	  		containment: "parent"
+	  		containment: "parent",
+	  		resize: function() {
+	  			$(div).find('textarea').css('width', $(div).width() - 10 + 'px');
+	  		},
+	  		stop: function() {
+	  			//$(div).find('textarea').css('width', $(div).width() - 10 + 'px');
+	  		}
 		}).draggable({
 			containment: 'parent'
 		}).attr({
@@ -31,16 +36,17 @@ function add_note() {
 			'left': e.pageX,
 			'top': e.pageY,
 			'position': 'absolute',
-			'height': localStorage.getItem('font_size').split('p')[0] * 5,
+			'height': localStorage.getItem('font_size').split('p')[0] * 2.8,
 			'width': wid,
 			'border': 'solid 1px ' + localStorage.getItem('font_outline')
 		}).click(function() {
 			$(this).addClass('marker_text_note_marker_selected');
 		}).appendTo('body');
 
-		var bg = localStorage.getItem('text_background');
+		var bg = localStorage.getItem('text_background'),
+			opacity = parseInt(localStorage.getItem('text_bg_opacity')) * .01;
 		$('<div />').css({
-			'opacity': '.3',
+			'opacity': opacity,
 			'background-color': bg,
 			'display': 'block',
 			'width': '100%',
@@ -55,18 +61,21 @@ function add_note() {
 		}).css({
 			'color': '#' + localStorage.getItem('font_color'),
 			'font-size': localStorage.getItem('font_size'),
-			'text-shadow': localStorage.getItem('text_shadow_color') + ' 1px 1px 2px'
+			'text-shadow': localStorage.getItem('text_shadow_color') + ' 1px 1px 2px',
+			'width': $(div).width() - 10 + 'px'
 		}).appendTo('#marker_text_note_' + nCount).focus();
 
 		var timeout;
 		$(div).hover(
 			function() {
 		        timeout = setTimeout(function(){
+		            $(div).find('img').fadeIn('slow');
 		            draw_textbox_options(t, nCount-1);
-		        }, 2000);
+		        }, 500);
 		    },
 		    function(){
 		        clearTimeout(timeout);
+		        $(div).find('img').fadeOut('slow');
 		        remove_textbox_options(t, nCount-1);
 		    }		  
 		);
@@ -87,8 +96,9 @@ function add_note() {
 
 		var img = $('<img />').attr('src', chrome.extension.getURL('images/notes.png')).attr('title', 'Right click to delete').attr('alt', 'Note ' + nCount).css({
 			'position': 'absolute',
-			'width': '48px',
-			'left': '-50px'
+			'width': '24px',
+			'left': '-26px',
+			'display': 'none'
 		}).bind('contextmenu', function(e) {
 			e.preventDefault();
 			$(div).remove();
@@ -161,7 +171,6 @@ function draw_text_options() {
 			var add = $('<a />').attr({
 				'id': 'marker_add_text_change'
 			}).addClass('change_width change_font_size marker_anchor').html('<img src="' + chrome.extension.getURL('images/plus.png') + '" alt="Increase font-size by 1px" />').appendTo(text_div);
-
 			
 			var tcLabel = $('<label />').css({
 				'font-weight': 'bold',
@@ -196,7 +205,7 @@ function draw_text_options() {
 				'border-bottom': 'solid 1px #aaa',
 				'margin-bottom': '5px',
 				'padding-left': '5px'
-			}).attr('for', 'marker_text_box_bg_color').addClass('marker').text('Box background color').css('width', '97%');			
+			}).attr('for', 'marker_text_box_bg_color').addClass('marker').text('Background color').css('width', '97%');			
 
 			$(new_border_color).ready(function() {
 				var font_cont_div = $('<div />');
@@ -219,15 +228,48 @@ function draw_text_options() {
 				$(outline_div).appendTo(div);
 			});
 
+
+			//Create Opacity change area on Annotate Panel
+			$('<strong />').addClass('marker').text('Change background opacity').css('width', '97%').appendTo(div);
+			var text_op_div = $('<div />').css({
+				'margin': '10px'
+			}).appendTo(div);
+			var sub_op = $('<a />').attr({
+				'id': 'marker_sub_op_change'
+			}).addClass('change_width change_op marker_anchor').html('<img src="' + chrome.extension.getURL('images/minus.png') + '" alt="Reduce background opacity by .1%" />').appendTo(text_op_div);
+			var change_op_input = $('<input />').attr({
+				'type': 'text',
+				'id': 'marker_text_change_opacity',
+				'class': 'marker_box_width_select',
+				'value': localStorage.getItem('text_bg_opacity').substring(0,3)
+			}).bind('mousewheel', function(e){
+		        e.preventDefault();
+		        var val = parseFloat($(this).val());
+		        if(e.originalEvent.wheelDelta /120 > 0) {
+					if(val < 100) {
+						val = val + 10;
+						localStorage.setItem('text_bg_opacity', val);
+					}				
+		        }
+		        else{
+					if(val > 0) {
+						val = val - 10;
+						localStorage.setItem('text_bg_opacity', val);
+					}
+		        }
+		        $(this).val(localStorage.getItem('text_bg_opacity'));
+		        sendUpdate();
+		    }).appendTo(text_op_div);
+			var add_op = $('<a />').attr({
+				'id': 'marker_add_op_change'
+			}).addClass('change_width change_op marker_anchor').html('<img src="' + chrome.extension.getURL('images/plus.png') + '" alt="Increase background opacity by .1%" />').appendTo(text_op_div);			
+
 			$(new_box_bg).ready(function() {
 				var bg_div = $('<div />');
 				$(box_bg_color_input).appendTo(bg_div);
 				$(bsLabel).prependTo(bg_div);
 				$(bg_div).appendTo(div);				
-			})	
-	
-			
-
+			});
 
 			$('.change_font_size').click(function() {
 				var val = $('#marker_text_font_size_input').val();
@@ -240,6 +282,25 @@ function draw_text_options() {
 				localStorage.setItem('font_size', val + 'px');
 				sendUpdate();
 			});
+
+			$('.change_op').click(function() {
+				var val = parseFloat($(change_op_input).val());
+				if($(this).attr('id') === 'marker_sub_op_change') {
+					if(val > 0) {
+						val = val - 10;
+					}
+					
+				} else {
+					if(val < 100) {
+						val = val + 10;
+					}
+					
+				}
+				$(change_op_input).val(val);
+				localStorage.setItem('text_bg_opacity', val);
+				sendUpdate();
+
+			})
 
 			$(shadow_color_input).change(function(e) {
 				localStorage.setItem('text_shadow_color', '#' + $(shadow_color_input).val());
@@ -308,6 +369,18 @@ function draw_textbox_options(el, counter) {
 		}).appendTo(container);
 		var change_shadow_color_js = new jscolor(change_shadow_color);
 
+		//Change the box background color
+		var change_bg_color = document.createElement('INPUT');
+		$(change_bg_color).attr('type', 'text');
+		$(change_bg_color).attr('style', 'z-index: 2147483635').attr('title', 'Change background color').addClass('jscolor marker_text_hover_color').val(localStorage.getItem('text_background'));
+		$(change_bg_color).change(function(e) {
+			$(this).css('color', '#' + $(this).val());
+			$(this).parent().parent().find('.marker_bg_opaque').css({
+				'background-color': '#' + $(this).val()
+			});
+		}).appendTo(container);
+		var change_bg_color_js = new jscolor(change_bg_color);		
+
 		var shad_bord_boxes = $('<div />').addClass('marker_text_options_checkboxes').appendTo(container);
 		var border_check = $('<input />').attr({
 			'type': 'checkbox',
@@ -367,8 +440,8 @@ function remove_textbox_options(el, counter) {
 
 function stop_writing_text() {
 	$('#marker_body_wrap, #marker_body_wrap a, #marker_body_wrap button').unbind('click');
-	$('#marker_body_wrap').css('cursor', 'default !important;');
-	$('#marker_body_wrap').removeAttr('style');
+	$('#marker_body_wrap').css('cursor', '');
+	//$('#marker_body_wrap').removeAttr('style');
 	$('#marker_add_text img').attr('src', chrome.extension.getURL('images/add_text_24_inactive.png'));
 	localStorage.setItem('addText', 'false');
 	$('#marker-box-text-drawer').slideUp('fast');

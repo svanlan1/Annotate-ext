@@ -11,7 +11,7 @@
 ************************************************/
 function place_marker() {
 
-	$('#marker_body_wrap').attr('style', 'cursor: url("'+chrome.extension.getURL('images/cursor_pin.png'+'"), default;'));
+	//$('#marker_body_wrap').attr('style', 'cursor: url("'+chrome.extension.getURL('images/cursor_pin.png'+'"), default;'));
 	$('#marker_body_wrap, #marker_body_wrap a, #marker_body_wrap button').bind('click', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
@@ -114,7 +114,7 @@ function unplace_marker() {
 	$('#marker_body_wrap, #marker_body_wrap a, #marker_body_wrap button').unbind('click');
 	$('#marker_pin_mouse_position_div').remove();
 	
-	$('#marker_body_wrap').removeAttr('style');
+	//$('#marker_body_wrap').removeAttr('style');
 
 }
 
