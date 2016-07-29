@@ -422,8 +422,8 @@ function resize_window(tip, text, val) {
 	var w_diff = cur_wid - parseInt(pre_wid),
 		h_diff = cur_heig - parseInt(pre_hei);
 
-	console.log('Width difference: ' + w_diff);
-	console.log('Heigh difference: ' + h_diff);
+	//console.log('Width difference: ' + w_diff);
+	//console.log('Heigh difference: ' + h_diff);
 
 	localStorage.setItem('marker_window_width', $(window).width());
 	localStorage.setItem('marker_window_height', $(window).height());	

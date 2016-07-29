@@ -22,7 +22,7 @@ function append_scripts_to_head(head, iframehead) {
 	var marker = $('<link />').attr({
 		'rel': 'stylesheet',
 		'type': 'text/css',
-		'href': chrome.extension.getURL('css/marker.css')
+		'href': chrome.extension.getURL('css/annotate.css')
 	});
 
 	if(head) {
@@ -275,7 +275,7 @@ function returnDate(date) {
 }
 
 function display_previous_annotations(ob) {
-	console.log(ob);
+	//console.log(ob);
 	
 	$('.rectangle, .marker_page_marker, .marker_text_note_marker').remove();
 

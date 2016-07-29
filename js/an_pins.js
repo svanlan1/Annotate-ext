@@ -35,9 +35,9 @@ function place_marker() {
 			}
 		}		
 
-		console.log('l_diff: ' + l_diff + ', e.pageX: ' + e.pageX);
-		console.log('t_diff ' + t_diff + ', e.pageY: ' + e.pageY);
-		console.log('Icon size: ' + val);
+		//console.log('l_diff: ' + l_diff + ', e.pageX: ' + e.pageX);
+		//console.log('t_diff ' + t_diff + ', e.pageY: ' + e.pageY);
+		//console.log('Icon size: ' + val);
 		var x = e.pageX - l_diff,
 			y = e.pageY - t_diff;
 
