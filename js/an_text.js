@@ -426,7 +426,37 @@ function draw_textbox_options(el, counter) {
 
 		var bg_lab = $('<label />').attr({
 			'for': 'marker_text_options_show_bg' + counter
-		}).text('Show box background').appendTo(shad_bord_boxes);		
+		}).text('Show box background').appendTo(shad_bord_boxes);
+
+		var font_select = $('<select />').addClass('ann-sel-text-option').appendTo(container);
+		var op0 = $('<option />').attr({
+			'value': 'Rock Salt, cursive'
+		}).text('Rock Salt').appendTo(font_select);
+
+		var op1 = $('<option />').attr({
+			'value': 'Arial, sans-serif',
+			'text': 'Arial'
+		}).text('Arial').appendTo(font_select);
+
+		var op2 = $('<option />').attr({
+			'value': '"Calibri Light", sans-serif',
+			'text': 'Calibri Light',
+		}).text('Calibri Light').appendTo(font_select);
+
+		var op3 = $('<option />').attr({
+			'value': 'Segoe UI, sans-serif',
+			'text': 'Segoe UI'
+		}).text('Segoe UI').appendTo(font_select);
+
+		var op4 = $('<option />').attr({
+			'value': '"Architects Daughter" ,cursive',
+		}).text('Architects Daughter').appendTo(font_select);
+
+		$(font_select).change(function(e) {
+			var style = $(this).parent().parent().find('textarea').attr('style');
+			style += ' font-family:' + $(this).val() + ' !important;';
+			$(this).parent().parent().find('textarea').attr('style', style);
+		});
 
 		//Change the box bg color
 	}

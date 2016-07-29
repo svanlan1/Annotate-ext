@@ -301,8 +301,6 @@ function display_previous_annotations(ob) {
 				var inside_div = $('<div />').css({
 					'background-color': v.box_bg_color,
 					'opacity': '.3',
-					'width': '100%',
-					'height': '100%'
 				}).appendTo(div);
 	            $(div).draggable();
 	        	$(div).resizable({

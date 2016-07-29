@@ -287,7 +287,7 @@ input.marker_box_width_select {
 .marker_note_hover_change_div {
 	position: absolute;
 	width: 300px;
-	height: 50px;
+	height: 75px;
 	background-color: #fff;
 	border: 1px solid #ccc;
 	box-shadow: #222 0 2px 6px 2px;
@@ -358,7 +358,7 @@ kbd.marker{padding:10px; background-color:#eee; border:1px solid #666; display:i
 .marker_text_note_marker_textarea {
 	border: 0;
 	position:absolute;
-	font-family: 'Rock Salt', cursive !important;
+	font-family: 'Rock Salt', cursive;
 	font-weight: bold;
 	background:none;
     padding: 0;
@@ -597,6 +597,10 @@ span.ann-circle {
 	font-family:'Raleway',cursive; font-weight:bold;  width:auto;  height:auto; padding: 1px;   font-size:16px;  line-height:6px;  text-align:center;  color:#666;   border:2px dotted #d10505;  border-radius:50%;  background-color:#fff; display: inline-block; margin-right: 5px; box-shadow: #777 0 1px 1px 2px;
 }
 
+span.ann-circle img {
+	vertical-align: initial !important;
+}
+
 #ann-alarm:focus, #ann-alarm:hover {
 	outline: dotted 1px #000;
 	display: inline-block;
@@ -610,6 +614,14 @@ span.ann-circle {
 
 .ann-list-trash img {
 	width: 14px;
+}
+
+.ann-sel-text-option {
+	position: absolute;
+    bottom: 0;
+    padding: 4px;
+    margin-left: 5px;
+    margin-top: 2px;
 }
 
 /*  Marker Panel styles /*
