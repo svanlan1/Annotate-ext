@@ -107,6 +107,10 @@ function get_select_options() {
 }
 
 function update_page_json() {
+	//REMOVE THIS IN ORDER TO PROVIDE LIST OF FULL RESULTS/SAVES - not just this page.
+	if(page_val) {
+		sess_id = page_val;
+	}
 	for(var i in pageJson) {
 		if(pageJson[i][sess_id]) {
 			pageJson[i][sess_id] = [];
@@ -323,6 +327,8 @@ function display_previous_annotations(ob) {
 			case 'pin':
 				var a = $('<a />').addClass('marker_page_marker marker_anchor').attr({
 					'data-marker-count': v['data-marker-count'],
+					'data-marker_pin_size': v['pin_size'],
+					'data_marker_flag_color': v['flag-color'],
 					'href': 'javascript:void(0);'
 				}).css({
 					'position': 'absolute',
@@ -336,6 +342,7 @@ function display_previous_annotations(ob) {
 				}).css({
 					'width': v['pin_size']
 				}).appendTo(a);
+				mCount++;
 				break;
 			case 'text':
 				var div = $('<div />').addClass('marker_text_note_marker').attr('id', 'marker_text_note_' + nCount).css({
@@ -437,21 +444,39 @@ function display_previous_annotations(ob) {
 	})
 }
 
+function get_ann_length(url) {
+	var len = 0;
+	for (var i in pageJson) {
+		if(pageJson[i]['url'] === url) {
+			var val = pageJson[i]['val'];
+			if(pageJson[i][val].length > 0) {
+				len++;
+			}
+			
+		}
+	}
+
+	return len;
+}
+
 function display_previous() {
 	var url = window.location.href;
+	var an_len = get_ann_length(url);
 	for (var i in pageJson) {
 		if(pageJson[i]['url'] === url) {
 			var val = pageJson[i]['val'];
 			var len = pageJson[i][val].length;
 			if(len > 0) {
-				$('.marker-panel-heading').prepend('<a href="javascript:void(0);"><img id="ann-alarm" style="padding-right: 5px; vertical-align: baseline; width: 20px;" src="' + chrome.extension.getURL('images/alarm.png') + '" title="You have previous markings on this page!" /></a>');
-				var img = $('#ann-alarm').parent();
+				$('.marker-panel-heading').prepend('<a id="ann-alarm" href="javascript:void(0);" title="You have previous annotations on this page!  Click to view."><span class="ann-circle marker"><img src="'+chrome.extension.getURL('images/previous.png')+'" alt="" /></span></a>');
+				var img = $('#ann-alarm');
 				$(img).click(function() {
 					//display_previous_annotations(pageJson[i]);
 					if($('.ann-prev-list-cont').length === 0) {
+						//$('#ann-alarm').attr('src', chrome.extension.getURL('images/list_active.png'));
 						show_previous_dialog();
 					} else {
 						$('.ann-prev-list-cont').remove();
+						//$('#ann-alarm').attr('src', chrome.extension.getURL('images/list_inactive.png'));
 					}
 					
 				});
@@ -474,13 +499,43 @@ function show_previous_dialog() {
 				var click_val = v;
 				$(a).click(function(e) {
 					$('.ann-prev-list-cont').remove();
+					//$('#ann-alarm').attr('src', chrome.extension.getURL('images/list_inactive.png'));
+					page_val = v.val;
 					display_previous_annotations(click_val);
 				});
+		    	$(a).bind('contextmenu',function(e) {
+		    		e.preventDefault();
+		    		if(confirm('Do you really want to remove this set of annotations?')) {
+		    			remove_row_from_json(this);
+		    		}
+		    		
+		    	});					
 			}
 		}
 	});
 
 	$('#marker_body_wrap').click(function() {
 		$('.ann-prev-list-cont').remove();
+		//$('#ann-alarm').attr('src', chrome.extension.getURL('images/list_inactive.png'));
 	})
+}
+
+function remove_row_from_json(el) {
+	var val = parseInt($(el).attr('data-ann-val'));
+	for (var i in pageJson) {
+		if(pageJson[i]['val'] === val) {
+			$('.ann-prev-list-cont').remove();
+			//pageJson.splice( parseInt(i), 1 );
+			pageJson[i][val] = [];
+			update_page_json();
+			var num = $('.ann-prev-list-item a').length;
+			$('.ann-circle').text(num);
+			if(num === 0) {
+				$('#ann-alarm').remove();
+			}
+			page_val = '';
+			
+		}
+	}
+	console.log(el);
 }

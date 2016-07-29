@@ -13,6 +13,7 @@ var nCount = 1; // Running tally of how many notes have been placed on the page
 var pageJson = []; // Create a json object to track all of pages markings
 var issues = []; // Array of all of the failed items on the page from the Accessibility checker
 var sess_id = "";//Create session ID for the saving of page markings
+var page_val; //Variable to track the page_val for annotation edits
 //Variable controls whether or not clicking in the page should place a flag.  Default = false
 localStorage.setItem('marker_place_flag', 'false'); // Do not place a Marker by default
  localStorage.setItem('e_c', 'expanded');
@@ -227,8 +228,9 @@ function create_marker_panel() {
 		'class': 'marker_option marker_anchor',
 		'title': 'Clear and start over'
 	}).html('<img src="' + chrome.extension.getURL('images/clear.png') + '" alt="Start Over" />').appendTo(div).click(function(e) {
-		$('.marker_page_marker, .marker_context_menu, .rectangle, .marker-print-res-cont, #marker_window_resize_msg').remove();
+		$('.marker_page_marker, .marker_context_menu, .rectangle, .marker-print-res-cont, #marker_window_resize_msg, .marker_text_note_marker, .marker_text_options_checkboxes').remove();
 		$(mifBody).find('.marker_side_text_selection').remove();
+		page_val = '';
 		mCount = 1;
 
 	});
@@ -265,6 +267,9 @@ function create_marker_panel() {
 function saveToPdf() {
 	
 	update_page_json();
+	$('#ann-alarm').remove();
+	//get_page_json();
+	display_previous();
 
 
 	$('#marker-results-ifr').remove();

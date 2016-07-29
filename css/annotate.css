@@ -579,16 +579,37 @@ a.change_op img, a.change_op_pin img{height:auto !important; width:auto !importa
 	text-decoration: none;
 	border-bottom: solid 1px #666;
 	padding: 6px;
+	font-size: .9rem !important
 }
 
 .ann-prev-list-cont a:hover, .ann-prev-list-cont a:focus {
 	background: #666;
 	color: #fff;
+
 }
 
 span.small {
 	font-size: .8rem;
 	color: #333;
+}
+
+span.ann-circle {
+	font-family:'Raleway',cursive; font-weight:bold;  width:auto;  height:auto; padding: 1px;   font-size:16px;  line-height:6px;  text-align:center;  color:#666;   border:2px dotted #d10505;  border-radius:50%;  background-color:#fff; display: inline-block; margin-right: 5px; box-shadow: #777 0 1px 1px 2px;
+}
+
+#ann-alarm:focus, #ann-alarm:hover {
+	outline: dotted 1px #000;
+	display: inline-block;
+}
+
+.ann-list-trash {
+	display: inline !important;
+	padding: 0 !important;
+	border: 0 !important;
+}
+
+.ann-list-trash img {
+	width: 14px;
 }
 
 /*  Marker Panel styles /*
