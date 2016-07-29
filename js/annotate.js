@@ -38,7 +38,7 @@ function run_marker(welcome) {
 	$('<canvas />').attr('id', 'marker-canvas-element').appendTo('body');
 	
 	//Add CSS to head of the document so Marker can access it
-	append_scripts_to_head('head');		
+	append_scripts_to_head($('head'));		
 
 	//Add resize function.  Displays a flag when the window is resized
 	window.addEventListener("resize", resize_window);
@@ -71,19 +71,19 @@ function create_marker_panel() {
 
 	//Determine the location of the Marker panel.  If it is too close to the left or top of the screen, position it somewhere the user will be able to see it fully
 	if(parseInt(left) > $(window).width()) {
-		left = $(window).width - 100;
+		panelCss.left = '50';
 	}
 
 	if(parseInt(top) > $(window).height()) {
-		top = $(window).height() - 200;
+		panelCss.top = '50';
 	}
 
 	if(parseInt(top) < 0) {
-		top = 50;
+		panelCss.top = '50';
 	}
 
 	if(parseInt(left) < 0) {
-		left = 50;
+		panelCss.left = '50';
 	}
 
 	//Create Marker panel div and make sure it's draggable
@@ -91,7 +91,7 @@ function create_marker_panel() {
 		'class': 'marker marker-controls',
 		'id': 'marker-control-panel'
 	}).draggable({
-      containment: 'parent',
+      containment: 'window',
       stop: function() {
         $(this).removeClass('annotate-highlight-panel');
         $(this).css('position', 'fixed');
@@ -276,9 +276,9 @@ function saveToPdf() {
 	var div = $('<div />').attr({
 		'id': 'marker-print-dialog',
 		'class': 'marker'
-	}).html('Thanks for using Annotate!  In this initial release, there\'s no true "Save" feature.<br />Please close this dialog and press  <kbd>Ctrl</kbd> + <kbd>S</kbd> to save this as a .html file<br /><br />At the bottom of this page, you\'ll find all of the recommendations that you\'ve made.').appendTo('body');
+	}).html('Saved!<br />To access your saved annotations, reload the page and follow the screen below:<br /><img src="' + chrome.extension.getURL('images/save.gif') + '" alt="" />').appendTo('body');
 
-	var h = create_iframe('marker-results-ifr', 'body'),
+	/*var h = create_iframe('marker-results-ifr', 'body'),
 		bod = get_iframe_bod('marker-results-ifr'),
 		head = get_iframe_head('marker-results-ifr');			
 
@@ -313,7 +313,7 @@ function saveToPdf() {
 		if(noteTa !== "") {
 			$('<div />').html('<span class="marker_user_note">' + noteTa + '</span></div>').appendTo(li);
 		}
-	});
+	});*/
 
 	var btn = $('<button />').click(function() {
 		$(modal).remove();
@@ -341,7 +341,7 @@ function saveToPdf() {
 		'width': '98%',
 		'font-size': '20px !important',
 		'font-weight': 'bold'
-	}).text('Ok!').appendTo(div);
+	}).text('Got it').appendTo(div);
 }
 
 function draw_tips_panel(msg) {

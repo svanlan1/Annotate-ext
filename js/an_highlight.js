@@ -1,5 +1,5 @@
 /*************************************************************************************************
-*	Filename: 	marker_a11y.js
+*	Filename: 	an_highlight.js
 *	Author: 	Shea VanLaningham
 *	Website: 	https://github.com/svanlan1/Marker
 *	Purpose: 	This file controls the highlighting of text while Marker is running
