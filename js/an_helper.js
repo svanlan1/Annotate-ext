@@ -125,7 +125,8 @@ function update_page_json() {
 				'height': $(v).height(),
 				'box_color': $(v).css('border-color'),
 				'box_width': $(v).css('border-width'),
-				'box_bg_color': $(v).find('div').eq(0).css('background-color')
+				'box_bg_color': $(v).find('div').eq(0).css('background-color'),
+				'opacity': $(v).find('div').eq(0).css('opacity')
 			}
 
 		update_marker_page_obj(obj);		
@@ -156,7 +157,9 @@ function update_page_json() {
 			'width': $(v).parent().css('width'),
 			'height': $(v).parent().css('height'),
 			'font': $(v).css('font-size'),
-			'shadow': $(v).css('text-shadow')
+			'font-family': $(v).css('font-family'),
+			'shadow': $(v).css('text-shadow'),
+			'opaque_disp': $(v).parent().find('.marker_bg_opaque').css('background')
 		}
 		update_marker_page_obj(obj);
 	});
@@ -300,7 +303,9 @@ function display_previous_annotations(ob) {
 
 				var inside_div = $('<div />').css({
 					'background-color': v.box_bg_color,
-					'opacity': '.3',
+					'opacity': v.opacity,
+					'width': '100%',
+					'height': '100%'
 				}).appendTo(div);
 	            $(div).draggable();
 	        	$(div).resizable({
@@ -350,7 +355,8 @@ function display_previous_annotations(ob) {
 					'width': v.width,
 					'height': v.height,
 					'border-color': v.border_c,
-					'border-width': v.border_w
+					'border-width': v.border_w,
+					'border-style': 'solid'
 				}).resizable({
 			  		handles: "n, e, s, w, ne, nw, se, sw",
 			  		containment: "parent",
@@ -375,7 +381,7 @@ function display_previous_annotations(ob) {
 				$('<div />').css({
 					'opacity': opacity,
 					'background-color': bg,
-					'display': 'block',
+					'background': v.opaque_disp,
 					'width': '100%',
 					'height': '100%',
 					'border': 'solid 1px #' + v.border_c
@@ -384,10 +390,11 @@ function display_previous_annotations(ob) {
 				var t = $('<textarea />').css({
 					'background-color': v.background,
 					'color': v.color,
-					'width': '99%',
+					'width': $(div).width() - 10 + 'px',
 					'height': '100%',
 					'font-size': v.font,
-					'text-shadow': v.shadow
+					'text-shadow': v.shadow,
+					'font-family': v['font-family']
 				}).attr('id','marker_text_note_textarea_' + nCount).addClass('marker_text_note_marker_textarea').val(v.text).appendTo(div);
 				var timeout;
 				$(div).hover(
