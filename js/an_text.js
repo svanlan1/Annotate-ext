@@ -62,8 +62,11 @@ function add_note() {
 			'color': '#' + localStorage.getItem('font_color'),
 			'font-size': localStorage.getItem('font_size'),
 			'text-shadow': localStorage.getItem('text_shadow_color') + ' 1px 1px 2px',
+			'min-height': '0 !important',
 			'width': $(div).width() - 10 + 'px'
 		}).appendTo('#marker_text_note_' + nCount).focus();
+
+		$(t).attr('style', 'min-height: 0 !important;');
 
 		var timeout;
 		$(div).hover(

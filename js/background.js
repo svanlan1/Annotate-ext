@@ -132,6 +132,8 @@ chrome.runtime.onInstalled.addListener(function(details){
 			chrome.tabs.getSelected(null, function(tab) {
 					chrome.browserAction.setBadgeText({text : 'NEW'});
 					chrome.browserAction.setBadgeBackgroundColor({color : '#055803'});
+					chrome.windows.create({'url': 'http://annotate.tech/changes.html', 'type': 'popup'}, function(window) {
+   					});
 			});
 			localStorage.setItem('version', chrome.runtime.getManifest().version);
        }

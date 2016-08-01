@@ -396,6 +396,8 @@ function display_previous_annotations(ob) {
 					'text-shadow': v.shadow,
 					'font-family': v['font-family']
 				}).attr('id','marker_text_note_textarea_' + nCount).addClass('marker_text_note_marker_textarea').val(v.text).appendTo(div);
+
+				$(t).attr('style', 'min-height: 0 !important;')
 				var timeout;
 				$(div).hover(
 					function() {
