@@ -1,7 +1,7 @@
 var user_submitted = 0;
 function loadIndex() {
 	
-
+	
 	$('#' + localStorage.getItem('set')).prop('checked', 'true');
 	$('#marker_text_size').val(localStorage.getItem('marker-font-size'));
 	$('#marker_select_border_color').val(localStorage.getItem('box_color'));
@@ -105,6 +105,10 @@ function loadIndex() {
 		}
 		
 	});	
+
+	$('#login_button').click(function() {
+		get_login_info();		
+	});
 
 	
 
@@ -546,4 +550,23 @@ function css2json(css) {
 $(document).ready(function() {
 	loadIndex();
 	loadOptions();
-})
+});
+
+function get_login_info() {
+	if(!localStorage.getItem('userID')) {
+		localStorage.setItem('userID', '');
+	} else {
+ $.ajax({
+        url: chrome.extension.getURL('http://annotate.tech/register/login.php'),
+        type: 'POST',
+        dataType: "json",
+        data: {
+            userEmail: $('#marker_username').val(),
+            userPass: $('#password').val()
+        }
+    }).done(function(data){
+            console.log(JSON.stringify(data));
+    });	
+	}
+
+}
