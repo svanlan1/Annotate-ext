@@ -29,6 +29,10 @@ function setInitial() {
 		"text_background": "#444",
 		"text_blur_radius": "2px",
 		"text_bg_opacity": "10",
+		"userID": "",
+		"email_address": "",
+		"first_name": "",
+		"last_name": "",
 		"user": ""
 	}
 
@@ -63,9 +67,34 @@ function highlight() {
 	});
 }
 
+function login(data) {
+	$.ajax({
+	  url: "http://annotate.tech/register/login.php",
+	  type: "POST",
+	  data: data,
+	  success: function (response) {
+	    console.log(response);
+	    var r = JSON.parse(response);
+	    localStorage.setItem('userID', r.userID);
+	    localStorage.setItem('userEmail', r.email_address);
+	    localStorage.setItem('firstName', r.first_name);
+	    localStorage.setItem('lastName', r.last_name);
+		chrome.runtime.sendMessage({
+			greeting: 'hide_login'
+		});		    
+	  },
+	  error: function (error) {
+	    console.log(error);
+	  }
+	});	
+}
+
 
 chrome.browserAction.onClicked.addListener(function(tab) {
-	setInitial();
+	if(localStorage.length === 0) {
+		setInitial();
+	}
+	
 	if(localStorage.getItem("set") === "a11y") {
 		if(localStorage.getItem("a11y_preset")) {
 			var preset = localStorage.getItem("a11y_preset");
@@ -109,6 +138,10 @@ chrome.runtime.onMessage.addListener(
 		if(request.greeting === "store") {
 			setVars(request);
 		}
+
+		if(request.greeting === "login"){
+			login(request.data);
+		}
 	});
 
 /*chrome.contextMenus.create({
@@ -139,3 +172,7 @@ chrome.runtime.onInstalled.addListener(function(details){
        }
     }
 });
+
+	if(localStorage.length === 0) {
+		setInitial();
+	}

@@ -1,13 +1,13 @@
 {
-  "name": "Annotate! - 0.1",
+  "name": "Annotate! - 0.6.36",
   "short_name": "Page annotation made easy.",
-  "version": "0.1",
+  "version": "0.6.36",
   "manifest_version": 2,
   "author": "Shea VanLaningham",
-  "options_page": "index.html",
+  "options_page": "index2.html",
   "description": "Quickly and easily add notes and annotations to any webpage and share with others.",
   "background": {
-    "scripts": ["js/background.js"],
+    "scripts": ["js/jquery.js", "js/background.js"],
     "persistent": true
   },
   "content_scripts": [
@@ -32,7 +32,7 @@
     "default_icon": "images/marker_16_inactive.png"
   },
   "permissions": [
-    "tabs", "<all_urls>", "http://*/*", "https://*/*", "contextMenus"
+    "tabs", "<all_urls>", "http://*/*", "https://*/*", "contextMenus", "http://annotate.tech/login.php"
   ],
    "web_accessible_resources": [
     "index.html",

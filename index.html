@@ -13,27 +13,30 @@
 	<body>
 		<div class="body marker">
 			<h1 class="pretty">Annotate!</h1>
-			<span class="tabs" role="tablist">			
+			<span class="ann-tabs" role="tablist">			
 				<h2 id="marker-group-h2">
-					<a href="javascript:void(0);" class="tab tab-selected" aria-controls="def_show_hide" aria-expanded="true" id="def_ops">Change default annotation options <span class="screen-reader-only"> click to show changable options</span></a></h2>
+					<a href="javascript:void(0);" class="ann-tab tab-selected" aria-controls="def_show_hide" aria-expanded="true" id="def_ops">Change default annotation options <span class="screen-reader-only"> click to show changable options</span></a></h2>
 				<h2>
-					<a href="javascript:void(0);" class="tab" aria-controls="rec_show_hide" aria-expanded="false" id="change_recs">Change the preset recommendations <span class="screen-reader-only"> click to change preset recommendation text</span></a></h2>	
+					<a href="javascript:void(0);" class="ann-tab" aria-controls="rec_show_hide" aria-expanded="false" id="change_recs">Change the preset recommendations <span class="screen-reader-only"> click to change preset recommendation text</span></a></h2>	
 				<h2>
-					<a href="javascript:void(0);" class="tab" aria-controls="os_show_hide" aria-expanded="false" id="os_ops">Contribution information <span class="screen-reader-only"> click to show contribution options</span></a></h2>	
+					<a href="javascript:void(0);" class="ann-tab" aria-controls="os_show_hide" aria-expanded="false" id="os_ops">Contribution information <span class="screen-reader-only"> click to show contribution options</span></a></h2>	
 				<h2>
-					<a href="javascript:void(0);" class="tab" aria-controls="faq_hide_show" aria-expanded="false" id='show_faq'>FAQ <span class="screen-reader-only"> click to read Frequently Asked Questions</span></a></h2>
+					<a href="javascript:void(0);" class="ann-tab" aria-controls="faq_hide_show" aria-expanded="false" id='show_faq'>FAQ <span class="screen-reader-only"> click to read Frequently Asked Questions</span></a></h2>
 			</span>							
 			<div class="alert" tabindex="-1"><img src="images/check_24_pass.jpg" alt="Success!" />Your settings have been saved.  These settings will take effect on the next new instance of Annotate.</div>
 			<div  id="def_show_hide" class="split">				
 				<div class="instruction" id="def_instrucs">
-				<p class="instruction">
+				<p id="login_area" class="instruction">
 					<span class="instruct_span" role="group">
 						<label for="marker_username" class="marker_options_edit">Email address</label>
 						<input type="text" id="marker_username" placeholder="Enter your email" />
 					</span>
 					<span class="instruct_span" role="group">
 						<label for="password" class="marker_options_edit">Password</label>
-						<input type="password" id="password" placeholder="Enter your password"
+						<input type="password" id="password" placeholder="Enter your password" />
+					</span>
+					<span class="instruct_span"><a id="register" href="javascript:void(0);">Register</a>
+					<div tabindex="0" id="login_button" style="display:block;" class='marker_preset_reset_btn'>Login</div>
 				</p>					
 				<h3><a href="javascript:void(0);" class="default_options_a" aria-expanded="false">Change default box options</a></h3>
 						<div class="default_group_toggle">

@@ -30,9 +30,7 @@
 
 .instruction{font-size:14px; padding:5px; color:#000; border-bottom:1px solid #e9e9e9; display:block; margin-bottom:20px; font-family:'Ubuntu',sans-serif}
 
-.instruction input[type=text], input[type=password]{border-radius:3px; line-height:25px; height:30px; font-size:14px; font-weight:bold; font-family:'Raleway',sans-serif; border:1px solid #000; padding-left:10px}
-
-.instruction input[type=text]:focus, input[type=password]:focus {outline:1px dotted #000}
+input[type=text].instruction{border-radius:3px; line-height:25px; height:30px; font-size:14px; font-weight:bold; font-family:'Raleway',sans-serif; border:1px solid #000; padding-left:10px}
 
 h1.marker{padding:2px; border-bottom:1px solid #666; text-align:center; -webkit-margin-after:0}
 
@@ -437,15 +435,15 @@ a.tab-selected{background-color:#eee}
 
 div.body a{display:block; color:#000; font-weight:normal; padding:8px; padding-left:15px; border-left:2px solid #ccc}
 
-div.body .tab{display:block; color:#000; font-weight:normal; padding:8px; border-left:2px solid #ccc; border-top:2px solid #ccc; border-right:2px solid #ccc; text-align:center; border-radius:5px 5px 0 0; text-decoration:none}
+div.body .ann-tab{display:block !important; color:#000 !important; font-weight:normal !important; padding:8px !important; border-left:2px solid #ccc !important; border-top:2px solid #ccc !important; border-right:2px solid #ccc !important; text-align:center !important; border-radius:5px 5px 0 0 !important; text-decoration:none !important;}
 
 div.body a:hover, div.body a:focus{outline:1px dotted #000}
 
 .marker_options_label{display:block}
 
-.tabs{display:block}
+.ann-tabs{display:block}
 
-.tabs h2{display:inline-block}
+.ann-tabs h2{display:inline-block; font-size: 1rem !important;}
 
 .split{margin-top:-16px; border-top:2px solid #ccc; border-left:2px solid #eee; border-right:2px solid #eee; border-bottom:2px solid #eee}
 
@@ -485,7 +483,7 @@ fieldset.ubuntu legend{margin-top:20px; font-weight:bold; font-size:14px; displa
 
 #heading_style_current{font-family:'Ubuntu',sans-serif; font-size:14px; font-color:#333}
 
-.default_group_toggle{display:none; border: solid 2px #ccc; margin-top: -16px; padding-bottom: 10px;}
+.default_group_toggle{display:block; border: solid 2px #ccc; padding-bottom: 10px;}
 
 .instruct_span{padding-left:20px; padding-right:20px; width:97%; display:block}
 
