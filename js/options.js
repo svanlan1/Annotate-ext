@@ -14,8 +14,10 @@ function loadIndex() {
 
       });
     } else {
-    	$('#login_area').html('<h2 class="pretty">Welcome ' + localStorage.getItem('user') + '</h2>');
-    	$('#login_button').hide();
+    	//$('#login_area').html('<h2 class="pretty">Welcome ' + localStorage.getItem('user') + '</h2>');
+    	//$('#login_button').hide();
+    	$('#login_area').remove();
+    	$('#ann-log-msg').text('Welcome ' + localStorage.getItem('firstName') + ' ' + localStorage.getItem('lastName'));
     }
 
 
@@ -308,7 +310,7 @@ $(document).ready(function() {
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if(request.greeting === 'hide_login') {
-			$('#login_area').html('<h2 class="pretty">Welcome ' + localStorage.getItem('user') + '</h2>');
-	    	$('#login_button').hide();
+			$('#login_area').remove();
+	    	$('#ann-log-msg').text('Welcome ' + localStorage.getItem('firstName') + ' ' + localStorage.getItem('lastName'));
 		}
 	});

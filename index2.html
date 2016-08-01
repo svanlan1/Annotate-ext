@@ -18,7 +18,7 @@
   <nav class="white" role="navigation">
     <div class="nav-wrapper container">
       <a id="logo-container" href="http://annotate.tech" class="brand-logo annotate">Annotate!<span class="small"></span></a>
-      <ul class="right hide-on-med-and-down annotate">
+      <ul class="right hide-on-med-and-down annotate" id="login_area">
         <li>
           <label class="screen-reader-only" for="username">Email Address</label>
           <input type="text" id="username" class="white black-text" placeholder="Email address" />
@@ -28,9 +28,10 @@
           <input style="margin-left: 1rem;" type="password" id="password" class="white black-text" placeholder="Password" />
         </li>
         <li style="margin-left: 1rem;">
-          <a href="javascript:void(0);" class="btn-large waves-effect waves-light blue darken-3 white-text">Login</a>
+          <a href="javascript:void(0);" class="btn-large waves-effect waves-light blue darken-3 white-text" id="login_button">Login</a>
         </li>
       </ul>
+      <div id="ann-log-msg" class="right-align black-text"></div>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
   </nav>
