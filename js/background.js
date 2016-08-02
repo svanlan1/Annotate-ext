@@ -117,7 +117,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 	} else {
 		var install_flag = "false";
 	}
-
+	localStorage.setItem('greeting', 'start_stop');
 	chrome.tabs.sendRequest(tab.id, localStorage, function(response) {});
 });
 

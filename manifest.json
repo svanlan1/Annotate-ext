@@ -20,7 +20,7 @@
         "js/an_highlight.js",
         "js/an_text.js",
         "js/an_pins.js",
-        "js/annotate.min.js", 
+        "js/annotate.js", 
         "js/jquery.js", 
         "js/jquery-ui.js"],
       "css": ["css/architects_daughter.css", "css/rocksalt.css", "css/annotate.css", "css/jquery-ui.structure.min.css"],
