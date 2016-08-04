@@ -169,7 +169,7 @@ function update_page_json() {
 
 	if(localStorage.getItem('userID') !== "") {
 		localStorage.setItem('pageJson', JSON.stringify(pageJson));
-		var data = {'url': window.location.href, 'obj': JSON.stringify(jsel), 'userID': localStorage.getItem('userID')}
+		var data = {'url': window.location.href, 'obj': JSON.stringify(pageJson), 'userID': localStorage.getItem('userID')}
 		chrome.runtime.sendMessage({
 			greeting: 'save_annotations',
 			data: data
@@ -194,7 +194,16 @@ function update_marker_page_obj(obj) {
 }
 
 function get_page_json() {
-	pageJson = $.parseJSON(localStorage.getItem('pageJson'));
+	var url = window.location.href;
+	var data = {'url': url, 'userID': localStorage.getItem('userID')};
+	chrome.runtime.sendMessage({
+		greeting: 'get_annotations',
+		data: data
+	});	
+}
+
+function write_page_json_to_memory() {
+	//pageJson = $.parseJSON(localStorage.getItem('pageJson'));
 	if(!pageJson) {
 		pageJson = [];
 	}
@@ -206,13 +215,7 @@ function get_page_json() {
 	tempObj['url'] = url;
 	tempObj['date_time'] = timeStamp();
 	tempObj['val'] = time;
-	pageJson.push(tempObj);	
-
-	var data = {'url': url, 'userID': localStorage.getItem('userID')};
-	chrome.runtime.sendMessage({
-		greeting: 'get_annotations',
-		data: data
-	});	
+	pageJson.push(tempObj);		
 }
 
 /**

@@ -52,7 +52,7 @@ function run_marker(welcome) {
 	//This feature will not do much until the paid version of this is released.
 	get_page_json();
 
-	display_previous();
+	
 }
 
 /*******************************************************
@@ -509,7 +509,12 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 	} else if (request.greeting === 'highlight') {
 		highlightSelection();
 	} else if (request.greeting === 'here_are_annotations') {
-		var str = request.data.replace(/\\\//g, '');
-		pageJson = $.parseJSON(request.data);		
+		if(request.data !== "") {
+			new_page_json_temp = $.parseJSON(request.data);	
+			pageJson = $.parseJSON(new_page_json_temp);
+			write_page_json_to_memory();
+			display_previous();
+			//console.log(page_json);	
+		}
 	}
 });
