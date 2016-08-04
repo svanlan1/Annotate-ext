@@ -281,7 +281,13 @@ function saveToPdf() {
 	var div = $('<div />').attr({
 		'id': 'marker-print-dialog',
 		'class': 'marker'
-	}).html('Saved!<br />To access your saved annotations, reload the page and follow the screen below:<br /><img src="' + chrome.extension.getURL('images/save.gif') + '" alt="" />').appendTo('body');
+	});//.html('Saved!<br />To access your saved annotations, reload the page and follow the screen below:<br /><img src="' + chrome.extension.getURL('images/save.gif') + '" alt="" />').appendTo('body');
+	if(localStorage.getItem('userID') !== "") {
+		$(div).html('Saved!<br />To access your saved annotations, reload the page and follow the screen below:<br /><img src="' + chrome.extension.getURL('images/save.gif') + '" alt="" />').appendTo('body');
+	} else {
+		$(div).html('Your annotation has been saved to this session.  Results will not be permanently saved until you <a href="'+chrome.extension.getURL('index2.html') + '" target="_blank">Sign in</a>').appendTo('body');
+	}
+
 
 	/*var h = create_iframe('marker-results-ifr', 'body'),
 		bod = get_iframe_bod('marker-results-ifr'),
@@ -513,8 +519,46 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 			new_page_json_temp = $.parseJSON(request.data);	
 			pageJson = $.parseJSON(new_page_json_temp);
 			write_page_json_to_memory();
-			display_previous();
-			//console.log(page_json);	
+			display_previous();	
+		} else {
+			write_page_json_to_memory();
+			var data = {'url': window.location.href, 'obj': JSON.stringify(pageJson), 'userID': localStorage.getItem('userID')}
+			chrome.runtime.sendMessage({
+				greeting: 'save_annotations',
+				data: data
+			});			
 		}
 	}
 });
+
+
+function check_params() {
+	var ps = getQueryParams(location.search);
+	for (var i in ps) {
+		if(i === 'annotate') {
+			chrome.runtime.sendMessage({
+				greeting: 'start_param'
+			});
+		}
+	}
+}
+
+function getQueryParams(qs) {
+    qs = qs.split('+').join(' ');
+
+    var params = {},
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+
+    return params;
+}
+
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+  check_params();
+});
+

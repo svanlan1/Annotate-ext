@@ -159,7 +159,7 @@ function update_page_json() {
 			'width': $(v).parent().css('width'),
 			'height': $(v).parent().css('height'),
 			'font': $(v).css('font-size'),
-			'font-family': $(v).css('font-family'),
+			'font-family': $(v).css('font-family').replace(/"/g, ''),
 			'shadow': $(v).css('text-shadow'),
 			'opaque_disp': $(v).parent().find('.marker_bg_opaque').css('background')
 		}
@@ -168,12 +168,15 @@ function update_page_json() {
 	});
 
 	if(localStorage.getItem('userID') !== "") {
-		localStorage.setItem('pageJson', JSON.stringify(pageJson));
+		//
 		var data = {'url': window.location.href, 'obj': JSON.stringify(pageJson), 'userID': localStorage.getItem('userID')}
 		chrome.runtime.sendMessage({
 			greeting: 'save_annotations',
 			data: data
 		});	
+	} else {
+		localStorage.setItem('pageJson', JSON.stringify(pageJson));
+		pageJson = localStorage.getItem('pageJson');
 	}	
 	sendUpdate();
 }
@@ -195,7 +198,9 @@ function update_marker_page_obj(obj) {
 
 function get_page_json() {
 	var url = window.location.href;
-	var data = {'url': url, 'userID': localStorage.getItem('userID')};
+	var x = url.indexOf('?annotate=true');
+	var substr = url.substring(0,x);
+	var data = {'url': substr, 'userID': localStorage.getItem('userID')};
 	chrome.runtime.sendMessage({
 		greeting: 'get_annotations',
 		data: data
@@ -488,9 +493,12 @@ function get_ann_length(url) {
 
 function display_previous() {
 	var url = window.location.href;
-	var an_len = get_ann_length(url);
+	var x = url.indexOf('?annotate=true');
+	var substr = url.substring(0,x);
+	var an_len = get_ann_length(substr);
+	console.log(pageJson);
 	for (var i in pageJson) {
-		if(pageJson[i]['url'] === url) {
+		if(pageJson[i]['url'] === substr) {
 			var val = pageJson[i]['val'];
 			var len = pageJson[i][val].length;
 			if(len > 0) {
@@ -515,12 +523,15 @@ function display_previous() {
 }
 
 function show_previous_dialog() {
+	var url = window.location.href;
+	var x = url.indexOf('?annotate=true');
+	var substr = url.substring(0,x);	
 	var temp = [],
 		container = $('<div />').addClass('ann-prev-list-cont').appendTo('.marker-panel-heading');
 	$(pageJson).each(function(i,v) {
 		var val = v.val;
 		if(v[val].length > 0) {
-			if(v.url === window.location.href) {
+			if(v.url === substr) {
 				var div = $('<div />').addClass('ann-prev-list-item').appendTo(container);
 				var a = $('<a />').attr('href', 'javascript:void(0);').attr('data-ann-val', val).html(returnDate(v.date_time) + '<br /><span class="small">' + v[val].length + ' annotations</span>').appendTo(div);
 				var click_val = v;

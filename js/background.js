@@ -92,7 +92,7 @@ function login(data) {
 	});	
 }
 
-function getPreviousAnnotations(data) {
+function getPreviousAnnotations(data, tabid) {
 	$.ajax({
 	  url: "http://annotate.tech/get_notations.php",
 	  type: "POST",
@@ -100,8 +100,18 @@ function getPreviousAnnotations(data) {
 	  success: function (response) {
 	    console.log(response);
 		chrome.tabs.getSelected(null, function(tab) {
-			chrome.tabs.sendRequest(tab.id, {greeting: "here_are_annotations", data: response}, function(response) {});
-		});
+			if(tab.id !== -1) {
+				chrome.tabs.sendRequest(tab.id, {greeting: "here_are_annotations", data: response}, function(response) {});
+			} else {
+			chrome.windows.getCurrent(function(w) {
+			    chrome.tabs.getSelected(w.id,
+			    function (response){
+			        chrome.tabs.sendRequest(w.id, {greeting: "here_are_annotations", data: response}, function(response) {});
+			    });
+			});				
+			}
+			
+		});	
 	  },
 	  error: function (error) {
 	    console.log(error);
@@ -161,6 +171,13 @@ chrome.runtime.onMessage.addListener(
 			chrome.browserAction.setIcon({tabId: sender.tab.id, path: "../images/marker_16_active.png"});			
 		}
 
+		if(request.greeting === "start_param") {
+			chrome.tabs.getSelected(null, function(tab) {
+				localStorage.setItem('greeting', 'start_stop');
+				chrome.tabs.sendRequest(tab.id, localStorage, function(response) {});
+			});
+		}
+
 		if(request.greeting === "welcome") {
 			localStorage.setItem("welcome", "hide");
 		}
@@ -215,6 +232,6 @@ chrome.runtime.onInstalled.addListener(function(details){
     }
 });
 
-	if(localStorage.length === 0) {
-		setInitial();
-	}
+if(localStorage.length === 0) {
+	setInitial();
+}
