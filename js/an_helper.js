@@ -197,14 +197,19 @@ function update_marker_page_obj(obj) {
 }
 
 function get_page_json() {
-	var url = window.location.href;
-	var x = url.indexOf('?annotate=true');
-	var substr = url.substring(0,x);
-	var data = {'url': substr, 'userID': localStorage.getItem('userID')};
-	chrome.runtime.sendMessage({
-		greeting: 'get_annotations',
-		data: data
-	});	
+	if(localStorage.getItem('userID') !== "") {
+		var url = window.location.href;
+		var x = url.indexOf('?annotate=true');
+		var substr = url.substring(0,x);
+		var data = {'url': substr, 'userID': localStorage.getItem('userID')};
+		chrome.runtime.sendMessage({
+			greeting: 'get_annotations',
+			data: data
+		});	
+	} else {
+		pageJson = $.parseJSON(localStorage.getItem('pageJson'))
+	}
+
 }
 
 function write_page_json_to_memory() {

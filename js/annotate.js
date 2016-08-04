@@ -51,6 +51,9 @@ function run_marker(welcome) {
 	//Get pageJson object.  This object determines if previous markings have been made on the page.
 	//This feature will not do much until the paid version of this is released.
 	get_page_json();
+	if(localStorage.getItem('userID') === "") {
+		display_previous();
+	}
 
 	
 }
