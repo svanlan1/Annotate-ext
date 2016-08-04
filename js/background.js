@@ -68,6 +68,9 @@ function highlight() {
 }
 
 function login(data) {
+	if(localStorage.length === 0) {
+		setInitial();
+	}
 	$.ajax({
 	  url: "http://annotate.tech/register/login.php",
 	  type: "POST",
@@ -87,6 +90,37 @@ function login(data) {
 	    console.log(error);
 	  }
 	});	
+}
+
+function getPreviousAnnotations(data) {
+	$.ajax({
+	  url: "http://annotate.tech/get_notations.php",
+	  type: "POST",
+	  data: data,
+	  success: function (response) {
+	    console.log(response);
+		chrome.tabs.getSelected(null, function(tab) {
+			chrome.tabs.sendRequest(tab.id, {greeting: "here_are_annotations", data: response}, function(response) {});
+		});
+	  },
+	  error: function (error) {
+	    console.log(error);
+	  }
+	});	
+}
+
+function postNewAnnotation(data) {
+	$.ajax({
+		url: 'http://annotate.tech/add_service.php',
+		type: "POST",
+		data: data,
+		success: function ( response ) {
+			console.log(response);
+		},
+		error: function ( error ) {
+			console.log(error);
+		}
+	})
 }
 
 
@@ -141,6 +175,14 @@ chrome.runtime.onMessage.addListener(
 
 		if(request.greeting === "login"){
 			login(request.data);
+		}
+
+		if(request.greeting === "get_annotations") {
+			getPreviousAnnotations(request.data);
+		}
+
+		if(request.greeting === "save_annotations") {
+			postNewAnnotation(request.data);
 		}
 	});
 

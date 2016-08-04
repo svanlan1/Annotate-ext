@@ -19,7 +19,16 @@ function loadIndex() {
       });
     } else {
     	$('#login_area').remove();
-    	$('#ann-log-msg').text('Welcome ' + localStorage.getItem('firstName') + ' ' + localStorage.getItem('lastName'));
+    	$('#ann-log-msg').html(' <a style="font-size: .92rem;" class="small black-text" href="http://annotate.tech/home.php" target="_blank">' + localStorage.getItem('userEmail') + '</a> | <a class="black-text" href="javascript:void(0);" style="font-size: .92rem;" id="logout"> Logout</a>');
+    	$('#logout').click(function() {
+    		localStorage.setItem('userID', '');
+    		window.location.replace(window.location.pathname + window.location.search + window.location.hash);
+    	});
+
+    	chrome.runtime.sendMessage({
+    		greeting: 'get_annotations'
+    	});
+    	
     }
 
 

@@ -460,6 +460,8 @@ function sendUpdate() {
 		box_bg_color: localStorage.getItem('box_bg_color'),
 		pageJson: localStorage.getItem('pageJson')
 	});	
+
+
 }
 
 
@@ -506,5 +508,8 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		}		
 	} else if (request.greeting === 'highlight') {
 		highlightSelection();
+	} else if (request.greeting === 'here_are_annotations') {
+		var str = request.data.replace(/\\\//g, '');
+		pageJson = $.parseJSON(request.data);		
 	}
 });

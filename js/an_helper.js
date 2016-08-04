@@ -108,6 +108,7 @@ function get_select_options() {
 
 function update_page_json() {
 	//REMOVE THIS IN ORDER TO PROVIDE LIST OF FULL RESULTS/SAVES - not just this page.
+	var jsel = [];
 	if(page_val) {
 		sess_id = page_val;
 	}
@@ -128,7 +129,7 @@ function update_page_json() {
 				'box_bg_color': $(v).find('div').eq(0).css('background-color'),
 				'opacity': $(v).find('div').eq(0).css('opacity')
 			}
-
+		jsel.push(obj);
 		update_marker_page_obj(obj);		
 	});
 
@@ -141,6 +142,7 @@ function update_page_json() {
 			'flag-color': $(v).attr('data_marker_flag_color'),
 			'data-marker-count': $(v).attr('data-marker-count')
 		}
+		jsel.push(obj);
 		update_marker_page_obj(obj);
 	});
 
@@ -161,9 +163,18 @@ function update_page_json() {
 			'shadow': $(v).css('text-shadow'),
 			'opaque_disp': $(v).parent().find('.marker_bg_opaque').css('background')
 		}
+		jsel.push(obj);
 		update_marker_page_obj(obj);
 	});
-	localStorage.setItem('pageJson', JSON.stringify(pageJson));
+
+	if(localStorage.getItem('userID') !== "") {
+		localStorage.setItem('pageJson', JSON.stringify(pageJson));
+		var data = {'url': window.location.href, 'obj': JSON.stringify(jsel), 'userID': localStorage.getItem('userID')}
+		chrome.runtime.sendMessage({
+			greeting: 'save_annotations',
+			data: data
+		});	
+	}	
 	sendUpdate();
 }
 
@@ -196,6 +207,12 @@ function get_page_json() {
 	tempObj['date_time'] = timeStamp();
 	tempObj['val'] = time;
 	pageJson.push(tempObj);	
+
+	var data = {'url': url, 'userID': localStorage.getItem('userID')};
+	chrome.runtime.sendMessage({
+		greeting: 'get_annotations',
+		data: data
+	});	
 }
 
 /**
