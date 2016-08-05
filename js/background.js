@@ -99,19 +99,22 @@ function getPreviousAnnotations(data, tabid) {
 	  data: data,
 	  success: function (response) {
 	    console.log(response);
-		chrome.tabs.getSelected(null, function(tab) {
-			if(tab.id !== -1) {
-				chrome.tabs.sendRequest(tab.id, {greeting: "here_are_annotations", data: response}, function(response) {});
-			} else {
-			chrome.windows.getCurrent(function(w) {
-			    chrome.tabs.getSelected(w.id,
-			    function (response){
-			        chrome.tabs.sendRequest(w.id, {greeting: "here_are_annotations", data: response}, function(response) {});
-			    });
-			});				
-			}
-			
-		});	
+		chrome.windows.getCurrent(function(win)
+		{
+		    chrome.tabs.getAllInWindow(win.id, function(tabs)
+		    {
+		        // Should output an array of tab objects to your dev console.
+		        //chrome.tabs.sendRequest(tabs[0].id, localStorage, function(response) {});
+		        var activeTab;
+		        $(tabs).each(function(i,v) {
+		        	if(v.active === true) {
+		        		activeTab = tabs[i]['id'];
+		        	}
+		        });
+		        chrome.tabs.sendRequest(activeTab, {greeting: "here_are_annotations", data: response}, function(response) {});
+		        //console.debug(tabs);
+		    });
+		});
 	  },
 	  error: function (error) {
 	    console.log(error);
@@ -172,10 +175,26 @@ chrome.runtime.onMessage.addListener(
 		}
 
 		if(request.greeting === "start_param") {
-			chrome.tabs.getSelected(null, function(tab) {
-				localStorage.setItem('greeting', 'start_stop');
-				chrome.tabs.sendRequest(tab.id, localStorage, function(response) {});
+			chrome.windows.getCurrent(function(win)
+			{
+			    chrome.tabs.getAllInWindow(win.id, function(tabs)
+			    {
+			        // Should output an array of tab objects to your dev console.
+			        localStorage.setItem('greeting', 'start_stop');
+			        chrome.tabs.sendRequest(sender.tab.id, localStorage, function(response) {});
+			        //console.debug(tabs);
+			    });
 			});
+
+
+
+			/*chrome.windows.getCurrent(function(w) {
+			    chrome.tabs.getSelected(w.id,
+			    function (response){
+			        //chrome.tabs.sendRequest(w.id, {greeting: "here_are_annotations", data: response}, function(response) {});
+			        
+			    });
+			});	*/						
 		}
 
 		if(request.greeting === "welcome") {

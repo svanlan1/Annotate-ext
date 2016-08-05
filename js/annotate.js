@@ -14,6 +14,7 @@ var pageJson = []; // Create a json object to track all of pages markings
 var issues = []; // Array of all of the failed items on the page from the Accessibility checker
 var sess_id = "";//Create session ID for the saving of page markings
 var page_val; //Variable to track the page_val for annotation edits
+var an_tech_sess_id;
 //Variable controls whether or not clicking in the page should place a flag.  Default = false
 localStorage.setItem('marker_place_flag', 'false'); // Do not place a Marker by default
  localStorage.setItem('e_c', 'expanded');
@@ -542,6 +543,11 @@ function check_params() {
 			chrome.runtime.sendMessage({
 				greeting: 'start_param'
 			});
+		}
+
+		if(i==='an_tech_sess_id') {
+			an_tech_sess_id = ps.an_tech_sess_id;
+			console.log(an_tech_sess_id);
 		}
 	}
 }

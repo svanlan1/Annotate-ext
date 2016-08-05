@@ -116,6 +116,7 @@ function update_page_json() {
 		if(pageJson[i][sess_id]) {
 			pageJson[i][sess_id] = [];
 		}
+
 	}
 	$('.rectangle').each(function(i,v) {
 			var obj = {
@@ -200,7 +201,12 @@ function get_page_json() {
 	if(localStorage.getItem('userID') !== "") {
 		var url = window.location.href;
 		var x = url.indexOf('?annotate=true');
-		var substr = url.substring(0,x);
+		if(x !== -1) {
+			var substr = url.substring(0,x);	
+		} else {
+			var substr = url;
+		}
+		
 		var data = {'url': substr, 'userID': localStorage.getItem('userID')};
 		chrome.runtime.sendMessage({
 			greeting: 'get_annotations',
@@ -225,6 +231,7 @@ function write_page_json_to_memory() {
 	tempObj['url'] = url;
 	tempObj['date_time'] = timeStamp();
 	tempObj['val'] = time;
+	tempObj['user'] = localStorage.getItem('firstName') + ' ' + localStorage.getItem('lastName');
 	pageJson.push(tempObj);		
 }
 
@@ -499,7 +506,12 @@ function get_ann_length(url) {
 function display_previous() {
 	var url = window.location.href;
 	var x = url.indexOf('?annotate=true');
-	var substr = url.substring(0,x);
+	if(x !== -1) {
+		var substr = url.substring(0,x);
+	} else {
+		var substr = url;
+	}
+	
 	var an_len = get_ann_length(substr);
 	console.log(pageJson);
 	for (var i in pageJson) {
@@ -525,36 +537,76 @@ function display_previous() {
 			}
 		}
 	}
+
+	if(an_tech_sess_id) {
+		show_previous_dialog();
+		$('.ann-prev-list-item a').eq(0).click();
+	}
 }
 
 function show_previous_dialog() {
 	var url = window.location.href;
 	var x = url.indexOf('?annotate=true');
-	var substr = url.substring(0,x);	
+	if(x !== -1) {
+		var substr = url.substring(0,x);
+	} else {
+		var substr = url;
+	}
+		
 	var temp = [],
 		container = $('<div />').addClass('ann-prev-list-cont').appendTo('.marker-panel-heading');
 	$(pageJson).each(function(i,v) {
 		var val = v.val;
 		if(v[val].length > 0) {
 			if(v.url === substr) {
-				var div = $('<div />').addClass('ann-prev-list-item').appendTo(container);
-				var a = $('<a />').attr('href', 'javascript:void(0);').attr('data-ann-val', val).html(returnDate(v.date_time) + '<br /><span class="small">' + v[val].length + ' annotations</span>').appendTo(div);
-				var click_val = v;
-				$(a).click(function(e) {
-					$('.ann-prev-list-cont').remove();
-					//$('#ann-alarm').attr('src', chrome.extension.getURL('images/list_inactive.png'));
-					page_val = v.val;
-					display_previous_annotations(click_val);
-				});
-		    	$(a).bind('contextmenu',function(e) {
-		    		e.preventDefault();
-		    		if(confirm('Do you really want to remove this set of annotations?')) {
-		    			remove_row_from_json(this);
-		    		}
-		    		
-		    	});					
+				if(!an_tech_sess_id || an_tech_sess_id === "") {
+					var div = $('<div />').addClass('ann-prev-list-item').appendTo(container);
+					var a = $('<a />').attr('href', 'javascript:void(0);').attr('data-ann-val', val).html(returnDate(v.date_time) + '<br /><span class="small">' + v[val].length + ' annotations</span>').appendTo(div);
+					var click_val = v;
+					$(a).click(function(e) {
+						$('.ann-prev-list-cont').remove();
+						//$('#ann-alarm').attr('src', chrome.extension.getURL('images/list_inactive.png'));
+						page_val = v.val;
+						display_previous_annotations(click_val);
+					});
+			    	$(a).bind('contextmenu',function(e) {
+			    		e.preventDefault();
+			    		if(confirm('Do you really want to remove this set of annotations?')) {
+			    			remove_row_from_json(this);
+			    		}
+			    		
+			    	});					
+				} else {
+					if(val === parseInt(an_tech_sess_id)) {
+						var div = $('<div />').addClass('ann-prev-list-item').appendTo(container);
+						var a = $('<a />').attr('href', 'javascript:void(0);').attr('data-ann-val', val).html(returnDate(v.date_time) + '<br /><span class="small">' + v[val].length + ' annotations</span>').appendTo(div);
+						var click_val = v;
+						$(a).click(function(e) {
+							$('.ann-prev-list-cont').remove();
+							//$('#ann-alarm').attr('src', chrome.extension.getURL('images/list_inactive.png'));
+							page_val = v.val;
+							display_previous_annotations(click_val);
+						});
+				    	$(a).bind('contextmenu',function(e) {
+				    		e.preventDefault();
+				    		if(confirm('Do you really want to remove this set of annotations?')) {
+				    			remove_row_from_json(this);
+				    		}
+				    		
+				    	});
+					}
+				}
+					
+			
+
+
+
+
+
+
 			}
-		}
+				}
+		
 	});
 
 	$('#marker_body_wrap').click(function() {
