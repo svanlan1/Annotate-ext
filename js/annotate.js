@@ -520,12 +520,12 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		highlightSelection();
 	} else if (request.greeting === 'here_are_annotations') {
 		if(request.data !== "") {
-			new_page_json_temp = $.parseJSON(request.data);	
-			pageJson = $.parseJSON(new_page_json_temp);
-			write_page_json_to_memory();
+			pageJson = $.parseJSON(request.data);	
+			//pageJson = $.parseJSON(new_page_json_temp);
+			//write_page_json_to_memory();
 			display_previous();	
 		} else {
-			write_page_json_to_memory();
+			//write_page_json_to_memory();
 			var data = {'url': window.location.href, 'obj': JSON.stringify(pageJson), 'userID': localStorage.getItem('userID')}
 			chrome.runtime.sendMessage({
 				greeting: 'save_annotations',

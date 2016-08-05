@@ -94,11 +94,13 @@ function login(data) {
 
 function getPreviousAnnotations(data, tabid) {
 	$.ajax({
-	  url: "http://annotate.tech/get_notations.php",
+	  url: "http://annotate.tech/get_annotations_new.php",
 	  type: "POST",
 	  data: data,
 	  success: function (response) {
-	    console.log(response);
+	    
+	    var estring = response.replace(/\\/g, '');
+	    console.log(estring);
 		chrome.windows.getCurrent(function(win)
 		{
 		    chrome.tabs.getAllInWindow(win.id, function(tabs)
@@ -111,7 +113,7 @@ function getPreviousAnnotations(data, tabid) {
 		        		activeTab = tabs[i]['id'];
 		        	}
 		        });
-		        chrome.tabs.sendRequest(activeTab, {greeting: "here_are_annotations", data: response}, function(response) {});
+		        chrome.tabs.sendRequest(activeTab, {greeting: "here_are_annotations", data: estring}, function(response) {});
 		        //console.debug(tabs);
 		    });
 		});
@@ -124,7 +126,7 @@ function getPreviousAnnotations(data, tabid) {
 
 function postNewAnnotation(data) {
 	$.ajax({
-		url: 'http://annotate.tech/add_service.php',
+		url: 'http://annotate.tech/add_service_new.php',
 		type: "POST",
 		data: data,
 		success: function ( response ) {

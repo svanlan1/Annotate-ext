@@ -120,15 +120,15 @@ function update_page_json() {
 	}
 	$('.rectangle').each(function(i,v) {
 			var obj = {
-				'type': 'box',
-				'left': $(v).offset().left,
-				'top': $(v).offset().top,
-				'width': $(v).width(),
-				'height': $(v).height(),
-				'box_color': $(v).css('border-color'),
-				'box_width': $(v).css('border-width'),
-				'box_bg_color': $(v).find('div').eq(0).css('background-color'),
-				'opacity': $(v).find('div').eq(0).css('opacity')
+				type: "box",
+				left: $(v).offset().left,
+				top: $(v).offset().top,
+				width: $(v).width(),
+				height: $(v).height(),
+				box_color: $(v).css('border-color'),
+				box_width: $(v).css('border-width'),
+				box_bg_color: $(v).find('div').eq(0).css('background-color'),
+				opacity: $(v).find('div').eq(0).css('opacity')
 			}
 		jsel.push(obj);
 		update_marker_page_obj(obj);		
@@ -136,12 +136,12 @@ function update_page_json() {
 
 	$('a.marker_page_marker').each(function(i,v) {
 		var obj = {
-			'type': 'pin',
-			'left': $(v).css('left'),
-			'top': $(v).css('top'),
-			'pin_size': $(v).attr('data-marker_pin_size'),
-			'flag-color': $(v).attr('data_marker_flag_color'),
-			'data-marker-count': $(v).attr('data-marker-count')
+			type: "pin",
+			left: $(v).css('left'),
+			top: $(v).css('top'),
+			pin_size: $(v).attr('data-marker_pin_size'),
+			flag_color: $(v).attr('data_marker_flag_color'),
+			data_marker_count: $(v).attr('data-marker-count')
 		}
 		jsel.push(obj);
 		update_marker_page_obj(obj);
@@ -149,20 +149,20 @@ function update_page_json() {
 
 	$('textarea.marker_text_note_marker_textarea').each(function(i,v) {
 		var obj = {
-			'type': 'text',
-			'left': $(v).parent().css('left'),
-			'top': $(v).parent().css('top'),
-			'text': $(v).val(),
-			'color': $(v).css('color'),
-			'background': $(v).css('background-color'),
-			'border_w': $(v).parent().css('border-width'),
-			'border_c': $(v).parent().css('border-color'),
-			'width': $(v).parent().css('width'),
-			'height': $(v).parent().css('height'),
-			'font': $(v).css('font-size'),
-			'font-family': $(v).css('font-family').replace(/"/g, ''),
-			'shadow': $(v).css('text-shadow'),
-			'opaque_disp': $(v).parent().find('.marker_bg_opaque').css('background')
+			type: "text",
+			left: $(v).parent().css('left'),
+			top: $(v).parent().css('top'),
+			text: $(v).val(),
+			color: $(v).css('color'),
+			background: $(v).css('background-color'),
+			border_w: $(v).parent().css('border-width'),
+			border_c: $(v).parent().css('border-color'),
+			width: $(v).parent().css('width'),
+			height: $(v).parent().css('height'),
+			font: $(v).css('font-size'),
+			font_family: $(v).css('font-family').replace(/"/g, ''),
+			shadow: $(v).css('text-shadow'),
+			opaque_disp: $(v).parent().find('.marker_bg_opaque').css('background')
 		}
 		jsel.push(obj);
 		update_marker_page_obj(obj);
@@ -170,7 +170,7 @@ function update_page_json() {
 
 	if(localStorage.getItem('userID') !== "") {
 		//
-		var data = {'url': window.location.href, 'obj': JSON.stringify(pageJson), 'userID': localStorage.getItem('userID')}
+		var data = {'url': window.location.href, 'obj': jsel, 'userID': localStorage.getItem('userID'), 'session_id': sess_id}
 		chrome.runtime.sendMessage({
 			greeting: 'save_annotations',
 			data: data
@@ -323,8 +323,8 @@ function display_previous_annotations(ob) {
 	
 	$('.rectangle, .marker_page_marker, .marker_text_note_marker').remove();
 
-	var val = ob.val;
-	$(ob[val]).each(function(i,v) {
+	//var val = ob.val;
+	$(pageJson).each(function(i,v) {
 		var type = v.type;
 		switch (type) {
 			case 'box':
@@ -334,8 +334,8 @@ function display_previous_annotations(ob) {
 					'width': v.width,
 					'height': v.height,
 					'position': 'absolute',
-					'left': v.left,
-					'top': v.top
+					'left': v.left + 'px',
+					'top': v.top + 'px'
 				}).appendTo('#marker_body_wrap');
 
 				var inside_div = $('<div />').css({
@@ -366,9 +366,9 @@ function display_previous_annotations(ob) {
 				break;
 			case 'pin':
 				var a = $('<a />').addClass('marker_page_marker marker_anchor').attr({
-					'data-marker-count': v['data-marker-count'],
+					'data-marker-count': v['data_marker_count'],
 					'data-marker_pin_size': v['pin_size'],
-					'data_marker_flag_color': v['flag-color'],
+					'data_marker_flag_color': v['flag_color'],
 					'href': 'javascript:void(0);'
 				}).css({
 					'position': 'absolute',
@@ -377,8 +377,8 @@ function display_previous_annotations(ob) {
 				}).appendTo('#marker_body_wrap');
 
 				var img = $('<img />').attr({
-					'src': chrome.extension.getURL('images/pins/pin_24_' + v['flag-color']+ '.png'),
-					'alt': v['flag-color'] + ' pin'
+					'src': chrome.extension.getURL('images/pins/pin_24_' + v['flag_color']+ '.png'),
+					'alt': v['flag_color'] + ' pin'
 				}).css({
 					'width': v['pin_size']
 				}).appendTo(a);
@@ -431,7 +431,7 @@ function display_previous_annotations(ob) {
 					'height': '100%',
 					'font-size': v.font,
 					'text-shadow': v.shadow,
-					'font-family': v['font-family']
+					'font-family': v['font_family']
 				}).attr('id','marker_text_note_textarea_' + nCount).addClass('marker_text_note_marker_textarea').val(v.text).appendTo(div);
 
 				$(t).attr('style', 'min-height: 0 !important;')
@@ -515,9 +515,9 @@ function display_previous() {
 	var an_len = get_ann_length(substr);
 	console.log(pageJson);
 	for (var i in pageJson) {
-		if(pageJson[i]['url'] === substr) {
-			var val = pageJson[i]['val'];
-			var len = pageJson[i][val].length;
+		//if(pageJson[i]['url'] === substr) {
+			//var val = pageJson[i]['val'];
+			var len = pageJson.length;
 			if(len > 0) {
 				$('.marker-panel-heading').prepend('<a id="ann-alarm" href="javascript:void(0);" title="You have previous annotations on this page!  Click to view."><span class="ann-circle marker"><img src="'+chrome.extension.getURL('images/previous.png')+'" alt="" /></span></a>');
 				var img = $('#ann-alarm');
@@ -535,7 +535,7 @@ function display_previous() {
 				
 				break;				
 			}
-		}
+		//}
 	}
 
 	if(an_tech_sess_id) {
@@ -555,7 +555,23 @@ function show_previous_dialog() {
 		
 	var temp = [],
 		container = $('<div />').addClass('ann-prev-list-cont').appendTo('.marker-panel-heading');
-	$(pageJson).each(function(i,v) {
+
+	var div = $('<div />').addClass('ann-prev-list-item').appendTo(container);
+	var a = $('<a />').attr('href', 'javascript:void(0);').html(/*returnDate(v.date_time) + */'<br /><span class="small">' + pageJson.length + ' annotations</span>').appendTo(div);
+	$(a).click(function(e) {
+		$('.ann-prev-list-cont').remove();
+		//$('#ann-alarm').attr('src', chrome.extension.getURL('images/list_inactive.png'));
+		//page_val = v.val;
+		display_previous_annotations();
+	});
+	$(a).bind('contextmenu',function(e) {
+		e.preventDefault();
+		if(confirm('Do you really want to remove this set of annotations?')) {
+			remove_row_from_json(this);
+		}
+	});	
+
+	/*$(pageJson).each(function(i,v) {
 		var val = v.val;
 		if(v[val].length > 0) {
 			if(v.url === substr) {
@@ -607,7 +623,7 @@ function show_previous_dialog() {
 			}
 				}
 		
-	});
+	});*/
 
 	$('#marker_body_wrap').click(function() {
 		$('.ann-prev-list-cont').remove();
