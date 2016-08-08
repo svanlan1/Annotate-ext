@@ -524,14 +524,14 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 			//pageJson = $.parseJSON(new_page_json_temp);
 			//write_page_json_to_memory();
 			display_previous();	
-		} else {
+		} /*else {
 			//write_page_json_to_memory();
 			var data = {'url': window.location.href, 'obj': JSON.stringify(pageJson), 'userID': localStorage.getItem('userID')}
 			chrome.runtime.sendMessage({
 				greeting: 'save_annotations',
 				data: data
 			});			
-		}
+		}*/
 	}
 });
 

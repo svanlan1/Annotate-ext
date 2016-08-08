@@ -112,6 +112,13 @@ function update_page_json() {
 	if(page_val) {
 		sess_id = page_val;
 	}
+
+	if(!sess_id) {
+		sess_id = Date.now();
+	}	
+	//jsel[sess_id] = [];
+
+
 	for(var i in pageJson) {
 		if(pageJson[i][sess_id]) {
 			pageJson[i][sess_id] = [];
@@ -324,7 +331,7 @@ function display_previous_annotations(ob) {
 	$('.rectangle, .marker_page_marker, .marker_text_note_marker').remove();
 
 	//var val = ob.val;
-	$(pageJson).each(function(i,v) {
+	$(ob).each(function(i,v) {
 		var type = v.type;
 		switch (type) {
 			case 'box':
@@ -552,38 +559,18 @@ function show_previous_dialog() {
 	} else {
 		var substr = url;
 	}
-		
 	var temp = [],
 		container = $('<div />').addClass('ann-prev-list-cont').appendTo('.marker-panel-heading');
-
-	var div = $('<div />').addClass('ann-prev-list-item').appendTo(container);
-	var a = $('<a />').attr('href', 'javascript:void(0);').html(/*returnDate(v.date_time) + */'<br /><span class="small">' + pageJson.length + ' annotations</span>').appendTo(div);
-	$(a).click(function(e) {
-		$('.ann-prev-list-cont').remove();
-		//$('#ann-alarm').attr('src', chrome.extension.getURL('images/list_inactive.png'));
-		//page_val = v.val;
-		display_previous_annotations();
-	});
-	$(a).bind('contextmenu',function(e) {
-		e.preventDefault();
-		if(confirm('Do you really want to remove this set of annotations?')) {
-			remove_row_from_json(this);
-		}
-	});	
-
-	/*$(pageJson).each(function(i,v) {
-		var val = v.val;
-		if(v[val].length > 0) {
-			if(v.url === substr) {
+	for (var i in pageJson) {
+		var val = i;
+		if(pageJson[i].length > 0) {
+			//if(v.url === substr) {
 				if(!an_tech_sess_id || an_tech_sess_id === "") {
 					var div = $('<div />').addClass('ann-prev-list-item').appendTo(container);
-					var a = $('<a />').attr('href', 'javascript:void(0);').attr('data-ann-val', val).html(returnDate(v.date_time) + '<br /><span class="small">' + v[val].length + ' annotations</span>').appendTo(div);
-					var click_val = v;
+					var a = $('<a />').attr('href', 'javascript:void(0);').attr('data-ann-val', val).html(returnDate(val) + '<br /><span class="small">' + pageJson[i].length + ' annotations</span>').appendTo(div);
 					$(a).click(function(e) {
 						$('.ann-prev-list-cont').remove();
-						//$('#ann-alarm').attr('src', chrome.extension.getURL('images/list_inactive.png'));
-						page_val = v.val;
-						display_previous_annotations(click_val);
+						display_previous_annotations(pageJson[i]);
 					});
 			    	$(a).bind('contextmenu',function(e) {
 			    		e.preventDefault();
@@ -595,13 +582,13 @@ function show_previous_dialog() {
 				} else {
 					if(val === parseInt(an_tech_sess_id)) {
 						var div = $('<div />').addClass('ann-prev-list-item').appendTo(container);
-						var a = $('<a />').attr('href', 'javascript:void(0);').attr('data-ann-val', val).html(returnDate(v.date_time) + '<br /><span class="small">' + v[val].length + ' annotations</span>').appendTo(div);
+						var a = $('<a />').attr('href', 'javascript:void(0);').attr('data-ann-val', val).html(returnDate(val) + '<br /><span class="small">' + pageJson[i].length + ' annotations</span>').appendTo(div);
 						var click_val = v;
 						$(a).click(function(e) {
 							$('.ann-prev-list-cont').remove();
 							//$('#ann-alarm').attr('src', chrome.extension.getURL('images/list_inactive.png'));
 							page_val = v.val;
-							display_previous_annotations(click_val);
+							display_previous_annotations(pageJson[i]);
 						});
 				    	$(a).bind('contextmenu',function(e) {
 				    		e.preventDefault();
@@ -612,18 +599,9 @@ function show_previous_dialog() {
 				    	});
 					}
 				}
-					
-			
-
-
-
-
-
-
-			}
-				}
-		
-	});*/
+			//}			
+		}
+	}
 
 	$('#marker_body_wrap').click(function() {
 		$('.ann-prev-list-cont').remove();
