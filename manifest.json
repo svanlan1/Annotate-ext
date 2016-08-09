@@ -36,6 +36,7 @@
   ],
    "web_accessible_resources": [
     "index.html",
+    "index2.html",
     "marker.html",
     "js/marker2.js",
     "css/annotate.css",
@@ -66,6 +67,7 @@
     "images/paint_32.png",
     "images/cursor_pin.png",
     "images/cursor_draw.png",
+    "images/loader.gif",
     "images/list_inactive.png",
     "images/list_active.png",
     "images/minimize.png",

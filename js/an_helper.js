@@ -159,7 +159,7 @@ function update_page_json() {
 			type: "text",
 			left: $(v).parent().css('left'),
 			top: $(v).parent().css('top'),
-			text: $(v).val(),
+			text: escape($(v).val()),
 			color: $(v).css('color'),
 			background: $(v).css('background-color'),
 			border_w: $(v).parent().css('border-width'),
@@ -194,8 +194,15 @@ function update_page_json() {
 			data: data
 		});		
 	} else {
+		if(!pageJson) {
+			pageJson = {};
+		}
+		jsel['url'] = window.location.href;
+		jsel[0]['url'] = window.location.href;
+		pageJson[sess_id] = jsel;
 		localStorage.setItem('pageJson', JSON.stringify(pageJson));
-		pageJson = localStorage.getItem('pageJson');
+		get_page_json();
+		//pageJson = localStorage.getItem('pageJson');
 	}	
 	sendUpdate();
 }
@@ -342,9 +349,15 @@ function display_previous_annotations(index) {
 	$('.rectangle, .marker_page_marker, .marker_text_note_marker').remove();
 
 	for (var i in pageJson) {
-		for (var x in pageJson[i]) {
-			if(x === index) {
-				ob = pageJson[i][x];
+		if(localStorage.getItem('userID') === "") {
+			if(i === index) {
+				ob = pageJson[i];
+			}
+		} else {
+			for (var x in pageJson[i]) {
+				if(x === index) {
+					ob = pageJson[i][x];
+				}
 			}
 		}
 	}
@@ -458,9 +471,9 @@ function display_previous_annotations(index) {
 					'font-size': v.font,
 					'text-shadow': v.shadow,
 					'font-family': v['font_family']
-				}).attr('id','marker_text_note_textarea_' + nCount).addClass('marker_text_note_marker_textarea').val(v.text).appendTo(div);
+				}).attr('id','marker_text_note_textarea_' + nCount).addClass('marker_text_note_marker_textarea').val(unescape(v.text)).appendTo(div);
 
-				$(t).attr('style', 'min-height: 0 !important;')
+				//$(t).attr('style', 'min-height: 0 !important;')
 				var timeout;
 				$(div).hover(
 					function() {
@@ -522,7 +535,6 @@ function get_ann_length(url) {
 			if(pageJson[i][val].length > 0) {
 				len++;
 			}
-			
 		}
 	}
 
@@ -539,29 +551,38 @@ function display_previous() {
 	}
 	
 	var an_len = get_ann_length(substr);
-	console.log(pageJson);
 	for (var i in pageJson) {
-		//if(pageJson[i]['url'] === substr) {
-			//var val = pageJson[i]['val'];
-			var len = pageJson.length;
-			if(len > 0) {
-				$('.marker-panel-heading').prepend('<a id="ann-alarm" href="javascript:void(0);" title="You have previous annotations on this page!  Click to view."><span class="ann-circle marker"><img src="'+chrome.extension.getURL('images/previous.png')+'" alt="" /></span></a>');
-				var img = $('#ann-alarm');
-				$(img).click(function() {
-					//display_previous_annotations(pageJson[i]);
-					if($('.ann-prev-list-cont').length === 0) {
-						//$('#ann-alarm').attr('src', chrome.extension.getURL('images/list_active.png'));
-						show_previous_dialog();
-					} else {
-						$('.ann-prev-list-cont').remove();
-						//$('#ann-alarm').attr('src', chrome.extension.getURL('images/list_inactive.png'));
-					}
-					
-				});
-				
-				break;				
+			if(localStorage.getItem('userID') !== "") {
+				var len = pageJson.length;
+				if(len > 0) {
+					$('.marker-panel-heading').prepend('<a id="ann-alarm" href="javascript:void(0);" title="You have previous annotations on this page!  Click to view."><span class="ann-circle marker"><img src="'+chrome.extension.getURL('images/previous.png')+'" alt="" /></span></a>');
+					var img = $('#ann-alarm');
+					$(img).click(function() {
+						if($('.ann-prev-list-cont').length === 0) {
+							show_previous_dialog();
+						} else {
+							$('.ann-prev-list-cont').remove();
+						}
+						
+					});
+					break;				
+				}
+			} else {
+				var len = pageJson[i].length;
+				if(len > 0 && pageJson[i][0]['url'] === window.location.href) {
+					$('.marker-panel-heading').prepend('<a id="ann-alarm" href="javascript:void(0);" title="You have previous annotations on this page!  Click to view."><span class="ann-circle marker"><img src="'+chrome.extension.getURL('images/previous.png')+'" alt="" /></span></a>');
+					var img = $('#ann-alarm');
+					$(img).click(function() {
+						if($('.ann-prev-list-cont').length === 0) {
+							show_previous_dialog();
+						} else {
+							$('.ann-prev-list-cont').remove();
+						}
+						
+					});
+					break;
+				}		
 			}
-		//}
 	}
 
 	if(an_tech_sess_id) {
@@ -581,34 +602,39 @@ function show_previous_dialog() {
 	var temp = [],
 		container = $('<div />').addClass('ann-prev-list-cont').appendTo('.marker-panel-heading');
 	for (var i in pageJson) {
-		for (var x in pageJson[i]) {
-			var val = x;
-			var d = new Date($.parseJSON(x));
-			var datestring = (d.getMonth()+1) + "/" + d.getDate()  + "/" + d.getFullYear();		
-			if(pageJson[i][x].length > 0) {
-				if(!an_tech_sess_id || an_tech_sess_id === "") {
-					var div = $('<div />').addClass('ann-prev-list-item').appendTo(container);
-					var a = $('<a />').attr('href', 'javascript:void(0);').attr('data-ann-val', val).html(returnDate(datestring) + '<br /><span class="small">' + pageJson[i][x].length + ' annotations</span>').appendTo(div);
-					$(a).click(function(e) {
-						$('.ann-prev-list-cont').remove();
-						display_previous_annotations($(this).attr('data-ann-val'));
-						page_val = $(this).attr('data-ann-val');
-					});
-			    	$(a).bind('contextmenu',function(e) {
-			    		e.preventDefault();
-			    		if(confirm('Do you really want to remove this set of annotations?')) {
-			    			remove_row_from_json(this);
-			    		}
-			    		
-			    	});					
-				} else {
-					if(val === an_tech_sess_id) {
+		if(localStorage.getItem('userID') === "") {
+			val = i;
+			var d = new Date($.parseJSON(i));
+			var datestring = (d.getMonth()+1) + "/" + d.getDate()  + "/" + d.getFullYear() + ', ' + d.getTime();		
+			if(pageJson[i].length > 0 && pageJson[i][0]['url'] === window.location.href) {
+				var div = $('<div />').addClass('ann-prev-list-item').appendTo(container);
+				var a = $('<a />').attr('href', 'javascript:void(0);').attr('data-ann-val', val).html(returnDate(datestring) + '<br /><span class="small">' + pageJson[i].length + ' annotations</span>').appendTo(div);
+				$(a).click(function(e) {
+					$('.ann-prev-list-cont').remove();
+					display_previous_annotations($(this).attr('data-ann-val'));
+					page_val = $(this).attr('data-ann-val');
+				});
+		    	$(a).bind('contextmenu',function(e) {
+		    		e.preventDefault();
+		    		if(confirm('Do you really want to remove this set of annotations?')) {
+		    			remove_row_from_json(this);
+		    		}
+		    		
+		    	});							
+			}			
+		} else {
+			for (var x in pageJson[i]) {
+				var val = x;
+				var d = new Date($.parseJSON(x));
+				var datestring = (d.getMonth()+1) + "/" + d.getDate()  + "/" + d.getFullYear() + ', ' + d.getTime();		
+				if(pageJson[i][x].length > 0) {
+					if(!an_tech_sess_id || an_tech_sess_id === "") {
 						var div = $('<div />').addClass('ann-prev-list-item').appendTo(container);
 						var a = $('<a />').attr('href', 'javascript:void(0);').attr('data-ann-val', val).html(returnDate(datestring) + '<br /><span class="small">' + pageJson[i][x].length + ' annotations</span>').appendTo(div);
 						$(a).click(function(e) {
 							$('.ann-prev-list-cont').remove();
-							page_val = an_tech_sess_id;
 							display_previous_annotations($(this).attr('data-ann-val'));
+							page_val = $(this).attr('data-ann-val');
 						});
 				    	$(a).bind('contextmenu',function(e) {
 				    		e.preventDefault();
@@ -616,20 +642,32 @@ function show_previous_dialog() {
 				    			remove_row_from_json(this);
 				    		}
 				    		
-				    	});
-					}
-				}		
-			}			
+				    	});					
+					} else {
+						if(val === an_tech_sess_id) {
+							var div = $('<div />').addClass('ann-prev-list-item').appendTo(container);
+							var a = $('<a />').attr('href', 'javascript:void(0);').attr('data-ann-val', val).html(returnDate(datestring) + '<br /><span class="small">' + pageJson[i][x].length + ' annotations</span>').appendTo(div);
+							$(a).click(function(e) {
+								$('.ann-prev-list-cont').remove();
+								page_val = an_tech_sess_id;
+								display_previous_annotations($(this).attr('data-ann-val'));
+							});
+					    	$(a).bind('contextmenu',function(e) {
+					    		e.preventDefault();
+					    		if(confirm('Do you really want to remove this set of annotations?')) {
+					    			remove_row_from_json(this);
+					    		}
+					    		
+					    	});
+						}
+					}		
+				}			
+			}
 		}
-
-
-
-
 	}
 
 	$('#marker_body_wrap').click(function() {
 		$('.ann-prev-list-cont').remove();
-		//$('#ann-alarm').attr('src', chrome.extension.getURL('images/list_inactive.png'));
 	})
 }
 
@@ -638,7 +676,6 @@ function remove_row_from_json(el) {
 	for (var i in pageJson) {
 		if(pageJson[i]['val'] === val) {
 			$('.ann-prev-list-cont').remove();
-			//pageJson.splice( parseInt(i), 1 );
 			pageJson[i][val] = [];
 			update_page_json();
 			var num = $('.ann-prev-list-item a').length;
@@ -650,5 +687,4 @@ function remove_row_from_json(el) {
 			
 		}
 	}
-	console.log(el);
 }

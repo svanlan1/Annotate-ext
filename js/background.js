@@ -76,14 +76,15 @@ function login(data) {
 	  type: "POST",
 	  data: data,
 	  success: function (response) {
-	    console.log(response);
 	    var r = JSON.parse(response);
 	    localStorage.setItem('userID', r.userID);
 	    localStorage.setItem('userEmail', r.email_address);
 	    localStorage.setItem('firstName', r.first_name);
 	    localStorage.setItem('lastName', r.last_name);
+		
 		chrome.runtime.sendMessage({
-			greeting: 'hide_login'
+			greeting: 'hide_login',
+			data: response
 		});		    
 	  },
 	  error: function (error) {
@@ -100,13 +101,10 @@ function getPreviousAnnotations(data, tabid) {
 	  success: function (response) {
 	    
 	    var estring = response.replace(/\\/g, '');
-	    console.log(estring);
 		chrome.windows.getCurrent(function(win)
 		{
 		    chrome.tabs.getAllInWindow(win.id, function(tabs)
 		    {
-		        // Should output an array of tab objects to your dev console.
-		        //chrome.tabs.sendRequest(tabs[0].id, localStorage, function(response) {});
 		        var activeTab;
 		        $(tabs).each(function(i,v) {
 		        	if(v.active === true) {
@@ -114,7 +112,6 @@ function getPreviousAnnotations(data, tabid) {
 		        	}
 		        });
 		        chrome.tabs.sendRequest(activeTab, {greeting: "here_are_annotations", data: estring}, function(response) {});
-		        //console.debug(tabs);
 		    });
 		});
 	  },
@@ -130,7 +127,20 @@ function postNewAnnotation(data) {
 		type: "POST",
 		data: data,
 		success: function ( response ) {
-			console.log(response);
+		chrome.windows.getCurrent(function(win)
+		{
+		    chrome.tabs.getAllInWindow(win.id, function(tabs)
+		    {
+		        var activeTab;
+		        $(tabs).each(function(i,v) {
+		        	if(v.active === true) {
+		        		activeTab = tabs[i]['id'];
+		        	}
+		        });
+		        chrome.tabs.sendRequest(activeTab, {greeting: "annotation_saved"}, function(response) {});
+		    });
+		});		
+
 		},
 		error: function ( error ) {
 			console.log(error);

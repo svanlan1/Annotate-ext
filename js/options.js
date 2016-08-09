@@ -562,6 +562,7 @@ $(document).ready(function() {
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if(request.greeting === 'hide_login') {
+			var msg = JSON.parse(request.data);
 			$('#login_area').remove();
 	    	$('#ann-log-msg').text('Welcome ' + localStorage.getItem('firstName') + ' ' + localStorage.getItem('lastName'));
 		}

@@ -158,9 +158,9 @@ strong.aria{border-bottom:2px solid #0d5e05; width:100%; display:block; backgrou
 .screen-reader-only{position:absolute; clip:rect(1px,1px,1px,1px); padding:0; border:0; height:1px; width:1px; overflow:hidden}
 
 /* Results <iframe />styles */
-#marker-print-modal{width:100%; height:100%; background-color:#000; opacity:.6; position:fixed; z-index:2147483634; top:0}
+#annotate-print-modal{width:100%; height:100%; background-color:#000; opacity:.6; position:fixed; z-index:2147483634; top:0}
 
-#marker-print-dialog{position:fixed; top:50%; left:50%; padding:15px; -ms-transform:translateX(-50%) translateY(-50%); -webkit-transform:translate(-50%,-50%); transform:translate(-50%,-50%); background-color:#fff; padding:25px; font-size:16px; font-weight:bold; border:3px solid #000; box-shadow:rgb(136,136,136) 6px 6px 10px 0px; z-index:2147483635; text-align:center; border-radius:5px; min-width:200px; color: #000;}
+#annotate-print-dialog{position:fixed; top:50%; left:50%; padding:15px; -ms-transform:translateX(-50%) translateY(-50%); -webkit-transform:translate(-50%,-50%); transform:translate(-50%,-50%); background-color:#fff; padding:25px; font-size:16px; font-weight:bold; border:3px solid #000; box-shadow:rgb(136,136,136) 6px 6px 10px 0px; z-index:2147483635; text-align:center; border-radius:5px; min-width:200px; color: #000;}
 
 .marker-btn{margin-left:25px; border-radius:3px; font-size:14px; line-height:18px; font-weight:bold}
 
@@ -626,6 +626,8 @@ font-size: 12px;
     height: 23px;
     width: 213px;
     margin-bottom: 0;
+    display: block;
+    border: solid 1px #222;
 }
 
 /*  Marker Panel styles /*

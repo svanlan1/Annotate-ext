@@ -235,6 +235,7 @@ function create_marker_panel() {
 		$('.marker_page_marker, .marker_context_menu, .rectangle, .marker-print-res-cont, #marker_window_resize_msg, .marker_text_note_marker, .marker_text_options_checkboxes').remove();
 		$(mifBody).find('.marker_side_text_selection').remove();
 		page_val = '';
+		sess_id = Date.now();
 		mCount = 1;
 
 	});
@@ -277,58 +278,21 @@ function saveToPdf() {
 
 
 	$('#marker-results-ifr').remove();
+	
 	var modal = $('<div />').attr({
-		'id': 'marker-print-modal',
+		'id': 'annotate-print-modal',
 		'class': 'marker'
 	}).appendTo('body');
 
 	var div = $('<div />').attr({
-		'id': 'marker-print-dialog',
+		'id': 'annotate-print-dialog',
 		'class': 'marker'
 	});//.html('Saved!<br />To access your saved annotations, reload the page and follow the screen below:<br /><img src="' + chrome.extension.getURL('images/save.gif') + '" alt="" />').appendTo('body');
 	if(localStorage.getItem('userID') !== "") {
-		$(div).html('Saved!<br />To access your saved annotations, reload the page and follow the screen below:<br /><img src="' + chrome.extension.getURL('images/save.gif') + '" alt="" />').appendTo('body');
+		$(div).html('Saved!<br />To access your saved annotations, follow the screen below:<br /><img src="' + chrome.extension.getURL('images/save.gif') + '" alt="" />').appendTo('body');
 	} else {
-		$(div).html('Your annotation has been saved to this session.  Results will not be permanently saved until you <a href="'+chrome.extension.getURL('index2.html') + '" target="_blank">Sign in</a>').appendTo('body');
+		$(div).html('Your annotation has been saved to this session.  Results will not be permanently saved until you <a href="'+chrome.extension.getURL('../index2.html') + '" target="_blank">Sign in</a>').appendTo('body');
 	}
-
-
-	/*var h = create_iframe('marker-results-ifr', 'body'),
-		bod = get_iframe_bod('marker-results-ifr'),
-		head = get_iframe_head('marker-results-ifr');			
-
-	append_scripts_to_head('', head);	
-
-	var res = $('<div />').addClass('marker-print-res-cont').appendTo(bod);
-	if(localStorage.getItem('user') !== '') {
-		var user = localStorage.getItem('user');
-	} else {
-		var user = ' [ no username set!  set username in Annotate! options. ] '
-	}
-	$('<div />').addClass(' marker marker-display-timestamp').html('<strong>Created by: </strong>' + user).appendTo(res);
-	$('<div />').addClass(' marker marker-display-timestamp').html(timeStamp()).appendTo(res);
-
-	var new_div = $('<ol />').addClass('marker-res').appendTo(res);
-
-	$('.marker_context_menu').each(function(i,v) {
-		var id = $(v).find('iframe').attr('id');
-		var ifr = $('#' + id)[0].contentWindow.document,
-			ifrBody = $(ifr).find('body');
-
-		var seltext = $(ifrBody).find('select option:selected').text();
-		var li = $('<li />').addClass('marker-a11y-res-list-type').appendTo(new_div);
-		var strongtext = $(ifrBody).find('.marker_recommendation_div').html();
-		if(strongtext) {
-			$('<div class="marker-res-type-issue" />').text(seltext).appendTo(li);
-			$('<strong class="recommendations" />').text('Recommendation').appendTo(li);
-			$('<div />').html(strongtext).appendTo(li);			
-		}
-		//$(ifrBody).find('.marker_recommendation').clone().appendTo(li);
-		var noteTa = $(ifrBody).find('textarea').val();
-		if(noteTa !== "") {
-			$('<div />').html('<span class="marker_user_note">' + noteTa + '</span></div>').appendTo(li);
-		}
-	});*/
 
 	var btn = $('<button />').click(function() {
 		$(modal).remove();
@@ -357,6 +321,7 @@ function saveToPdf() {
 		'font-size': '20px !important',
 		'font-weight': 'bold'
 	}).text('Got it').appendTo(div);
+
 }
 
 function draw_tips_panel(msg) {
@@ -467,8 +432,7 @@ function sendUpdate() {
 		text_blur_radius: localStorage.getItem('text_blur_radius'),
 		box_width: localStorage.getItem('box_width'),
 		box_color: localStorage.getItem('box_color'),
-		box_bg_color: localStorage.getItem('box_bg_color'),
-		pageJson: localStorage.getItem('pageJson')
+		box_bg_color: localStorage.getItem('box_bg_color')
 	});	
 
 
@@ -521,17 +485,11 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 	} else if (request.greeting === 'here_are_annotations') {
 		if(request.data !== "") {
 			pageJson = $.parseJSON(request.data);	
-			//pageJson = $.parseJSON(new_page_json_temp);
-			//write_page_json_to_memory();
 			display_previous();	
-		} /*else {
-			//write_page_json_to_memory();
-			var data = {'url': window.location.href, 'obj': JSON.stringify(pageJson), 'userID': localStorage.getItem('userID')}
-			chrome.runtime.sendMessage({
-				greeting: 'save_annotations',
-				data: data
-			});			
-		}*/
+		}
+	} else if (request.greeting === 'annotation_saved') {		
+		$('#ann-alarm').remove();
+		get_page_json();
 	}
 });
 

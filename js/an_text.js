@@ -66,7 +66,7 @@ function add_note() {
 			'width': $(div).width() - 10 + 'px'
 		}).appendTo('#marker_text_note_' + nCount).focus();
 
-		$(t).attr('style', 'min-height: 0 !important;');
+		//$(t).attr('style', 'min-height: 0 !important;');
 
 		var timeout;
 		$(div).hover(
