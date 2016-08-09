@@ -1,0 +1,261 @@
+[
+	{
+		"Value": "<empty value>",
+		"QuickName": "   ",
+		"Example": "",
+		"Recommendation": ""
+	},	
+	{
+		"Value": "anchor",
+		"QuickName": "Anchor",
+		"Recommendation": "All anchors require a valid href attribute and link text.  If an image is the sole piece of content inside of the anchor, ensure that the image has descriptive alt text.",
+		"Example": "<a href='index.html'>Home</a>"
+	},
+	{
+		"Value": "anchorNewWindow",
+		"QuickName": "Anchor (Opens in a new window)",
+		"Recommendation": "If an anchor is opening in a new window, the user must be alerted.  Methods for this include adding 'screen-reader-only' text, or adding an icon with alt text alerting the user.  The most common text for either of these methods is 'Opens in a new window'",
+		"Example": "<a href='index.html' target='_blank'>News <span class='AT_only'> Opens in a new window</span></a>"
+	},
+	{
+		"Value": "anchorLinked",
+		"QuickName": "Anchor (Linked image)",
+		"Recommendation": "When an image is the sole piece of content inside of an anchor, ensure the image has descriptive alt text.",
+		"Example": "<a href='index.html'><img src='home.png' alt='Home' />"
+	},
+	{
+		"Value": "button",
+		"QuickName": "Button",
+		"Recommendation": "All buttons require explicit text.  Screen readers will read out the text of the button.",
+		"Example": "<button>Submit</button>"
+	},	
+	{
+		"Value": "chart",
+		"QuickName": "Chart",
+		"Recommendation": "Charts, graphs and maps use visuals to convey complex images to users. But since they are images, these media provide serious accessibility issues to colorblind users and users of screen readers.<br /><br />Charts should also have an accompanying table that displays the chart data in a tabular form.  All of the interactive segments of the chart must work with both a keyboard and a mouse.<br /><a href='https://www.lireo.com/make-graphs-charts-maps-accessible-video/?utm_content=24352861&utm_medium=social&utm_source=twitter' target='_blank'>Making charts accessible</a>",
+		"Example": ""
+	},
+	{
+		"Value": "carousel",
+		"QuickName": "Carousel",
+		"Recommendation": "Each image needs to a valid textual equivalent.<br />Alert users to what each element is: Their role (such as checkbox)<br />Alert users to their properties and important relationships<br />Alert users to what each element is doing: The state (such as checked)<br />Alert users to changes in their state<br />Make sure widgets are keyboard accessible and focus works predictably. Events can be triggered though the keyboard, and it should be intuitive to the user. All controls should receive focus via tabbing though the keyboard",
+		"Example": "http://accessibility.athena-ict.com/aria/examples/carousel.shtml"
+	},	
+	{
+		"Value": "modalDialog",
+		"QuickName": "Dialog (Modal)",
+		"Recommendation": "Dialogs require a number of considerations.<ol><li>The parent container (generally a &lt;div&gt; requires the attribute 'role=&quot;dialog&quot;'</li><li>The parent container (div) should contain the attribute 'aria-lablledby'.  The value for this is generally the #id of the &lt; h2 &gt; inside of the dialog</li><li>The dialog should contain an a heading with a valid #id<br />&lt;h2 id=&quot;dialog_heading_id&quot;/&gt;</li><li>Focus should be trapped inside of the dialog.  Tabbing past the last tabbable element should take the user back to the first tabbable element</li><li>Ensure all images (background, foreground) have the proper textual equivalent</li><li>The background content should have the attribute 'aria-hidden=&quot;true&quot;'</li></ol>",
+		"Example": "<div role='dialog' aria-labelledby='dialog_head'>\n\n<h2 id='dialog_head'>\n\n<a href='javascript:void(0)'>Close dialog</a> <!--first focusable element-->\n\n<p>This is some text inside of your dialog</p>\n\n<button>Save</button> <!--last focusable element-->\n\n</div>"
+	},
+	{
+		"Value": "nonModalDialog",
+		"QuickName": "Dialog (Non-Modal)",
+		"Recommendation": "Dialogs (non-modal) must have 'role=dialog' added to the dialog parent element<br />Dialogs must also have a label of some sort (e.g., aria-label, aria-labelledby)<br />Focus should be set to the dialog upon opening.  Focus does <strong>not</strong> need to be trapped in the dialog when it is non-modal<br />Pressing escape should close the dialog and return focus to the previously focused element",
+		"Example": "<div role='dialog' aria-labelledby='dialog_head'>\n\n<h2 id='dialog_head'>...</div>"
+	},
+	{
+		"Value": "drawers",
+		"QuickName": "Drawers/Accordion",
+		"Recommendation": "",
+		"Example": ""
+	},
+	{
+		"Value": "formErrors",
+		"QuickName": "Error Handling on Forms",
+		"Recommendation": "Form fields that either require a specific format of text or are simply a required field, the use of ARIA should be utilized.  Required fields should use the attribute 'aria-required=&quot;true&quot;'.",
+		"Example": ""
+	},	
+	{
+		"Value": "Graph",
+		"QuickName": "Graph",
+		"Recommendation": "",
+		"Example": ""
+	},
+	{
+		"Value": "html",
+		"QuickName": "HTML",
+		"Recommendation": "Ensure that the &lt;html&gt; element has a valid 'lang' attribute.",
+		"Example": "<html lang='en-us'>"
+	},
+	{
+		"Value": "imageBackground",
+		"QuickName": "Image (Background)",
+		"Recommendation": "If this is a background image and contains text, there must be a textual alternative.  Textual alternatives can include visual or text that is hidden visually hidden, but accessible to users of assistive technologies.",
+		"Example": "<div class='background-image-class'><span class='AT_only'> TEXTUAL EQUIVALENT OF THE BACKGROUND IMAGE</span></div>"
+	},			
+	{
+		"Value": "imageDecorative",
+		"QuickName": "Image (Decorative)",
+		"Recommendation": "Decorative images should have a null alt attribute.",
+		"Example": "<img src='spacer.gif' alt='' />"
+	},
+	{
+		"Value": "imageInfo",
+		"QuickName": "Image (Informational)",
+		"Recommendation": "All informational images should contain descriptive alt text.",
+		"Example": "<img src='banner.png' alt='Thanks for using Marker!' />"
+	},
+	{
+		"Value": "inputText",
+		"QuickName": "Input[type=text] ",
+		"Recommendation": "All form fields require an explicit label.  This can be accomplished by either using a &lt;label&gt; element, using the &quot;aria-labelledby&quot; attribute, or using the &quot;aria-label&quot; attribute on the input.",
+		"Example": "<label for='input_1'>First name</label>\n<input id='input_1' type='text' />"
+	},
+	{
+		"Value": "inputButton",
+		"QuickName": "Input[type=button]",
+		"Recommendation": "Use native HTML elements (such as input[type=button]) whenever possible.  Ensure that there is a valid &quot;value&quot; attribute with a value.",
+		"Example": ""
+	},
+	{
+		"Value": "inputCheckbox",
+		"QuickName": "Input[type=checkbox]",
+		"Recommendation": "",
+		"Example": "<label for='input_1'>First name</label>\n<input id='input_1' type='checkbox' />"
+	},
+	{
+		"Value": "inputImage",
+		"QuickName": "Input[type=image]",
+		"Recommendation": "Input images should be treated the same as an informational image.  Ensure the input has explicit alt text.  This value cannot be left blank.",
+		"Example": ""
+	},
+	{
+		"Value": "h1",
+		"QuickName": "Heading Level 1 (h1)",
+		"Recommendation": "This should be marked up as a heading level 1.",
+		"Example": "<h1>Thanks for using Marker!</h1>"
+	},
+	{
+		"Value": "h2",
+		"QuickName": "Heading Level 2 (h2)",
+		"Recommendation": "This should be marked up as a heading level 2.",
+		"Example": "<h2>We hope it's been a great help</h2>"
+	},
+	{
+		"Value": "h3",
+		"QuickName": "Heading Level 3 (h3)",
+		"Recommendation": "This should be marked up as a heading level 3.",
+		"Example": "<h3>Article title</h3>"
+	},
+	{
+		"Value": "h4",
+		"QuickName": "Heading Level 4 (h4)",
+		"Recommendation": "This should be marked up as a heading level 4.",
+		"Example": "<h4>Heading level 4</h4>"
+	},
+	{
+		"Value": "h5",
+		"QuickName": "Heading Level 5 (h5)",
+		"Recommendation": "This should be marked up as a heading level 5.",
+		"Example": "<h5>This is probably pretty small</h5>"
+	},
+	{
+		"Value": "h6",
+		"QuickName": "Heading Level 6 (h6)",
+		"Recommendation": "This should be marked up as a heading level 6.",
+		"Example": "<h6>The illusive catch-all h6</6>"
+	},
+	{
+		"Value": "label",
+		"QuickName": "Label",
+		"Recommendation": "Labels should be used for all input[type=text], input[type=checkbox], input[type=radio], and textarea elements.  The label should have a valid 'for' attribute which associates the label to the desired element.<br /><br />You can also wrap the element in a label.  Ensure there is text inside of the label element.",
+		"Example": "<label for='input_id_1'>LABEL FOR ELEMENT</label>\n<input type='text' id='input_id_1' />"
+	},		
+	{
+		"Value": "orderedList",
+		"QuickName": "List (Ordered)",
+		"Recommendation": "",
+		"Example": ""
+	},
+	{
+		"Value": "unorderedList",
+		"QuickName": "List (Unordered)",
+		"Recommendation": "",
+		"Example": "<ul role='menu'><li role='menuitem'><a href='index.html'>Home</a><li><li role='menuitem'><a href='specials.html'>Specials</a></li></ul>"
+	},
+	{
+		"Value": "definitionList",
+		"QuickName": "List (Definition)",
+		"Recommendation": "",
+		"Example": ""
+	},
+	{
+		"Value": "menu",
+		"QuickName": "Menu",
+		"Recommendation": "Menus require the following aria attributes: <ul><li>Role=&quot;menu&quot; on the &lt;UL&gt;</li><li>Role=&quot;menuitem&quot; on each sub-item &lt;LI&gt;</li></ul><strong>WCAG Example</strong><a href='https://www.w3.org/TR/wai-aria-practices/#menu'>ARIA Menus</a>",
+		"Example": ""
+	},
+	{
+		"Value": "meta",
+		"QuickName": "Meta",
+		"Recommendation": "",
+		"Example": ""
+	},
+	{
+		"Value": "radioGroup",
+		"QuickName": "Radio Group",
+		"Recommendation": "Groups of radio buttons should be marked up in either <ol><li>A fieldset with a legend element</li><li>Wrapped inside of a &lt;div role=&quot;group&quot; aria-labelledby=&quot;group_heading_id&quot;&gt;.  <br /><br />The attributes role=&quot;group&quot; and aria-labelledby=&quot #id of head element &quot; should be used</li></ol>",
+		"Example": ""
+	},
+	{
+		"Value": "select",
+		"QuickName": "Select",
+		"Recommendation": "Ensure that all form fields have an explicit label with a valid 'for' attribute that associates the label to the select box",
+		"Example": "<label for='input_1'>Choose state</label>\n<select id='input_1'>...</select>"
+	},			
+	{
+		"Value": "tabset",
+		"QuickName": "Tabset",
+		"Recommendation": "Tabsets require the following aria attributes: <ul><li>Role=&quot;tabset&quot; on the &lt;ul&gt;</li><li>Role=&quot;tab&quot;</li></ul>",
+		"Example": ""
+	},
+	{
+		"Value": "title",
+		"QuickName": "Title",
+		"Recommendation": "Ensure that this page has a descriptive title.  Screen readers read out the title of the page before anything else, so this is very important.",
+		"Example": "<title>Marker!</title>"
+	},
+	{
+		"Value": "tooltip",
+		"QuickName": "Tooltips",
+		"Recommendation": "",
+		"Example": ""
+	},	
+	{
+		"Value": "dataTable",
+		"QuickName": "Table (Data)",
+		"Recommendation": "Tabular data should be marked up in a data table, with a caption and table headings.  The caption for the table doesn't necessarily have to be a caption element, but can be also be a heading that is associated to the table with the 'aria-labelledby' attribute.<br />  Table headings that are positioned in the row should use the attribute 'scope=row'.",
+		"Example": ""
+	},
+	{
+		"Value": "layoutTable",
+		"QuickName": "Table (Layout)",
+		"Recommendation": "Tables used for layout purposes should always have the attribute 'role=&quot;presentation&quot;'.",
+		"Example": "<table role='presentation'>..</table>"
+	},
+	{
+		"Value": "-",
+		"QuickName": "-----Global-----",
+		"Recommendation": "",
+		"Example": ""
+	},
+	{
+		"Value": "focusManagement",
+		"QuickName": "Focus Management",
+		"Recommendation": "Do not suppress the default browser focus indication without setting a focus indicator of your own.",
+		"Example": "Do not use ':focus { outline: 0 }'.  This will remove focus entirely and make the page unusable for keyboard users.\n\nInstead, use ':focus { outline: solid 2px #000; }'"
+	},
+	{
+		"Value": "colorContrast",
+		"QuickName": "Color Contrast",
+		"Recommendation": "Ensure that all text under 16pts has at least a 4.5:1 color contrast ratio between the foreground and background.  For large size text (16pt or larger), a contrast ratio of at least 3:1 should be met.",
+		"Example": ""
+	},
+	{
+		"Value": "tabOrder",
+		"QuickName": "Tab Order",
+		"Recommendation": "Tabbing through the page should move left to right, top to bottom.  Tabbable elements should be wrapped in an anchor, or have a tabindex of 0. <br /> It is a best practice to allow the browser to assign the taborder, and to only use a tabindex where applicable.",
+		"Example": ""
+	}
+
+]

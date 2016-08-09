@@ -1,0 +1,636 @@
+/***********************************************
+*Author: Shea VanLaningham
+*Website:http://www.sheavanlaningham.com
+***********************************************/
+/* Global styles */
+
+#marker_body_wrap{ width:100%; height: z-index: 2147483634 !important; position: absolute; top: 0; display: block;}
+
+
+.ubuntu{font-family:'Ubuntu',sans-serif}
+
+.marker{font-family:'Raleway',sans-serif; color: #000 !important; }
+
+.marker-save-msg{position:fixed; top:50%; left:50%; padding:15px; -ms-transform:translateX(-50%) translateY(-50%); -webkit-transform:translate(-50%,-50%); transform:translate(-50%,-50%); background-color:#fff; padding:25px; font-size:16px; font-weight:bold; border:3px solid #000; box-shadow:rgb(136,136,136) 6px 6px 10px 0px; z-index:2147483635; text-align:center; border-radius:5px; min-width:200px}
+
+/* Original Page Style Manipulation */
+#marker_window_resize_msg{border:3px solid #000; border-top:0; position:fixed; top:0; display:block; right:10px;  background-color:#ffe;  z-index:2147483630;  height:160px;  font-family:'Raleway',sans-serif;  color:#000; box-shadow:rgb(136,136,136) 6px 6px 10px 0px; border-radius:0 0 10px 10px; font-size:14px !important;  text-align:left;  width:300px;  padding:10px;  height:auto;  display:none}
+
+#marker_window_resize_msg span{font-family:'Ubuntu',sans-serif}
+
+#marker_window_resize_msg strong{display:block; padding:3px; width:100%}
+
+/* Content/ <iframe />styles */
+#marker_div_container{display:block; left:0; top:0; position:fixed; width:278px}
+
+#marker_iframe{width:270px;  height:100%;  float:left;  position:fixed;  border-top:none;  border-right:2px solid #aaa;  z-index:2147483646;  top:0px;  left:0px; font-family:'Raleway',sans-serif; background-color:#fff}
+
+/* Font styles */
+.marker{font-family:'Raleway',sans-serif}
+
+.instruction{font-size:14px; padding:5px; color:#000; border-bottom:1px solid #e9e9e9; display:block; margin-bottom:20px; font-family:'Ubuntu',sans-serif}
+
+input[type=text].instruction{border-radius:3px; line-height:25px; height:30px; font-size:14px; font-weight:bold; font-family:'Raleway',sans-serif; border:1px solid #000; padding-left:10px}
+
+h1.marker{padding:2px; border-bottom:1px solid #666; text-align:center; -webkit-margin-after:0}
+
+h2.marker{padding:2px; font-weight:normal; text-align:left; color:#000; font-size:13px !important; line-height:20px;  padding:5px;  margin:0;  background-color:#eee;  position:initial;  width:auto;  height:auto}
+
+h2.marker_drag:active{background-color:#888}
+
+button{margin-top:0 !important; vertical-align:initial}
+
+/* Actionable options */
+#marker_options{width:265px; display:block; padding:3px; border-top:2px solid #aaa}
+
+.marker_option{display:inline-block; padding:2px; margin-left:10px; margin-top:10px}
+
+.marker_option img{width:24px}
+
+.marker_option:focus, .marker_option:hover{outline:1px dotted #000}
+
+#test3 h3 { font-size: 19px; font-color: #9e9e9e; height: 25px; line-height: 25px;  }
+
+/* Original page injections */
+a.marker_page_marker{color:#000; text-decoration:none !important; z-index:2147483634; transition:all .2s ease-in-out}
+
+a.marker_page_marker:hover{transform:scale(1.3); outline:0}
+
+a.marker_page_marker:focus{outline:1px dotted #000; outline-offset:5px}
+
+.marker_page_marker:before{content:attr(data-marker-count); font-family:'Architects Daughter',cursive; font-weight:bold;  position:absolute;  top:-.5em;  left:-32px;  width:25px;  height:25px;   font-size:18px;  line-height:24px;  text-align:center;  color:#666;   border:3px solid #a9a9a9;  border-radius:50%;  background-color:#fff}
+
+.marker_page_marker_rotate { -moz-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1);
+    -ms-filter: fliph; /*IE*/
+    filter: fliph; /*IE*/ }
+
+/* Marker right click note styles */
+.marker_context_menu{position:absolute; border:2px solid #aaa; background-color:#fff; display:block; z-index:2147483635; max-width:440px; box-shadow:rgb(136,136,136) 3px 3px 5px 0px}
+
+.marker-context-menu-iframe-container{padding:5px}
+
+.marker_context_menu:hover{cursor:move}
+
+.marker_context_menu h2{font-size:13px}
+
+.marker_context_menu h2:hover{cursor:move}
+
+.marker_context_close{float:right; margin-top:5px;     margin-right:10px}
+
+.marker_context_close:hover, .marker_context_close:focus{outline:1px dotted #000}
+
+.marker_info{width:98.1%}
+
+.marker_info select{  -webkit-appearance:none !important;   -moz-appearance:none !important;   background-color:#FAFAFA;   border-radius:0;    border-style:solid;  border-width:1px;  border-color:#ccc;  color:rgba(0,0,0,0.75);  font-family:inherit;  font-size:0.875rem;  line-height:normal;  padding:0.5rem;  border-radius:0;  width:100%;  font-size:14px !important;  font-weight:bold;  margin-left:5px}
+.marker_context_menu select::-ms-expand{ display:none}
+ .marker_context_menu select.radius{ border-radius:3px}
+ .marker_context_menu select:hover{ background-color:#f3f3f3;  border-color:#999}
+ .marker_context_menu select:disabled{ background-color:#DDD;  cursor:default}
+ .marker_context_menu select[multiple]{ height:auto}
+
+.marker_note{resize:none; height:174px; width:200px; padding:0; vertical-align:inherit; font-size:12px}
+
+label.marker{font-family:'Raleway',sans-serif; font-size:13px !important; height:20px; display:inherit}
+
+.marker_info{padding-bottom:10px}
+
+.marker_fun_btn{ background:#fff;  border:2px solid #c00;  font-family:'Raleway',sans-serif;  font-size:12px !important;  width:200px;  text-align:center;  color:#c00;  margin-bottom:2px;  margin-top:10px;  display:inline;  margin-left:5px;  padding-top:5px;  padding-bottom:5px}
+
+.marker_fun_btn:hover{background-color:#e9e9e9}
+
+.marker_save_note_btn{border:2px solid #000080; color:#000080; font-weight:bold}
+
+/* Marker text and recommendations */
+.marker_side_text_container{border-top:2px solid #aaa; font-family:'Ubuntu',sans-serif}
+
+.marker_side_text_container a:hover, .marker_side_text_container a:focus{outline:1px dotted #000}
+
+.marker_side_text_selection{border-bottom:1px solid #aaa; padding:3px}
+
+.marker_side_text_selection h3{font-weight:bold; font-size:13px; font-family:'Ubuntu',sans-serif; line-height:1px; display:inline-block; margin-top:7px}
+
+.marker_side_text_selection .expand_collapse{font-size:12px; float:right; margin-right:3px; display:inline}
+
+.marker_side_text_selection select{display:inline-block;  height:28px;  line-height:28px;  border:1px solid #aaa;  padding:4px;  color:#555;  font-family:'Ubuntu',sans-serif;  font-size:13px}
+
+.marker_side_text_selection .instruction{color:#000; font-size:12px; font-family:'Ubuntu',sans-serif; font-weight:bold; border-bottom:0}
+
+.marker_ele_type{padding-left:5px}
+
+.marker_required:after{content:'*';  color:#c00;  font-size:15px}
+
+.marker_recommendation{font-size:13px}
+
+.marker_recommendation_div{margin-top:5px; font-family:'Ubuntu',sans-serif; font-size:13px; padding:2px; text-align:left}
+
+.marker_recommendation_div ol, .marker_recommendation_div ul{padding-left:15px; font-size:12px}
+
+.marker_recommendation_div a{text-decoration:none; text-align:left; color:#000080}
+
+.marker_recommendation_div strong{text-align:left}
+
+.marker_recommendation_div a:visited{color:#000080}
+
+.marker_recommendation_div img{vertical-align:sub; margin-left:5px}
+
+.marker_recommendation strong{margin-top:3px; display:block; width:100%; background-color:#e9e9e9; font-family:'Ubuntu',sans-serif; padding:3px}
+
+strong.recommendations{border-bottom:2px solid #333; width:100%; display:block; background-color:#e9e9e9}
+
+strong.example{border-bottom:2px solid #480f09; width:100%; display:block; background-color:#e9e9e9}
+
+strong.aria{border-bottom:2px solid #0d5e05; width:100%; display:block; background-color:#e9e9e9}
+
+.marker_user_note_side{display:block; font-size:13px; font-family:'Ubuntu',sans-serif}
+
+.marker_user_note_side strong{display:block; border-bottom:2px solid #000080; font-size:13px; width:100%; background-color:#e9e9e9; margin-bottom:5px; padding-left:3px}
+
+.marker-highlight{font-weight:bold}
+
+.marker_or{font-weight:bold; display:block; margin-top:3px; margin-bottom:3px}
+
+/* Misc. helper styles */
+#marker_save_to_pdf{width:100%; display:block; border:2px solid #000; position:absolute; bottom:0}
+
+.screen-reader-only{position:absolute; clip:rect(1px,1px,1px,1px); padding:0; border:0; height:1px; width:1px; overflow:hidden}
+
+/* Results <iframe />styles */
+#annotate-print-modal{width:100%; height:100%; background-color:#000; opacity:.6; position:fixed; z-index:2147483634; top:0}
+
+#annotate-print-dialog{position:fixed; top:50%; left:50%; padding:15px; -ms-transform:translateX(-50%) translateY(-50%); -webkit-transform:translate(-50%,-50%); transform:translate(-50%,-50%); background-color:#fff; padding:25px; font-size:16px; font-weight:bold; border:3px solid #000; box-shadow:rgb(136,136,136) 6px 6px 10px 0px; z-index:2147483635; text-align:center; border-radius:5px; min-width:200px; color: #000;}
+
+.marker-btn{margin-left:25px; border-radius:3px; font-size:14px; line-height:18px; font-weight:bold}
+
+#marker_results_frame{display:block; background-color:#fff; border-top:3px dashed #000; border-left:3px dashed #666; padding:5px; z-index:21433235543849}
+
+#body_shim{position:absolute; bottom:0; height:200px; width:100%; display:block}
+
+.rectangle{ border:2px solid #F00;  position:absolute;  z-index:2147483632;  position:absolute !important}
+
+.marker-text-bottom-div{padding-left:100px}
+
+@media print{ #marker_iframe{ display:none}
+
+
+
+}
+/***************************
+New styles
+****************************/
+#marker-control-panel{height:auto; width:auto; max-width:305px; min-height:85px; border:2px solid #000; background-color:#e9e9e9; position:fixed; top:50px; left:50px; z-index:2147483635; background-color:#fff; box-shadow:rgb(136,136,136) 3px 3px 5px 0px; display:none}
+
+#marker-a11y-results-iframe{border:0; min-height:250px}
+
+#marker-a11y-results{max-height:500px; border:2px solid #ccc; margin-top:10px;  background-color:#fff}
+
+.marker-a11y-top-anchor{display:block; background-color:#eaeaea; text-decoration:none; border-bottom:1px solid #ccc; color:#000; width:98.5%}
+
+.marker-a11y-results-h3{font-size:12px; font-weight:bold; margin:0; line-height:25px; display:inline}
+
+.marker-expanded-ind{color:#000; text-decoration:none; font-size:11px}
+
+.marker-a11y-results-span{font-size:12px; padding:5px; display:none}
+
+.marker-a11y-results-code{display:block; width:96%; background-color:#222; color:#fff;  padding:5px;  font-size:12px; display:none}
+
+#marker-a11y-panel-h2{font-size:13px; font-weight:bold; display:block; border-bottom:2px solid #aaa; color:#000080; font-family:'Raleway',sans-serif; margin-bottom:0}
+
+#marker-a11y-panel-h2:hover{cursor:move}
+
+.marker-panel-heading{font-size:14px !important; display:block !important; background-color:#eaeaea !important; font-weight:bold !important; font-family:'Raleway',sans-serif !important; padding:6px !important; color: #000 !important; max-width:305px !important; position:initial !important;  margin:0 !important;  /* padding:0; */ width:auto !important;  height:auto !important;  line-height:initial !important;  font-size:16px !important;  text-align:left !important}
+
+.marker-panel-heading:hover{cursor:move}
+
+#marker-panel-close{position:absolute; right:10px}
+
+.marker-flagged-issue{outline:2px dashed #A10606; outline-offset:2px}
+
+#marker-a11y-head{border-bottom:2px solid #ccc}
+
+.marker-a11y-rec-a{text-decoration:none; text-align:left; display:block; color:#000}
+
+.marker-a11y-rec-a strong{text-align:left !important}
+
+.marker-a11y-rec-a:hover, .marker-a11y-rec-a:focus{outline:1px dotted #000; outline-offset:2px}
+
+.marker-print-res-cont{border-top:2px solid #aaa; margin-top:10px; padding:5px}
+
+.marker-print-res-cont ol.marker-res{ list-style-type:none; padding-left:15px; margin:0; margin-left:4em; padding:0;  counter-reset:li-counter}
+.marker-print-res-cont ol.marker-res >li{ position:relative;  margin-bottom:20px;  padding-left:0.5em;  min-height:3em}
+.marker-print-res-cont ol.marker-res >li:before{ position:absolute;  top:0;  left:-1.33em;  width:1.2em;  height:1.2em;   font-size:2.5em;  line-height:1.2;  text-align:center;  color:#f5f5f5;   border:3px solid #c5c5c5;  border-radius:50%;  background-color:#464646;  content:counter(li-counter);  counter-increment:li-counter}
+
+.marker-a11y-res-list-type{font-family:'Ubuntu',sans-serif}
+
+.marker-a11y-res-list-type strong.recommendations, .marker-a11y-res-list-type strong.example{background-color:#fff;  padding:8px;  border-bottom:1px solid #ccc;  font-size:15px;  margin-bottom:10px}
+
+.marker-a11y-res-list-type div{font-size:14px !important; padding:5px}
+
+#marker_saves{padding-right:10px}
+
+#marker-pin-colors-drawer, #marker-box-colors-drawer, #marker-box-text-drawer { display: none; }
+
+.marker-context-iframe{display:block; overflow-x:hidden; border:0; height:100%; width:427px}
+
+#marker-results-ifr{display:block; border:0; height:100% !important; background-color:#fff; position:absolute; z-index: 21455456;}
+
+#marker-pin-colors-iframe{display:block; border:0; overflow-x:hidden; height:390px; max-width:210px}
+
+#marker-pin-colors-iframe .marker_option{display:inline-block; padding:2px; margin-left:10px; margin-top:10px}
+
+#marker-pin-colors-iframe .marker_option:focus, .marker_option:hover{outline:1px dotted #000}
+
+.marker_collapse_1 { font-size: 10px; color: #222; }
+
+strong.marker{font-family:'Raleway',sans-serif; font-weight:bold; font-size:14px; padding-left:5px; display:block; margin-top:10px; border-bottom:1px solid #ccc; width:100%;  position:initial;  height:auto;  line-height:initial;  text-align:left;  color:#000;  margin:10px 0}
+
+input#marker_color_select, input#marker_text_color_select, input#marker_text_outline_select, input#marker_text_color, input#marker_text_shadow_color, input#marker_text_box_bg_color, input#marker_bg_color_select{border-radius:3px; line-height:25px; height:30px; font-size:14px; font-weight:bold; font-family:'Raleway',sans-serif; border:1px solid #000; padding-left:10px; width:80%; margin:10px}
+
+input.marker_text_size_select {
+	border-radius:3px; 
+	line-height:25px; 
+	text-indent: 0; 
+	box-shadow: rgba(34,34,34,0.3) 0 2px 6px inset; 
+	font-size:18px; 
+	font-weight:bold; 
+	font-family:'Raleway',sans-serif; 
+	border:1px solid #000; 
+	padding-left: 15px; 
+	margin-left:20px; 
+	margin-right:20px; 
+	display:inline;
+}
+
+input.marker_box_width_select {
+	border-radius:3px !important; 
+	line-height:25px !important; 
+	height:30px !important; 
+	text-indent: 0 !important; 
+	box-shadow: rgba(34,34,34,0.3) 0 2px 6px inset !important; 
+	font-size:18px !important !important; 
+	font-weight:bold !important; 
+	font-family:'Raleway',sans-serif !important; 
+	border:1px solid #000; 
+	width:55px !important; 
+	padding-left: 15px !important; 
+	margin-left:20px !important; 
+	margin-right:20px !important; 
+	display:inline !important;	
+}
+
+.marker_note_image:hover {
+	outline: dotted 1px #000;
+}
+
+.marker_note_hover_change_div {
+	position: absolute;
+	width: 300px;
+	height: 75px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	box-shadow: #222 0 2px 6px 2px;
+	display: none;
+	margin: 0;
+	padding: 0;
+	top: -78px;
+	left: 8px;
+}
+
+.marker_note_hover_change_div:hover {
+
+}
+
+.marker_note_hover_change_button {
+	border: 1px solid #ccc;
+	height: 50px;
+	width: 50px;
+}
+
+#marker_sub_box_change, #marker_add_box_change{vertical-align:baseline; border-bottom:1px}
+
+.marker_textarea_notes{width:425px; height:200px; overflow-y:auto; font-size:14px; font-weight:bold; font-family:'Raleway',sans-serif}
+
+.marker_label{margin-top:12px; display:block; line-height:25px; height:30px; font-weight:bold; font-size:13px}
+
+.marker-res-type-issue{display:block; font-weight:bold; font-size:16px; font-family:'Raleway',sans-serif; border-bottom:1px solid #666; padding:5px}
+
+kbd.marker{padding:10px; background-color:#eee; border:1px solid #666; display:inline-block; border-radius:3px}
+
+.alert{padding:15px; border:3px solid #128715; width:96%; height:35px; display:none; font-family:'Ubuntu',sans-serif}
+
+.marker-tips{width:380px; position:fixed; top:155px; left:20px; background-color:#ffe; padding:5px; font-size:12px; border-style:solid; border-width:1px; border-color:#ccc}
+
+#marker_pin_mouse_position_div {
+	position: fixed;
+	bottom: 0;
+	right: 25px;
+	height: 25px;
+	border-radius: 5px;
+	background-color: #fff;
+	color: #000;
+	border: solid 1px #000;
+	padding: 10px;
+}
+
+.marker-pos-x, .marker-pos-y { font-size: 12px; display: block; line-height: initial;}
+
+/* Marker text note styles */
+.marker_text_note_marker {
+	position: absolute;
+	display:block;
+	background-color: none;
+	border-radius: 5px;
+	z-index:2147483633;
+}
+
+.marker_text_note_marker:hover {
+	outline: dotted 1px #000;
+}
+
+.marker_text_note_marker_textarea:hover, .marker_text_note_marker_textarea:focus {
+	outline: none;
+	background: none;
+
+}
+
+.marker_text_note_marker_textarea {
+	border: 0;
+	position:absolute;
+	font-family: 'Rock Salt', cursive;
+	font-weight: bold;
+	background:none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    padding-left: 10px;
+    height: 94%;
+    bottom: 2px;    
+}
+
+.marker_text_hover_color {
+	z-index: 2147483635;
+    height: 97% !important;
+    width: 25px !important;
+    color: #fff;
+    border: solid 1px #ccc !important;
+    font-size: 0 !important;
+    cursor: default !important;
+    margin: 0 0 0 0 !important;
+    padding: 0 !important;
+    display: inline !important;
+}
+
+.marker_text_options_checkboxes {
+	display: inline-block;
+	position: absolute;
+	padding-left: 5px;
+	padding-top: 4px;
+}
+
+.marker_text_options_checkboxes label {
+	display: inline-block;
+	font-family: 'Raleway', sans-serif !important;
+	font-size: 13px;
+}
+
+.marker-text-checkbox {
+	margin-left: 10px !important;
+	display: inline !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	width: auto !important;
+}
+
+.marker_window_resize_anchor {
+	position: absolute;
+	top: 4px;
+	right: 5px;
+	display: block;
+}
+
+.marker_window_resize_anchor:hover {
+	outline: dotted 1px #000;
+}
+
+.marker_window_resize_panel_anchor {
+	display: block;
+	text-decoration: none;
+	padding: 5px;
+	color: black;
+}
+
+.marker_window_resize_panel_anchor:hover {
+	outline: dotted 1px #000;
+	color: #666;
+	background-color: #ddd;
+	font-weight: bold;
+}
+
+/*Options pages styles  */
+body{margin:0 auto; padding:0; overflow-x:hidden}
+
+div.body{width:75%; margin:0 auto; padding:0}
+
+a.tab-selected{background-color:#eee}
+
+div.body a{display:block; color:#000; font-weight:normal; padding:8px; padding-left:15px; border-left:2px solid #ccc}
+
+div.body .ann-tab{display:block !important; color:#000 !important; font-weight:normal !important; padding:8px !important; border-left:2px solid #ccc !important; border-top:2px solid #ccc !important; border-right:2px solid #ccc !important; text-align:center !important; border-radius:5px 5px 0 0 !important; text-decoration:none !important;}
+
+div.body a:hover, div.body a:focus{outline:1px dotted #000}
+
+.marker_options_label{display:block}
+
+.ann-tabs{display:block}
+
+.ann-tabs h2{display:inline-block; font-size: 1rem !important;}
+
+.split{margin-top:-16px; border-top:2px solid #ccc; border-left:2px solid #eee; border-right:2px solid #eee; border-bottom:2px solid #eee}
+
+textarea.marker_options_input{width:98%; height:200px; font-weight:bold; font-size:13px; line-height:15px; padding:5px; margin-left:5px; display:none}
+
+input.marker_options_input{width:98%; line-height:15px; height:20px; font-size:13px; display:none; padding:3px; border:1px solid #aaa; margin-bottom:10px; margin-left:5px}
+
+.marker_options_edit{font-weight:bold; font-size:14px; margin:0; display:block; margin-top:10px; margin-bottom:0}
+
+ul.css-list{list-style-type:none; padding:0; }
+
+ul.css-list li{margin-top:10px}
+
+.css-prop{padding-left:5px; border-left:2px solid #ccc; font-size:14px}
+
+.css-val{font-size:13px}
+
+#change_rec_style_div{display:none}
+
+.instructional{font-size:12px; color:#666}
+
+.marker_options_label_anchor{display:block;  border:1px dotted #aaa;  padding:5px;  text-decoration:none;  color:#000;  font-weight:bold;  font-size:14px}
+
+#marker_index_options p{border-left:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc}
+
+.marker_options_label_anchor:hover{cursor:pointer}
+
+.marker_options_label_anchor:focus{outline:2px solid #ccc; background-color:#efefef}
+
+#add-new-req, #change_rec_style{display:block; color:#000; text-decoration:none; padding:5px; width:auto}
+
+#save_button{position:fixed; right:30px; top:50px}
+
+fieldset.ubuntu{border:0;  margin-top:20px;  padding:0}
+
+fieldset.ubuntu legend{margin-top:20px; font-weight:bold; font-size:14px; display:block; margin-bottom:10px}
+
+#heading_style_current{font-family:'Ubuntu',sans-serif; font-size:14px; font-color:#333}
+
+.default_group_toggle{display:block; border: solid 2px #ccc; padding-bottom: 10px;}
+
+.instruct_span{padding-left:20px; padding-right:20px; width:97%; display:block}
+
+.instruct_span img{width:24px}
+
+.marker_preset_save_btn{box-shadow:#aaa 2px 2px 6px 1px; color:#000; background:#fff;  border:2px solid #222;  font-family:'Raleway',sans-serif;  font-size:15px !important;  font-weight:bold;  width:99%;  text-align:center;  margin-bottom:2px;  margin-top:10px;  display:inline;  margin-left:5px;  padding-top:5px;  padding-bottom:5px;  display:none}
+
+.marker_preset_reset_btn{box-shadow:#666 2px 2px 6px 1px; color:#fff; background:#790a0a;  border:2px solid #222;  font-family:'Raleway',sans-serif;  font-size:16px !important;  font-weight:bold;  width:50%;  text-align:center;  margin-bottom:2px;  margin-top:10px;  margin-left:5px;  padding-top:5px;  padding-bottom:5px;  display:none;  margin-bottom:20px;  text-transform:uppercase;  letter-spacing:2px}
+
+.marker_preset_save_btn:active{background-color:#585454; color:#fff}
+
+.marker_preset_save_btn:focus{outline:1px dotted #800000}
+
+#rec_show_hide{display:none}
+
+#faq_hide_show{display:none}
+
+#def_show_hide{display:block}
+
+#os_show_hide{display:none}
+
+.border_width_example{display:block; width:50%; height:100px; margin-top:10px}
+
+a.change_width, a.change_width_pin{display:inline !important; border:0 !important; padding:0 !important; vertical-align:-webkit-baseline-middle}
+
+a.change_width img, a.change_width_pin img{height:auto !important; width:auto !important; display:inline !important}
+
+a.change_op, a.change_op_pin{display:inline !important; border:0 !important; padding:0 !important; vertical-align:-webkit-baseline-middle}
+
+a.change_op img, a.change_op_pin img{height:auto !important; width:auto !important; display:inline !important}
+
+.clear-line{border-bottom:1px solid #ccc; display:block; width:100%; height:10px; margin-top:5px; margin-bottom:5px}
+
+.input-label{margin-top:20px; font-size:14px; font-weight:bold; display:none; margin-left:8px}
+
+.marker-remove-rec-link{border:2px solid #790a0a; margin-top:15px}
+
+#marker-group-h2{margin:0}
+
+.marker-flag-selected{background-color:#e9e9e9}
+
+.attribution a{ display: inline-block !important; border: 0 !important; padding: 0 !important;}
+
+.border_width_example div {
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+
+.options_a_selected { background-color: #eee; border-top: solid 2px #ccc; }
+
+.default_markers a {
+	display: inline-block !important;
+	border-left: 0;
+	padding-left: 5px !important;
+}
+
+.prev-title {
+	font-size: 14px;
+	font-weight: normal;
+	display: inline-block;
+}
+
+.marker-display-timestamp {
+	display: inline-block;
+	font-size: 12px;
+	margin-left: 28px;
+	padding: 10px;
+}
+
+.prev-box-settings {
+
+}
+
+.annotate-highlight-panel {
+	box-shadow:#c00 3px 3px 50px 1px !important;
+}
+
+.ann-prev-list-cont {
+	position: absolute;
+	top: 10;
+	left: 20;
+	height: auto;
+	background-color: #fff;
+	border: solid 2px #000;
+}
+
+.ann-prev-list-cont a {
+	display: block;
+	color: #000;
+	text-decoration: none;
+	border-bottom: solid 1px #666;
+	padding: 6px;
+	font-size: .9rem !important
+}
+
+.ann-prev-list-cont a:hover, .ann-prev-list-cont a:focus {
+	background: #666;
+	color: #fff;
+
+}
+
+span.small {
+	font-size: .8rem;
+	color: #333;
+}
+
+span.ann-circle {
+	font-family:'Raleway',cursive; font-weight:bold;  width:auto;  height:auto; padding: 1px;   font-size:16px;  line-height:6px;  text-align:center;  color:#666;   border:2px dotted #d10505;  border-radius:50%;  background-color:#fff; display: inline-block; margin-right: 5px; box-shadow: #777 0 1px 1px 2px;
+}
+
+span.ann-circle img {
+	vertical-align: initial !important;
+}
+
+#ann-alarm:focus, #ann-alarm:hover {
+	outline: dotted 1px #000;
+	display: inline-block;
+}
+
+.ann-list-trash {
+	display: inline !important;
+	padding: 0 !important;
+	border: 0 !important;
+}
+
+.ann-list-trash img {
+	width: 14px;
+}
+
+.ann-sel-text-option {
+	position: absolute;
+    bottom: 0;
+    padding: 4px;
+    margin-left: 5px;
+    margin-top: 2px;
+font-size: 12px;
+    height: 23px;
+    width: 213px;
+    margin-bottom: 0;
+    display: block;
+    border: solid 1px #222;
+}
+
+/*  Marker Panel styles /*
+/*  Marker pin styles  */
+/*  Marker box styles  */
+/*  Marker results styles  */
