@@ -123,30 +123,32 @@ function getPreviousAnnotations(data, tabid) {
 }
 
 function postNewAnnotation(data) {
-	$.ajax({
-		url: 'http://annotate.tech/add_service_new.php',
-		type: "POST",
-		data: data,
-		success: function ( response ) {
-		chrome.windows.getCurrent(function(win)
-		{
-		    chrome.tabs.getAllInWindow(win.id, function(tabs)
-		    {
-		        var activeTab;
-		        $(tabs).each(function(i,v) {
-		        	if(v.active === true) {
-		        		activeTab = tabs[i]['id'];
-		        	}
-		        });
-		        chrome.tabs.sendRequest(activeTab, {greeting: "annotation_saved"}, function(response) {});
-		    });
-		});		
+	if(localStorage.getItem('userEmail') !== "") {
+		$.ajax({
+			url: 'http://annotate.tech/add_service_new.php',
+			type: "POST",
+			data: data,
+			success: function ( response ) {
+			chrome.windows.getCurrent(function(win)
+			{
+			    chrome.tabs.getAllInWindow(win.id, function(tabs)
+			    {
+			        var activeTab;
+			        $(tabs).each(function(i,v) {
+			        	if(v.active === true) {
+			        		activeTab = tabs[i]['id'];
+			        	}
+			        });
+			        chrome.tabs.sendRequest(activeTab, {greeting: "annotation_saved"}, function(response) {});
+			    });
+			});		
 
-		},
-		error: function ( error ) {
-			console.log(error);
-		}
-	})
+			},
+			error: function ( error ) {
+				console.log(error);
+			}
+		});
+	}
 }
 
 function getRecommendations() {

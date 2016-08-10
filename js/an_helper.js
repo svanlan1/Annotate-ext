@@ -193,7 +193,7 @@ function update_page_json() {
 		update_marker_page_obj(obj);
 	});
 
-	if(localStorage.getItem('userID') !== "") {
+	if(localStorage.getItem('userID') && localStorage.getItem('userID') !== "") {
 		if(!an_tech_sess_id || an_tech_sess_id === "") {
 			var url = window.location.href;
 		} else {

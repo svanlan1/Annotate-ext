@@ -86,9 +86,12 @@ function createContextMenu(el, e, val, prev, prevObj, bool) {
 		}
 		if(prev) {
 			var x = $('#marker-context-menu-' + prevObj.count)[0].contentWindow.document;
-			$(x).find('#marker_textarea_'+prevObj.count).text(prevObj['notes']);
+			var xBody = $(x).find('body');
+			console.log($(xBody).height());
+			$(x).find('#marker_textarea_'+prevObj.count).text(unescape(prevObj['notes']));
 			$(x).find('#marker_select_box_'+prevObj.count).val(prevObj['qRec']);
-			$('#' + id).css('height', '525px');
+			$('.marker-context-menu-iframe-container').css('height', $(xBody).height() + 110 + 'px');
+			$('#marker_context_menu'+prevObj.count).css('height', 'auto');
 			$('#' + id).hide();
 		}
 	}
