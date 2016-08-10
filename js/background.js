@@ -33,6 +33,7 @@ function setInitial() {
 		"email_address": "",
 		"first_name": "",
 		"last_name": "",
+		"custom_preset": "[]",
 		"user": ""
 	}
 
@@ -148,6 +149,21 @@ function postNewAnnotation(data) {
 	})
 }
 
+function getRecommendations() {
+	$.ajax({
+		url: 'http://annotate.tech/get_recs_service.php',
+		type: 'POST',
+		data: {userID: localStorage.getItem('userID')},
+		success: function ( response ) {
+			console.log(response);
+			localStorage.setItem('custom_preset', response);
+		},
+		error: function ( error ) {
+			console.log(error);
+		}
+	})
+}
+
 
 chrome.browserAction.onClicked.addListener(function(tab) {
 	if(localStorage.length === 0) {
@@ -168,8 +184,10 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 			var preset = "[]";
 		}
 		
-	} else {
-		var preset = "[]";
+	} else if (localStorage.getItem('set') === "custom") {
+		var preset = localStorage.getItem('custom_preset');
+	}else {
+		var preset = '[]';
 	}
 	if(localStorage.getItem("version") !== chrome.runtime.getManifest().version) {
 		var install_flag = "true"
@@ -183,6 +201,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if(request.greeting === "start") {
+			getRecommendations();
 			chrome.browserAction.setIcon({tabId: sender.tab.id, path: "../images/marker_16_active.png"});			
 		}
 
@@ -196,17 +215,7 @@ chrome.runtime.onMessage.addListener(
 			        chrome.tabs.sendRequest(sender.tab.id, localStorage, function(response) {});
 			        //console.debug(tabs);
 			    });
-			});
-
-
-
-			/*chrome.windows.getCurrent(function(w) {
-			    chrome.tabs.getSelected(w.id,
-			    function (response){
-			        //chrome.tabs.sendRequest(w.id, {greeting: "here_are_annotations", data: response}, function(response) {});
-			        
-			    });
-			});	*/						
+			});					
 		}
 
 		if(request.greeting === "welcome") {
@@ -226,7 +235,7 @@ chrome.runtime.onMessage.addListener(
 		}
 
 		if(request.greeting === "get_annotations") {
-			getPreviousAnnotations(request.data);
+			getPreviousAnnotations(request.data);			
 		}
 
 		if(request.greeting === "save_annotations") {

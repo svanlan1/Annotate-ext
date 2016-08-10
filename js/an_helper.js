@@ -82,6 +82,8 @@ function getOptions() {
 				options = $.parseJSON(data);
 			}
 		});		
+	} else if(localStorage.getItem('set') === 'custom') {
+		options = JSON.parse(localStorage.getItem('custom_preset'));
 	} else {
 		options = $.parseJSON(localStorage.getItem('preset'));
 	}
@@ -175,6 +177,22 @@ function update_page_json() {
 		update_marker_page_obj(obj);
 	});
 
+	$('.marker_context_menu').each(function(i,v) {
+		var x = $('#marker-context-menu-' + $(v).attr('data-marker-dialog-count'))[0].contentWindow.document;
+		var obj = {
+			type: "context",
+			left: $(v).css('left'),
+			top: $(v).css('top'),
+			qRec: $(x).find('select').val(),
+			rec: escape($(x).find('.marker_recommendation_div').text()),
+			ex: escape($(x).find('.marker-rec-ex').next('div').text()),
+			notes: escape($(x).find('.marker_textarea_notes').val()),
+			count: $(v).attr('data-marker-dialog-count')
+		}
+		jsel.push(obj);
+		update_marker_page_obj(obj);
+	});
+
 	if(localStorage.getItem('userID') !== "") {
 		if(!an_tech_sess_id || an_tech_sess_id === "") {
 			var url = window.location.href;
@@ -188,7 +206,7 @@ function update_page_json() {
 			}			
 		}	
 
-		var data = {'url': url, 'obj': jsel, 'userID': localStorage.getItem('userID'), 'session_id': sess_id, 'username': localStorage.getItem('firstName') + ' ' + localStorage.getItem('lastName')}
+		var data = {'url': url, 'obj': jsel, 'page_title': document.title, 'userID': localStorage.getItem('userID'), 'session_id': sess_id, 'username': localStorage.getItem('firstName') + ' ' + localStorage.getItem('lastName')}
 		chrome.runtime.sendMessage({
 			greeting: 'save_annotations',
 			data: data
@@ -409,6 +427,9 @@ function display_previous_annotations(index) {
 					'data-marker_pin_size': v['pin_size'],
 					'data_marker_flag_color': v['flag_color'],
 					'href': 'javascript:void(0);'
+				}).bind('contextmenu', function(e) {
+					e.preventDefault();
+					createContextMenu($(this), null, '', null, null, true);
 				}).css({
 					'position': 'absolute',
 					'top': v.top,
@@ -521,6 +542,14 @@ function display_previous_annotations(index) {
 
 				nCount++;				
 				break
+			case 'context':
+				$('.marker_page_marker').each(function(g,b) {
+					if($(b).attr('data-marker-count') === v.count) {
+						createContextMenu($(b), null, v.qRec, true, ob[i], true);
+					}
+				})
+				
+				break;
 			default:
 				break;
 		}

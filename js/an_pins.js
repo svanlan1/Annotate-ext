@@ -67,10 +67,10 @@ function place_ind_marker(x,y,val) {
 		'top': y + 'px'
 	}).bind('contextmenu', function(e) {
 		e.preventDefault();
-		createContextMenu($(this), e, val);
+		createContextMenu($(this), e, val, null, null, true);
 	}).click(function(e) {
 		if(localStorage.getItem('leftclick') === 'true') {
-			createContextMenu($(this), e, val);
+			createContextMenu($(this), e, val, null, null, true);
 			e.preventDefault();			
 		}
 		return false;

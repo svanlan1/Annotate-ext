@@ -116,6 +116,11 @@ function loadIndex() {
 		savePresets();
 	});
 
+	$('#custom').click(function() {
+		localStorage.setItem('set', 'custom');
+		savePresets();
+	})
+
 	$('.marker_preset_reset_btn').click(function() {
 		resetPresets();
 		location.reload();
