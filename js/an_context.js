@@ -90,8 +90,12 @@ function createContextMenu(el, e, val, prev, prevObj, bool) {
 			console.log($(xBody).height());
 			$(x).find('#marker_textarea_'+prevObj.count).text(unescape(prevObj['notes']));
 			$(x).find('#marker_select_box_'+prevObj.count).val(prevObj['qRec']);
-			$('.marker-context-menu-iframe-container').css('height', $(xBody).height() + 110 + 'px');
-			$('#marker_context_menu'+prevObj.count).css('height', 'auto');
+
+			/*var h = $(infoDiv).height();
+			var he = h + 95;
+			$('.marker-context-menu-iframe-container:visible').css('height', he + 'px');
+			$('.marker_context_menu:visible').css('height', he + 'px');	*/
+
 			$('#' + id).hide();
 		}
 	}
@@ -139,7 +143,7 @@ function add_marker_select_options(divItem, el, selVal, prev, prevObj) {
 	$(sel).change(function() {
 		var val = $(this).val();
 		if(val === "") {
-			$(strong).hide();
+			$(divItem).find('.marker-a11y-rec-a, .marker-rec-ex, .marker_recommendation_div').hide();
 		} else {
 			$(this).find('option').each(function(i,v) {
 				if(val === $(v).attr('value')) {
@@ -153,7 +157,7 @@ function add_marker_select_options(divItem, el, selVal, prev, prevObj) {
 					var example_strong = $('<strong />').addClass('recommendations marker-rec-ex').text('Example');
 					$(this).parent().parent().find('.marker_recommendation').append(example_strong);
 					$(this).parent().parent().find('.marker_recommendation').append(exDiv);
-
+					$(a).show();
 					return false;
 				}
 			});			

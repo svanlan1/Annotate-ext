@@ -21,7 +21,8 @@
         "js/an_text.js",
         "js/annotate.js", 
         "js/jquery.js", 
-        "js/jquery-ui.js"],
+        "js/jquery-ui.js",
+        "js/jquery.touchpunch.min.js"],
       "css": ["css/architects_daughter.css", "css/rocksalt.css", "css/annotate.css", "css/jquery-ui.structure.min.css"],
       "run_at" : "document_start"
     }
