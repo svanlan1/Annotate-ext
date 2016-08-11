@@ -19,18 +19,18 @@ function append_scripts_to_head(head, iframehead) {
 		'href': 'https://fonts.googleapis.com/css?family=Ubuntu'
 	});
 
-	var marker = $('<link />').attr({
+	var annotate = $('<link />').attr({
 		'rel': 'stylesheet',
 		'type': 'text/css',
 		'href': chrome.extension.getURL('css/annotate.css')
 	});
 
 	if(head) {
-		$(raleway, ubuntu, marker).appendTo(head);
+		$(raleway, ubuntu, annotate).appendTo(head);
 	}
 
 	if(iframehead) {
-		$(marker).appendTo(iframehead);
+		$(annotate).appendTo(iframehead);
 		$(raleway).appendTo(iframehead);
 		$(ubuntu).appendTo(iframehead);
 	}
@@ -109,7 +109,6 @@ function get_select_options() {
 }
 
 function update_page_json() {
-	//REMOVE THIS IN ORDER TO PROVIDE LIST OF FULL RESULTS/SAVES - not just this page.
 	var jsel = [];
 	if(page_val) {
 		sess_id = page_val;
@@ -118,8 +117,6 @@ function update_page_json() {
 	if(!sess_id) {
 		sess_id = Date.now();
 	}	
-	//jsel[sess_id] = [];
-
 
 	for(var i in pageJson) {
 		if(pageJson[i][sess_id]) {
@@ -150,7 +147,7 @@ function update_page_json() {
 			top: $(v).css('top'),
 			pin_size: $(v).attr('data-marker_pin_size'),
 			flag_color: $(v).attr('data_marker_flag_color'),
-			data_marker_count: $(v).attr('data-marker-count')
+			data_marker_count: $(v).attr('data-annotate-count')
 		}
 		jsel.push(obj);
 		update_marker_page_obj(obj);
@@ -178,16 +175,16 @@ function update_page_json() {
 	});
 
 	$('.marker_context_menu').each(function(i,v) {
-		var x = $('#marker-context-menu-' + $(v).attr('data-marker-dialog-count'))[0].contentWindow.document;
+		var x = $('#annotate-context-menu-' + $(v).attr('data-annotate-dialog-count'))[0].contentWindow.document;
 		var obj = {
 			type: "context",
 			left: $(v).css('left'),
 			top: $(v).css('top'),
 			qRec: $(x).find('select').val(),
 			rec: escape($(x).find('.marker_recommendation_div').text()),
-			ex: escape($(x).find('.marker-rec-ex').next('div').text()),
+			ex: escape($(x).find('.annotate-rec-ex').next('div').text()),
 			notes: escape($(x).find('.marker_textarea_notes').val()),
-			count: $(v).attr('data-marker-dialog-count')
+			count: $(v).attr('data-annotate-dialog-count')
 		}
 		jsel.push(obj);
 		update_marker_page_obj(obj);
@@ -241,7 +238,7 @@ function update_marker_page_obj(obj) {
 }
 
 function get_page_json() {
-	if(localStorage.getItem('userID') !== "") {
+	if(localStorage.getItem('userID') && localStorage.getItem('userID') !== "") {
 		var url = window.location.href;
 		var x = url.indexOf('?annotate=true');
 		if(x !== -1) {
@@ -262,7 +259,6 @@ function get_page_json() {
 }
 
 function write_page_json_to_memory() {
-	//pageJson = $.parseJSON(localStorage.getItem('pageJson'));
 	if(!pageJson) {
 		pageJson = [];
 	}
@@ -393,7 +389,7 @@ function display_previous_annotations(index) {
 					'position': 'absolute',
 					'left': v.left + 'px',
 					'top': v.top + 'px'
-				}).appendTo('#marker_body_wrap');
+				}).appendTo('#ann_body_wrap');
 
 				var inside_div = $('<div />').css({
 					'background-color': v.box_bg_color,
@@ -406,14 +402,14 @@ function display_previous_annotations(index) {
 				  containment: "parent",
 				  handles: "n, e, s, w, ne, nw, se, sw",
 				  resize: function( event, ui ) {
-				  	stop_drawing_boxes(document.getElementById('marker_body_wrap'));
+				  	stop_drawing_boxes(document.getElementById('ann_body_wrap'));
 					$('#place_marker').find('img').attr('src', chrome.extension.getURL('images/pins/pin_24_inactive.png'));
 					localStorage.setItem('marker_place_flag', 'false');	
-					$('#marker-pin-colors-drawer').remove();		
+					$('#annotate-pin-colors-drawer').remove();		
 					unplace_marker();				  	
 				  },
 				  stop: function (event, ui ) {
-				  	initDraw(document.getElementById('marker_body_wrap'));
+				  	initDraw(document.getElementById('ann_body_wrap'));
 				  }
 				});	
 		    	$('.rectangle').bind('contextmenu',function(e) {
@@ -423,18 +419,22 @@ function display_previous_annotations(index) {
 				break;
 			case 'pin':
 				var a = $('<a />').addClass('marker_page_marker marker_anchor').attr({
-					'data-marker-count': v['data_marker_count'],
+					'data-annotate-count': v['data_marker_count'],
 					'data-marker_pin_size': v['pin_size'],
 					'data_marker_flag_color': v['flag_color'],
 					'href': 'javascript:void(0);'
-				}).bind('contextmenu', function(e) {
+				}).draggable({
+			  		stop: function() {
+			    		hideMenu('marker_context_menu' + $(this).attr('data-annotate-count'));
+			  		}
+			    }).bind('contextmenu', function(e) {
 					e.preventDefault();
 					createContextMenu($(this), null, '', null, null, true);
 				}).css({
 					'position': 'absolute',
 					'top': v.top,
 					'left': v.left
-				}).appendTo('#marker_body_wrap');
+				}).appendTo('#ann_body_wrap');
 
 				var img = $('<img />').attr({
 					'src': chrome.extension.getURL('images/pins/pin_24_' + v['flag_color']+ '.png'),
@@ -461,7 +461,6 @@ function display_previous_annotations(index) {
 			  			$(div).find('textarea').css('width', $(div).width() - 10 + 'px');
 			  		},
 			  		stop: function() {
-			  			//$(div).find('textarea').css('width', $(div).width() - 10 + 'px');
 			  		}
 				}).draggable({
 					containment: 'parent'
@@ -471,7 +470,7 @@ function display_previous_annotations(index) {
 					'tabinex': '-1'
 				}).draggable({
 					containment: 'parent'
-				}).appendTo('#marker_body_wrap');
+				}).appendTo('#ann_body_wrap');
 
 				var bg = localStorage.getItem('text_background'),
 					opacity = parseInt(localStorage.getItem('text_bg_opacity')) * .01;
@@ -494,7 +493,6 @@ function display_previous_annotations(index) {
 					'font-family': v['font_family']
 				}).attr('id','marker_text_note_textarea_' + nCount).addClass('marker_text_note_marker_textarea').val(unescape(v.text)).appendTo(div);
 
-				//$(t).attr('style', 'min-height: 0 !important;')
 				var timeout;
 				$(div).hover(
 					function() {
@@ -544,7 +542,7 @@ function display_previous_annotations(index) {
 				break
 			case 'context':
 				$('.marker_page_marker').each(function(g,b) {
-					if($(b).attr('data-marker-count') === v.count) {
+					if($(b).attr('data-annotate-count') === v.count) {
 						createContextMenu($(b), null, v.qRec, true, ob[i], true);
 					}
 				})
@@ -584,7 +582,7 @@ function display_previous() {
 			if(localStorage.getItem('userID') !== "") {
 				var len = pageJson.length;
 				if(len > 0) {
-					$('.marker-panel-heading').prepend('<a id="ann-alarm" href="javascript:void(0);" title="You have previous annotations on this page!  Click to view."><span class="ann-circle marker"><img src="'+chrome.extension.getURL('images/previous.png')+'" alt="" /></span></a>');
+					$('.annotate-panel-heading').prepend('<a id="ann-alarm" href="javascript:void(0);" title="You have previous annotations on this page!  Click to view."><span class="ann-circle annotate"><img src="'+chrome.extension.getURL('images/previous.png')+'" alt="" /></span></a>');
 					var img = $('#ann-alarm');
 					$(img).click(function() {
 						if($('.ann-prev-list-cont').length === 0) {
@@ -599,7 +597,7 @@ function display_previous() {
 			} else {
 				var len = pageJson[i].length;
 				if(len > 0 && pageJson[i][0]['url'] === window.location.href) {
-					$('.marker-panel-heading').prepend('<a id="ann-alarm" href="javascript:void(0);" title="You have previous annotations on this page!  Click to view."><span class="ann-circle marker"><img src="'+chrome.extension.getURL('images/previous.png')+'" alt="" /></span></a>');
+					$('.annotate-panel-heading').prepend('<a id="ann-alarm" href="javascript:void(0);" title="You have previous annotations on this page!  Click to view."><span class="ann-circle annotate"><img src="'+chrome.extension.getURL('images/previous.png')+'" alt="" /></span></a>');
 					var img = $('#ann-alarm');
 					$(img).click(function() {
 						if($('.ann-prev-list-cont').length === 0) {
@@ -629,7 +627,7 @@ function show_previous_dialog() {
 		var substr = url;
 	}
 	var temp = [],
-		container = $('<div />').addClass('ann-prev-list-cont').appendTo('.marker-panel-heading');
+		container = $('<div />').addClass('ann-prev-list-cont').appendTo('.annotate-panel-heading');
 	for (var i in pageJson) {
 		if(localStorage.getItem('userID') === "") {
 			val = i;
@@ -695,7 +693,7 @@ function show_previous_dialog() {
 		}
 	}
 
-	$('#marker_body_wrap').click(function() {
+	$('#ann_body_wrap').click(function() {
 		$('.ann-prev-list-cont').remove();
 	})
 }

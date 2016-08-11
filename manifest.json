@@ -1,10 +1,10 @@
 {
-  "name": "Annotate!",
-  "short_name": "Page annotation made easy.",
-  "version": "0.6.37",
+  "name": "Annotate",
+  "short_name": "Easily annotate any page on the web.",
+  "version": "0.6.39",
   "manifest_version": 2,
   "author": "Shea VanLaningham",
-  "options_page": "index2.html",
+  "options_page": "index.html",
   "description": "Quickly and easily add notes and annotations to any webpage and share with others.",
   "background": {
     "scripts": ["js/jquery.js", "js/background.js"],
@@ -27,18 +27,16 @@
       "run_at" : "document_start"
     }
   ],
-  "icons":{"16":"images/marker_16_inactive.png", "128":"images/marker_128.png"},
+  "icons":{"16":"images/annotate_16_inactive.png", "128":"images/annotate_128.png"},
   "browser_action": {
-    "default_icon": "images/marker_16_inactive.png"
+    "default_icon": "images/annotate_16_inactive.png"
   },
   "permissions": [
-    "tabs", "<all_urls>", "http://*/*", "https://*/*", "contextMenus", "http://annotate.tech/login.php"
+    "tabs", "notifications", "<all_urls>", "http://*/*", "https://*/*", "contextMenus", "http://annotate.tech/login.php"
   ],
    "web_accessible_resources": [
     "index.html",
     "index2.html",
-    "marker.html",
-    "js/marker2.js",
     "css/annotate.css",
     "css/railway.css",
     "js/options.json",
@@ -60,9 +58,9 @@
     "images/flag_24_inactive.png",
     "images/highlight_24.png",
     "images/highlight_24_inactive.png",
-    "images/marker_16_new.png",
-    "images/marker_32.png",
-    "images/marker_64.png",
+    "images/annotate_16_new.png",
+    "images/annotate_32.png",
+    "images/annotate_64.png",
     "images/notes.png",
     "images/paint_32.png",
     "images/cursor_pin.png",

@@ -1,7 +1,7 @@
 /*************************************************************************************************
 *	Filename: 	marker_pins.js
 *	Author: 	Shea VanLaningham
-*	Website: 	https://github.com/svanlan1/Marker
+*	Website: 	https://github.com/svanlan1/annotate
 *	Purpose: 	This file controls the creation, placement, and removal of all pins on the page
 *
 **************************************************************************************************/
@@ -11,8 +11,8 @@
 ************************************************/
 function place_marker() {
 
-	//$('#marker_body_wrap').attr('style', 'cursor: url("'+chrome.extension.getURL('images/cursor_pin.png'+'"), default;'));
-	$('#marker_body_wrap, #marker_body_wrap a, #marker_body_wrap button').bind('click', function(e) {
+	//$('#ann_body_wrap').attr('style', 'cursor: url("'+chrome.extension.getURL('images/cursor_pin.png'+'"), default;'));
+	$('#ann_body_wrap, #ann_body_wrap a, #ann_body_wrap button').bind('click', function(e) {
 		e.preventDefault();
 		e.stopPropagation();
 		var val = parseInt(localStorage.getItem('pin_size').split('p')[0]);
@@ -48,17 +48,17 @@ function place_marker() {
 
 	$('<div />').attr({
 		'id': 'marker_pin_mouse_position_div',
-		'class': 'marker',
+		'class': 'annotate',
 		'style': 'display: none;'
 	}).appendTo('body');
 
 	$(document).bind('mouseover', function(e) {
-		$('#marker_pin_mouse_position_div').show().html('<span class="marker-pos-x">Axis X: ' + e.pageX + '</span><span class="marker-pos-y">Axis Y:' + e.pageY + '</span>');
+		$('#marker_pin_mouse_position_div').show().html('<span class="annotate-pos-x">Axis X: ' + e.pageX + '</span><span class="annotate-pos-y">Axis Y:' + e.pageY + '</span>');
 	});
 }
 
 /***********************************************
-*	Place the actual marker on the page
+*	Place the actual annotate on the page
 ************************************************/
 function place_ind_marker(x,y,val) {
 	var flag_wrap = $('<a />').addClass('marker_page_marker marker_anchor').css({
@@ -75,12 +75,12 @@ function place_ind_marker(x,y,val) {
 		}
 		return false;
 	}).attr({
-		'data-marker-count': mCount,
+		'data-annotate-count': mCount,
 		'data-marker_pin_size': localStorage.getItem('pin_size'),
 		'data_marker_flag_color': localStorage.getItem('flag-color')
-	}).appendTo('#marker_body_wrap').draggable({
+	}).appendTo('#ann_body_wrap').draggable({
   		stop: function() {
-    		hideMenu('marker_context_menu' + $(this).attr('data-marker-count'));
+    		hideMenu('marker_context_menu' + $(this).attr('data-annotate-count'));
   		}
     });
 
@@ -88,8 +88,8 @@ function place_ind_marker(x,y,val) {
 		'src': chrome.extension.getURL('images/pins/pin_24_' + localStorage.getItem('flag-color') + '.png'),
 		'class': 'marker_page_marker',
 		'style': 'width: ' + localStorage.getItem('pin_size') + ';',
-		'data-marker-count': mCount
-	}).attr('alt', 'Marker ' + mCount).appendTo(flag_wrap);
+		'data-annotate-count': mCount
+	}).attr('alt', 'annotate ' + mCount).appendTo(flag_wrap);
 
 	if(localStorage.getItem('pin_size') === '48px') {
 		$('a.marker_page_marker').css('width', '85px');
@@ -107,14 +107,14 @@ function place_ind_marker(x,y,val) {
 /***********************************************
 *	Remove all pins placed on the screen
 ************************************************/
-function unplace_marker() {
-	$('#marker-pin-colors-drawer').slideUp('fast');
+function unplace_pin() {
+	$('#annotate-pin-colors-drawer').slideUp('fast');
 	localStorage.setItem('marker_place_flag', 'false');	
 	localStorage.setItem('rotate_marker', 'false');
-	$('#marker_body_wrap, #marker_body_wrap a, #marker_body_wrap button').unbind('click');
+	$('#ann_body_wrap, #ann_body_wrap a, #ann_body_wrap button').unbind('click');
 	$('#marker_pin_mouse_position_div').remove();
 	
-	//$('#marker_body_wrap').removeAttr('style');
+	//$('#ann_body_wrap').removeAttr('style');
 
 }
 
@@ -124,34 +124,34 @@ function unplace_marker() {
 *	or only the default workstation icons
 ************************************************/
 function draw_new_marker_options() {
-	//$('#marker-pin-colors-drawer').remove();
+	//$('#annotate-pin-colors-drawer').remove();
 	
 	//Create additional icon panel
-	if($('#marker-pin-colors-drawer').length > 0) {
-		$('#marker-pin-colors-drawer').slideDown('slow');
+	if($('#annotate-pin-colors-drawer').length > 0) {
+		$('#annotate-pin-colors-drawer').slideDown('slow');
 	} else {
-		var div = $('<div />').attr('id', 'marker-pin-colors-drawer').appendTo('#marker-control-panel');
-		var iframe = create_iframe('marker-pin-colors-iframe', div);
-		var ifbody = get_iframe_bod('marker-pin-colors-iframe');
-		var ifhead = get_iframe_head('marker-pin-colors-iframe');
+		var div = $('<div />').attr('id', 'annotate-pin-colors-drawer').appendTo('#annotate-control-panel');
+		var iframe = create_iframe('annotate-pin-colors-iframe', div);
+		var ifbody = get_iframe_bod('annotate-pin-colors-iframe');
+		var ifhead = get_iframe_head('annotate-pin-colors-iframe');
 
 		//Add the CSS files to the results panel
 		append_scripts_to_head('', ifhead);
 
-		$('<strong />').addClass('marker').text('Select new pin').appendTo(ifbody);
+		$('<strong />').addClass('annotate').text('Select new pin').appendTo(ifbody);
 
 		var default_icons = JSON.parse(localStorage.getItem('default_icons'));// ['Red', 'Pink', 'Orange', 'Plum', 'Blue', 'Aqua', 'Bluegreen', 'Green', 'Lime', 'Yellow', 'Poop', 'Black', 'Grey', 'White', 'Placeholder_red', 'Placeholder_blue', 'Dot_red', 'Dot_blue', 'Dot_green', 'Dot_black'];
 		$(default_icons).each(function(i,v) {
-			$('<a />').attr('data-val', v.toLowerCase()).addClass('marker_option marker_anchor').html('<img src="' + chrome.extension.getURL('images/pins/pin_24_'+v.toLowerCase()+'.png') + '" alt="'+v+' marker" />').appendTo(ifbody);
+			$('<a />').attr('data-val', v.toLowerCase()).addClass('marker_option marker_anchor').html('<img src="' + chrome.extension.getURL('images/pins/pin_24_'+v.toLowerCase()+'.png') + '" alt="'+v+' annotate" />').appendTo(ifbody);
 		});
 
 		if(localStorage.getItem('pack_1') === 'true') {
 			var fun_icons = JSON.parse(localStorage.getItem('fun_icons'));//['HTML', 'CSS', 'Scissors', 'Notepad', 'Brackets', 'Dung', 'Goldstar', 'Wrong', 'Happy', 'Laughing', 'Sad', 'Sick', 'Heart', 'Mag', 'Jason', 'Freddy'];
 			$(fun_icons).each(function(i,v) {
-				$('<a />').attr('data-val', v.toLowerCase()).addClass('marker_option marker_anchor').html('<img src="' + chrome.extension.getURL('images/pins/pin_24_'+v.toLowerCase()+'.png') + '" alt="'+v+' marker" />').appendTo(ifbody);
+				$('<a />').attr('data-val', v.toLowerCase()).addClass('marker_option marker_anchor').html('<img src="' + chrome.extension.getURL('images/pins/pin_24_'+v.toLowerCase()+'.png') + '" alt="'+v+' annotate" />').appendTo(ifbody);
 			});
 		} else {
-			$('#marker-pin-colors-iframe').css('height', '275px');
+			$('#annotate-pin-colors-iframe').css('height', '275px');
 		}
 
 		draw_pin_options(ifbody);
@@ -174,7 +174,7 @@ function draw_new_marker_options() {
 
 function draw_pin_options(ifbody) {
 	var in_val = localStorage.getItem('pin_size').split('p')[0];
-	var s = $('<strong />').addClass('marker').css({
+	var s = $('<strong />').addClass('annotate').css({
 			'border-top': 'solid 1px #ccc',
 			'padding-top': '5px',
 			'padding-bottom': '5px'
@@ -191,7 +191,7 @@ function draw_pin_options(ifbody) {
 		'margin-top': '-15px',
 		'border-bottom': 'solid 1px #ccc',
 		'padding': '8px'
-	}).addClass('default_options_a marker').text('Change default options').click(function() {
+	}).addClass('default_options_a annotate').text('Change default options').click(function() {
 		var url = chrome.extension.getURL('index.html');
 		window.open(url);
 	});//.appendTo(opt_div);	
@@ -286,9 +286,9 @@ function draw_pin_options(ifbody) {
 	}).click(function() {
 		if($(opt_div).css('display') === 'none') {
 			if(localStorage.getItem('pack_1') === 'true') {
-				$('#marker-pin-colors-iframe').css('height', '490px');
+				$('#annotate-pin-colors-iframe').css('height', '490px');
 			} else {
-				$('#marker-pin-colors-iframe').css('height', '375px');
+				$('#annotate-pin-colors-iframe').css('height', '375px');
 			}
 			
 			$(opt_div).fadeIn('fast');
@@ -299,9 +299,9 @@ function draw_pin_options(ifbody) {
 			$(this).find('.marker_collapse_1').remove();
 			
 			if(localStorage.getItem('pack_1') === 'true') {
-				$('#marker-pin-colors-iframe').css('height', '390px');
+				$('#annotate-pin-colors-iframe').css('height', '390px');
 			} else {
-				$('#marker-pin-colors-iframe').css('height', '275px');
+				$('#annotate-pin-colors-iframe').css('height', '275px');
 			}				
 			
 		}

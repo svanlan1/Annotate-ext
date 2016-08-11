@@ -1,5 +1,5 @@
 function add_note() {
-	$('#marker_body_wrap, #marker_body_wrap a, #marker_body_wrap button').bind('click', function(e) {
+	$('#ann_body_wrap, #ann_body_wrap a, #ann_body_wrap button').bind('click', function(e) {
 		var x = e.pageX,
 			y = e.pageY,
 			wid;
@@ -120,10 +120,10 @@ function add_note() {
 }
 
 function draw_text_options() {
-		if($('#marker-box-text-drawer').length > 0) {
-			$('#marker-box-text-drawer').slideDown('slow');
+		if($('#annotate-box-text-drawer').length > 0) {
+			$('#annotate-box-text-drawer').slideDown('slow');
 		} else {
-			var div = $('<div />').attr('id', 'marker-box-text-drawer').appendTo('#marker-control-panel');
+			var div = $('<div />').attr('id', 'annotate-box-text-drawer').appendTo('#annotate-control-panel');
 			
 			var input_outline_option = document.createElement('INPUT');
 			$(input_outline_option).attr('type', 'text');
@@ -147,7 +147,7 @@ function draw_text_options() {
 
 
 
-			$('<strong />').addClass('marker').text('Change font size').css('width', '97%').appendTo(div);
+			$('<strong />').addClass('annotate').text('Change font size').css('width', '97%').appendTo(div);
 			var text_div = $('<div />').css({
 				'margin': '10px'
 			}).appendTo(div);
@@ -181,9 +181,9 @@ function draw_text_options() {
 				'margin-bottom': '5px',
 				'padding-left': '5px',
 				'display': 'block'
-			}).attr('for', 'marker_text_color_select').addClass('marker').text('Text Color').css('width', '97%');
+			}).attr('for', 'marker_text_color_select').addClass('annotate').text('Text Color').css('width', '97%');
 
-			var ocLabel = $('<label />').addClass('marker').css({
+			var ocLabel = $('<label />').addClass('annotate').css({
 				'font-weight': 'bold',
 				'border-bottom': 'solid 1px #aaa',
 				'margin-bottom': '5px',
@@ -201,14 +201,14 @@ function draw_text_options() {
 				'border-bottom': 'solid 1px #aaa',
 				'margin-bottom': '5px',
 				'padding-left': '5px'
-			}).attr('for', 'marker_text_shadow_color').addClass('marker').text('Text-shadow Color').css('width', '97%');
+			}).attr('for', 'marker_text_shadow_color').addClass('annotate').text('Text-shadow Color').css('width', '97%');
 
 			var bsLabel = $('<label />').css({
 				'font-weight': 'bold',
 				'border-bottom': 'solid 1px #aaa',
 				'margin-bottom': '5px',
 				'padding-left': '5px'
-			}).attr('for', 'marker_text_box_bg_color').addClass('marker').text('Background color').css('width', '97%');			
+			}).attr('for', 'marker_text_box_bg_color').addClass('annotate').text('Background color').css('width', '97%');			
 
 			$(new_border_color).ready(function() {
 				var font_cont_div = $('<div />');
@@ -233,7 +233,7 @@ function draw_text_options() {
 
 
 			//Create Opacity change area on Annotate Panel
-			$('<strong />').addClass('marker').text('Change background opacity').css('width', '97%').appendTo(div);
+			$('<strong />').addClass('annotate').text('Change background opacity').css('width', '97%').appendTo(div);
 			var text_op_div = $('<div />').css({
 				'margin': '10px'
 			}).appendTo(div);
@@ -388,7 +388,7 @@ function draw_textbox_options(el, counter) {
 		var border_check = $('<input />').attr({
 			'type': 'checkbox',
 			'id': 'marker_text_options_show_border' + counter,
-			'class': 'marker-text-checkbox',
+			'class': 'annotate-text-checkbox',
 			'checked': 'true'
 		}).click(function() {
 			var val = $(this).prop('checked');
@@ -412,7 +412,7 @@ function draw_textbox_options(el, counter) {
 		var bg_check = $('<input />').attr({
 			'type': 'checkbox',
 			'id': 'marker_text_options_show_bg' + counter,
-			'class': 'marker-text-checkbox',
+			'class': 'annotate-text-checkbox',
 			'checked': 'true'
 		}).click(function() {
 			var val = $(this).prop('checked');
@@ -472,10 +472,10 @@ function remove_textbox_options(el, counter) {
 
 
 function stop_writing_text() {
-	$('#marker_body_wrap, #marker_body_wrap a, #marker_body_wrap button').unbind('click');
-	$('#marker_body_wrap').css('cursor', '');
-	//$('#marker_body_wrap').removeAttr('style');
+	$('#ann_body_wrap, #ann_body_wrap a, #ann_body_wrap button').unbind('click');
+	$('#ann_body_wrap').css('cursor', '');
+	//$('#ann_body_wrap').removeAttr('style');
 	$('#marker_add_text img').attr('src', chrome.extension.getURL('images/add_text_24_inactive.png'));
 	localStorage.setItem('addText', 'false');
-	$('#marker-box-text-drawer').slideUp('fast');
+	$('#annotate-box-text-drawer').slideUp('fast');
 }

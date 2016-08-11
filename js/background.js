@@ -1,4 +1,5 @@
 function setInitial() {
+	
 	var obj = 	{
 		"greeting": "start_stop",
 		"welcome": "show",
@@ -94,7 +95,7 @@ function login(data) {
 	});	
 }
 
-function getPreviousAnnotations(data, tabid) {
+function getCount(data, tabid) {
 	$.ajax({
 	  url: "http://annotate.tech/get_annotations_new.php",
 	  type: "POST",
@@ -102,6 +103,38 @@ function getPreviousAnnotations(data, tabid) {
 	  success: function (response) {
 	    
 	    var estring = response.replace(/\\/g, '');
+	    var res = $.parseJSON(estring);
+	    var len = JSON.stringify(res.length);
+	    if(res.length > 0) {
+			chrome.browserAction.setBadgeText({text : len});
+			chrome.browserAction.setBadgeBackgroundColor({color : '#c00'});	    	
+	    } else {
+			chrome.browserAction.setBadgeText({text : ''});
+			chrome.browserAction.setBadgeBackgroundColor({color : '#fff'});	  	    	
+	    }
+	  },
+	  error: function (error) {
+	    console.log(error);
+	  }
+	});	
+}
+
+function getPreviousAnnotations(data, tabid) {
+	$.ajax({
+	  url: "http://annotate.tech/get_annotations_new.php",
+	  type: "POST",
+	  data: data,
+	  success: function (response) {
+	    var estring = response.replace(/\\/g, '');
+	    var res = $.parseJSON(estring);
+	    var len = JSON.stringify(res.length);
+	    if(res.length > 0) {
+			chrome.browserAction.setBadgeText({text : len});
+			chrome.browserAction.setBadgeBackgroundColor({color : '#c00'});	    	
+	    } else {
+			chrome.browserAction.setBadgeText({text : ''});
+			chrome.browserAction.setBadgeBackgroundColor({color : '#fff'});	  	    	
+	    }	    
 		chrome.windows.getCurrent(function(win)
 		{
 		    chrome.tabs.getAllInWindow(win.id, function(tabs)
@@ -123,6 +156,8 @@ function getPreviousAnnotations(data, tabid) {
 }
 
 function postNewAnnotation(data) {
+	var warningId = 'notification.warning';
+	var url = data.url;
 	if(localStorage.getItem('userEmail') !== "") {
 		$.ajax({
 			url: 'http://annotate.tech/add_service_new.php',
@@ -140,6 +175,14 @@ function postNewAnnotation(data) {
 			        	}
 			        });
 			        chrome.tabs.sendRequest(activeTab, {greeting: "annotation_saved"}, function(response) {});
+				    chrome.notifications.create(warningId, {
+				      iconUrl: chrome.runtime.getURL('images/annotate_128.png'),
+				      title: 'Annotation saved!',
+				      type: 'basic',
+				      message: url + ' \nYour annotation has been saved to your account.',
+				      isClickable: true,
+				      priority: 1,
+				    }, function() {});			        
 			    });
 			});		
 
@@ -204,7 +247,7 @@ chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if(request.greeting === "start") {
 			getRecommendations();
-			chrome.browserAction.setIcon({tabId: sender.tab.id, path: "../images/marker_16_active.png"});			
+			chrome.browserAction.setIcon({tabId: sender.tab.id, path: "../images/annotate_16_active.png"});			
 		}
 
 		if(request.greeting === "start_param") {
@@ -225,7 +268,7 @@ chrome.runtime.onMessage.addListener(
 		}
 
 		if(request.greeting === "stop") {
-			chrome.browserAction.setIcon({tabId: sender.tab.id, path: "../images/marker_16_inactive.png"});
+			chrome.browserAction.setIcon({tabId: sender.tab.id, path: "../images/annotate_16_inactive.png"});
 		}
 
 		if(request.greeting === "store") {
@@ -243,22 +286,19 @@ chrome.runtime.onMessage.addListener(
 		if(request.greeting === "save_annotations") {
 			postNewAnnotation(request.data);
 		}
+
+		if(request.greeting === "get_count") {
+			getCount(request.data);
+		}
 	});
 
-/*chrome.contextMenus.create({
-	title: "Highlight with Annotate!",
-	contexts:["selection"],
-	onclick: highlight
-});*/
-
-
-// Credit to Alvin Wong
-// http://stackoverflow.com/questions/2399389/detect-chrome-extension-first-run-update
 chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "install"){
 		chrome.tabs.getSelected(null, function(tab) {
 				chrome.browserAction.setBadgeText({text : 'NEW'});
 				chrome.browserAction.setBadgeBackgroundColor({color : '#dd8127'});
+				chrome.windows.create({'url': 'index.html', 'type': 'popup'}, function(window) {
+   					});
 		});
 		localStorage.setItem('version', chrome.runtime.getManifest().version);  
     } else if(details.reason == "update"){

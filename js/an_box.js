@@ -1,7 +1,7 @@
 /*************************************************************************************************
 *	Filename: 	marker_box.js
 *	Author: 	Shea VanLaningham
-*	Website: 	https://github.com/svanlan1/Marker
+*	Website: 	https://github.com/svanlan1/annotate
 *	Purpose: 	This file controls the creation, placement, and removal of all boxes on the page
 *	
 *	function initDraw(canvas) credit to Spencer Lockhart
@@ -73,14 +73,14 @@ function initDraw(canvas) {
 				  containment: "parent",
 				  handles: "n, e, s, w, ne, nw, se, sw",
 				  resize: function( event, ui ) {
-				  	stop_drawing_boxes(document.getElementById('marker_body_wrap'));
+				  	stop_drawing_boxes(document.getElementById('ann_body_wrap'));
 					$('#place_marker').find('img').attr('src', chrome.extension.getURL('images/pins/pin_24_inactive.png'));
 					localStorage.setItem('marker_place_flag', 'false');	
-					$('#marker-pin-colors-drawer').remove();		
+					$('#annotate-pin-colors-drawer').remove();		
 					unplace_marker();				  	
 				  },
 				  stop: function (event, ui ) {
-				  	initDraw(document.getElementById('marker_body_wrap'));
+				  	initDraw(document.getElementById('ann_body_wrap'));
 				  }
 				}); 
 				return false;          
@@ -98,17 +98,17 @@ function stop_drawing_boxes(canvas) {
     canvas.onclick = function (e) {
 
     };
-    $('#marker-box-colors-drawer').slideUp('fast');
-    $('#marker_body_wrap').css('cursor', '');
+    $('#annotate-box-colors-drawer').slideUp('fast');
+    $('#ann_body_wrap').css('cursor', '');
 }
 
 function draw_select_color_options() {
-	if($('#marker-box-colors-drawer').length > 0) {
-		$('#marker-box-colors-drawer').slideDown('slow');
+	if($('#annotate-box-colors-drawer').length > 0) {
+		$('#annotate-box-colors-drawer').slideDown('slow');
 	} else {
-		var div = $('<div />').attr('id', 'marker-box-colors-drawer').appendTo('#marker-control-panel');
+		var div = $('<div />').attr('id', 'annotate-box-colors-drawer').appendTo('#annotate-control-panel');
 
-		$('<strong />').addClass('marker').text('Change box width').appendTo(div);
+		$('<strong />').addClass('annotate').text('Change box width').appendTo(div);
 		var widDiv = $('<div />').css({
 			'margin': '10px'
 		}).appendTo(div);
@@ -164,7 +164,7 @@ function draw_select_color_options() {
 			'margin-bottom': '5px',
 			'padding-left': '5px',
 			'display': 'block'
-		}).attr('for', 'marker_color_select').addClass('marker').text('Box color').css('width', '97%');	
+		}).attr('for', 'marker_color_select').addClass('annotate').text('Box color').css('width', '97%');	
 
 		var boxBgLabel = $('<label />').css({
 			'font-weight': 'bold',
@@ -172,7 +172,7 @@ function draw_select_color_options() {
 			'margin-bottom': '5px',
 			'padding-left': '5px',
 			'display': 'block'
-		}).attr('for', 'marker_bg_color_select').addClass('marker').text('Box background color').css('width', '97%');						
+		}).attr('for', 'marker_bg_color_select').addClass('annotate').text('Box background color').css('width', '97%');						
 
 		$(box_bg_picker).ready(function() {
 			var box_bg_div = $('<div />');
@@ -206,10 +206,10 @@ function draw_select_color_options() {
 }
 
 function draw_highlight_color_options() {
-	$('#marker-pin-colors-drawer').remove();
-	var div = $('<div />').attr('id', 'marker-pin-colors-drawer').appendTo('#marker-control-panel');
+	$('#annotate-pin-colors-drawer').remove();
+	var div = $('<div />').attr('id', 'annotate-pin-colors-drawer').appendTo('#annotate-control-panel');
 
-	$('<strong />').addClass('marker').text('Change box color').appendTo(div);
+	$('<strong />').addClass('annotate').text('Change box color').appendTo(div);
 	var input = document.createElement('INPUT');
 	$(input).attr('type', 'text');
 	$(input).attr('id', 'marker_color_select').addClass('jscolor').val(localStorage.getItem('highlight_color').substring(1, localStorage.getItem('highlight_color').length)).appendTo(div);

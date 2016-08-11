@@ -4,14 +4,14 @@
 ***********************************************/
 /* Global styles */
 
-#marker_body_wrap{ width:100%; height: z-index: 2147483634 !important; position: absolute; top: 0; display: block;}
+#ann_body_wrap{ width:100%; height: z-index: 2147483634 !important; position: absolute; top: 0; display: block;}
 
 
 .ubuntu{font-family:'Ubuntu',sans-serif}
 
-.marker{font-family:'Raleway',sans-serif; color: #000 !important; }
+.annotate{font-family:'Raleway',sans-serif; color: #000 !important; }
 
-.marker-save-msg{position:fixed; top:50%; left:50%; padding:15px; -ms-transform:translateX(-50%) translateY(-50%); -webkit-transform:translate(-50%,-50%); transform:translate(-50%,-50%); background-color:#fff; padding:25px; font-size:16px; font-weight:bold; border:3px solid #000; box-shadow:rgb(136,136,136) 6px 6px 10px 0px; z-index:2147483635; text-align:center; border-radius:5px; min-width:200px}
+.annotate-save-msg{position:fixed; top:50%; left:50%; padding:15px; -ms-transform:translateX(-50%) translateY(-50%); -webkit-transform:translate(-50%,-50%); transform:translate(-50%,-50%); background-color:#fff; padding:25px; font-size:16px; font-weight:bold; border:3px solid #000; box-shadow:rgb(136,136,136) 6px 6px 10px 0px; z-index:2147483635; text-align:center; border-radius:5px; min-width:200px}
 
 /* Original Page Style Manipulation */
 #marker_window_resize_msg{border:3px solid #000; border-top:0; position:fixed; top:0; display:block; right:10px;  background-color:#ffe;  z-index:2147483630;  height:160px;  font-family:'Raleway',sans-serif;  color:#000; box-shadow:rgb(136,136,136) 6px 6px 10px 0px; border-radius:0 0 10px 10px; font-size:14px !important;  text-align:left;  width:300px;  padding:10px;  height:auto;  display:none}
@@ -26,15 +26,15 @@
 #marker_iframe{width:270px;  height:100%;  float:left;  position:fixed;  border-top:none;  border-right:2px solid #aaa;  z-index:2147483646;  top:0px;  left:0px; font-family:'Raleway',sans-serif; background-color:#fff}
 
 /* Font styles */
-.marker{font-family:'Raleway',sans-serif}
+.annotate{font-family:'Raleway',sans-serif}
 
 .instruction{font-size:14px; padding:5px; color:#000; border-bottom:1px solid #e9e9e9; display:block; margin-bottom:20px; font-family:'Ubuntu',sans-serif}
 
 input[type=text].instruction{border-radius:3px; line-height:25px; height:30px; font-size:14px; font-weight:bold; font-family:'Raleway',sans-serif; border:1px solid #000; padding-left:10px}
 
-h1.marker{padding:2px; border-bottom:1px solid #666; text-align:center; -webkit-margin-after:0}
+h1.annotate{padding:2px; border-bottom:1px solid #666; text-align:center; -webkit-margin-after:0}
 
-h2.marker{padding:2px; font-weight:normal; text-align:left; color:#000; font-size:13px !important; line-height:20px;  padding:5px;  margin:0;  background-color:#eee;  position:initial;  width:auto;  height:auto}
+h2.annotate{padding:2px; font-weight:normal; text-align:left; color:#000; font-size:13px !important; line-height:20px;  padding:5px;  margin:0;  background-color:#eee;  position:initial;  width:auto;  height:auto}
 
 h2.marker_drag:active{background-color:#888}
 
@@ -43,11 +43,11 @@ button{margin-top:0 !important; vertical-align:initial}
 /* Actionable options */
 #marker_options{width:265px; display:block; padding:3px; border-top:2px solid #aaa}
 
-.marker_option{display:inline-block; padding:2px; margin-left:10px; margin-top:10px}
+.marker_option{display:inline-block; padding:2px; margin-left:10px; margin-top:10px; border: 0 !important; outline: 0;}
 
 .marker_option img{width:24px}
 
-.marker_option:focus, .marker_option:hover{outline:1px dotted #000}
+.marker_option:focus, .marker_option:hover{outline:1px dotted #000; border: 0 !important; }
 
 #test3 h3 { font-size: 19px; font-color: #9e9e9e; height: 25px; line-height: 25px;  }
 
@@ -58,7 +58,7 @@ a.marker_page_marker:hover{transform:scale(1.3); outline:0}
 
 a.marker_page_marker:focus{outline:1px dotted #000; outline-offset:5px}
 
-.marker_page_marker:before{content:attr(data-marker-count); font-family:'Architects Daughter',cursive; font-weight:bold;  position:absolute;  top:-.5em;  left:-32px;  width:25px;  height:25px;   font-size:18px;  line-height:24px;  text-align:center;  color:#666;   border:3px solid #a9a9a9;  border-radius:50%;  background-color:#fff}
+.marker_page_marker:before{content:attr(data-annotate-count); font-family:'Architects Daughter',cursive; font-weight:bold;  position:absolute;  top:-.5em;  left:-32px;  width:25px;  height:25px;   font-size:18px;  line-height:24px;  text-align:center;  color:#666;   border:3px solid #a9a9a9;  border-radius:50%;  background-color:#fff}
 
 .marker_page_marker_rotate { -moz-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
@@ -67,10 +67,10 @@ a.marker_page_marker:focus{outline:1px dotted #000; outline-offset:5px}
     -ms-filter: fliph; /*IE*/
     filter: fliph; /*IE*/ }
 
-/* Marker right click note styles */
+/* annotate right click note styles */
 .marker_context_menu{position:absolute; border:2px solid #aaa; background-color:#fff; display:block; z-index:2147483635; max-width:440px; box-shadow:rgb(136,136,136) 3px 3px 5px 0px}
 
-.marker-context-menu-iframe-container{padding:5px}
+.annotate-context-menu-iframe-container{padding:5px}
 
 .marker_context_menu:hover{cursor:move}
 
@@ -93,7 +93,7 @@ a.marker_page_marker:focus{outline:1px dotted #000; outline-offset:5px}
 
 .marker_note{resize:none; height:174px; width:200px; padding:0; vertical-align:inherit; font-size:12px}
 
-label.marker{font-family:'Raleway',sans-serif; font-size:13px !important; height:20px; display:inherit}
+label.annotate{font-family:'Raleway',sans-serif; font-size:13px !important; height:20px; display:inherit}
 
 .marker_info{padding-bottom:10px}
 
@@ -103,7 +103,7 @@ label.marker{font-family:'Raleway',sans-serif; font-size:13px !important; height
 
 .marker_save_note_btn{border:2px solid #000080; color:#000080; font-weight:bold}
 
-/* Marker text and recommendations */
+/* annotate text and recommendations */
 .marker_side_text_container{border-top:2px solid #aaa; font-family:'Ubuntu',sans-serif}
 
 .marker_side_text_container a:hover, .marker_side_text_container a:focus{outline:1px dotted #000}
@@ -148,7 +148,7 @@ strong.aria{border-bottom:2px solid #0d5e05; width:100%; display:block; backgrou
 
 .marker_user_note_side strong{display:block; border-bottom:2px solid #000080; font-size:13px; width:100%; background-color:#e9e9e9; margin-bottom:5px; padding-left:3px}
 
-.marker-highlight{font-weight:bold}
+.annotate-highlight{font-weight:bold}
 
 .marker_or{font-weight:bold; display:block; margin-top:3px; margin-bottom:3px}
 
@@ -162,7 +162,7 @@ strong.aria{border-bottom:2px solid #0d5e05; width:100%; display:block; backgrou
 
 #annotate-print-dialog{position:fixed; top:50%; left:50%; padding:15px; -ms-transform:translateX(-50%) translateY(-50%); -webkit-transform:translate(-50%,-50%); transform:translate(-50%,-50%); background-color:#fff; padding:25px; font-size:16px; font-weight:bold; border:3px solid #000; box-shadow:rgb(136,136,136) 6px 6px 10px 0px; z-index:2147483635; text-align:center; border-radius:5px; min-width:200px; color: #000;}
 
-.marker-btn{margin-left:25px; border-radius:3px; font-size:14px; line-height:18px; font-weight:bold}
+.annotate-btn{margin-left:25px; border-radius:3px; font-size:14px; line-height:18px; font-weight:bold}
 
 #marker_results_frame{display:block; background-color:#fff; border-top:3px dashed #000; border-left:3px dashed #666; padding:5px; z-index:21433235543849}
 
@@ -170,7 +170,7 @@ strong.aria{border-bottom:2px solid #0d5e05; width:100%; display:block; backgrou
 
 .rectangle{ border:2px solid #F00;  position:absolute;  z-index:2147483632;  position:absolute !important}
 
-.marker-text-bottom-div{padding-left:100px}
+.annotate-text-bottom-div{padding-left:100px}
 
 @media print{ #marker_iframe{ display:none}
 
@@ -180,71 +180,71 @@ strong.aria{border-bottom:2px solid #0d5e05; width:100%; display:block; backgrou
 /***************************
 New styles
 ****************************/
-#marker-control-panel{height:auto; width:auto; max-width:305px; min-height:85px; border:2px solid #000; background-color:#e9e9e9; position:fixed; top:50px; left:50px; z-index:2147483635; background-color:#fff; box-shadow:rgb(136,136,136) 3px 3px 5px 0px; display:none}
+#annotate-control-panel{height:auto; width:auto; max-width:305px; min-height:85px; border:2px solid #000; background-color:#e9e9e9; position:fixed; top:50px; left:50px; z-index:2147483635; background-color:#fff; box-shadow:rgb(136,136,136) 3px 3px 5px 0px; display:none}
 
-#marker-a11y-results-iframe{border:0; min-height:250px}
+#annotate-a11y-results-iframe{border:0; min-height:250px}
 
-#marker-a11y-results{max-height:500px; border:2px solid #ccc; margin-top:10px;  background-color:#fff}
+#annotate-a11y-results{max-height:500px; border:2px solid #ccc; margin-top:10px;  background-color:#fff}
 
-.marker-a11y-top-anchor{display:block; background-color:#eaeaea; text-decoration:none; border-bottom:1px solid #ccc; color:#000; width:98.5%}
+.annotate-a11y-top-anchor{display:block; background-color:#eaeaea; text-decoration:none; border-bottom:1px solid #ccc; color:#000; width:98.5%}
 
-.marker-a11y-results-h3{font-size:12px; font-weight:bold; margin:0; line-height:25px; display:inline}
+.annotate-a11y-results-h3{font-size:12px; font-weight:bold; margin:0; line-height:25px; display:inline}
 
-.marker-expanded-ind{color:#000; text-decoration:none; font-size:11px}
+.annotate-expanded-ind{color:#000; text-decoration:none; font-size:11px}
 
-.marker-a11y-results-span{font-size:12px; padding:5px; display:none}
+.annotate-a11y-results-span{font-size:12px; padding:5px; display:none}
 
-.marker-a11y-results-code{display:block; width:96%; background-color:#222; color:#fff;  padding:5px;  font-size:12px; display:none}
+.annotate-a11y-results-code{display:block; width:96%; background-color:#222; color:#fff;  padding:5px;  font-size:12px; display:none}
 
-#marker-a11y-panel-h2{font-size:13px; font-weight:bold; display:block; border-bottom:2px solid #aaa; color:#000080; font-family:'Raleway',sans-serif; margin-bottom:0}
+#annotate-a11y-panel-h2{font-size:13px; font-weight:bold; display:block; border-bottom:2px solid #aaa; color:#000080; font-family:'Raleway',sans-serif; margin-bottom:0}
 
-#marker-a11y-panel-h2:hover{cursor:move}
+#annotate-a11y-panel-h2:hover{cursor:move}
 
-.marker-panel-heading{font-size:14px !important; display:block !important; background-color:#eaeaea !important; font-weight:bold !important; font-family:'Raleway',sans-serif !important; padding:6px !important; color: #000 !important; max-width:305px !important; position:initial !important;  margin:0 !important;  /* padding:0; */ width:auto !important;  height:auto !important;  line-height:initial !important;  font-size:16px !important;  text-align:left !important}
+.annotate-panel-heading{font-size:14px !important; display:block !important; background-color:#eaeaea !important; font-weight:bold !important; font-family:'Raleway',sans-serif !important; padding:6px !important; color: #000 !important; max-width:305px !important; position:initial !important;  margin:0 !important;  /* padding:0; */ width:auto !important;  height:auto !important;  line-height:initial !important;  font-size:16px !important;  text-align:left !important}
 
-.marker-panel-heading:hover{cursor:move}
+.annotate-panel-heading:hover{cursor:move}
 
-#marker-panel-close{position:absolute; right:10px}
+#annotate-panel-close{position:absolute; right:10px}
 
-.marker-flagged-issue{outline:2px dashed #A10606; outline-offset:2px}
+.annotate-flagged-issue{outline:2px dashed #A10606; outline-offset:2px}
 
-#marker-a11y-head{border-bottom:2px solid #ccc}
+#annotate-a11y-head{border-bottom:2px solid #ccc}
 
-.marker-a11y-rec-a{text-decoration:none; text-align:left; display:block; color:#000}
+.annotate-a11y-rec-a{text-decoration:none; text-align:left; display:block; color:#000}
 
-.marker-a11y-rec-a strong{text-align:left !important}
+.annotate-a11y-rec-a strong{text-align:left !important}
 
-.marker-a11y-rec-a:hover, .marker-a11y-rec-a:focus{outline:1px dotted #000; outline-offset:2px}
+.annotate-a11y-rec-a:hover, .annotate-a11y-rec-a:focus{outline:1px dotted #000; outline-offset:2px}
 
-.marker-print-res-cont{border-top:2px solid #aaa; margin-top:10px; padding:5px}
+.annotate-print-res-cont{border-top:2px solid #aaa; margin-top:10px; padding:5px}
 
-.marker-print-res-cont ol.marker-res{ list-style-type:none; padding-left:15px; margin:0; margin-left:4em; padding:0;  counter-reset:li-counter}
-.marker-print-res-cont ol.marker-res >li{ position:relative;  margin-bottom:20px;  padding-left:0.5em;  min-height:3em}
-.marker-print-res-cont ol.marker-res >li:before{ position:absolute;  top:0;  left:-1.33em;  width:1.2em;  height:1.2em;   font-size:2.5em;  line-height:1.2;  text-align:center;  color:#f5f5f5;   border:3px solid #c5c5c5;  border-radius:50%;  background-color:#464646;  content:counter(li-counter);  counter-increment:li-counter}
+.annotate-print-res-cont ol.annotate-res{ list-style-type:none; padding-left:15px; margin:0; margin-left:4em; padding:0;  counter-reset:li-counter}
+.annotate-print-res-cont ol.annotate-res >li{ position:relative;  margin-bottom:20px;  padding-left:0.5em;  min-height:3em}
+.annotate-print-res-cont ol.annotate-res >li:before{ position:absolute;  top:0;  left:-1.33em;  width:1.2em;  height:1.2em;   font-size:2.5em;  line-height:1.2;  text-align:center;  color:#f5f5f5;   border:3px solid #c5c5c5;  border-radius:50%;  background-color:#464646;  content:counter(li-counter);  counter-increment:li-counter}
 
-.marker-a11y-res-list-type{font-family:'Ubuntu',sans-serif}
+.annotate-a11y-res-list-type{font-family:'Ubuntu',sans-serif}
 
-.marker-a11y-res-list-type strong.recommendations, .marker-a11y-res-list-type strong.example{background-color:#fff;  padding:8px;  border-bottom:1px solid #ccc;  font-size:15px;  margin-bottom:10px}
+.annotate-a11y-res-list-type strong.recommendations, .annotate-a11y-res-list-type strong.example{background-color:#fff;  padding:8px;  border-bottom:1px solid #ccc;  font-size:15px;  margin-bottom:10px}
 
-.marker-a11y-res-list-type div{font-size:14px !important; padding:5px}
+.annotate-a11y-res-list-type div{font-size:14px !important; padding:5px}
 
 #marker_saves{padding-right:10px}
 
-#marker-pin-colors-drawer, #marker-box-colors-drawer, #marker-box-text-drawer { display: none; }
+#annotate-pin-colors-drawer, #annotate-box-colors-drawer, #annotate-box-text-drawer { display: none; }
 
-.marker-context-iframe{display:block; overflow-x:hidden; border:0; height:100%; width:427px}
+.annotate-context-iframe{display:block; overflow-x:hidden; border:0; height:100%; width:427px}
 
-#marker-results-ifr{display:block; border:0; height:100% !important; background-color:#fff; position:absolute; z-index: 21455456;}
+#annotate-results-ifr{display:block; border:0; height:100% !important; background-color:#fff; position:absolute; z-index: 21455456;}
 
-#marker-pin-colors-iframe{display:block; border:0; overflow-x:hidden; height:390px; max-width:210px}
+#annotate-pin-colors-iframe{display:block; border:0; overflow-x:hidden; height:390px; max-width:210px}
 
-#marker-pin-colors-iframe .marker_option{display:inline-block; padding:2px; margin-left:10px; margin-top:10px}
+#annotate-pin-colors-iframe .marker_option{display:inline-block; padding:2px; margin-left:10px; margin-top:10px}
 
-#marker-pin-colors-iframe .marker_option:focus, .marker_option:hover{outline:1px dotted #000}
+#annotate-pin-colors-iframe .marker_option:focus, .marker_option:hover{outline:1px dotted #000}
 
 .marker_collapse_1 { font-size: 10px; color: #222; }
 
-strong.marker{font-family:'Raleway',sans-serif; font-weight:bold; font-size:14px; padding-left:5px; display:block; margin-top:10px; border-bottom:1px solid #ccc; width:100%;  position:initial;  height:auto;  line-height:initial;  text-align:left;  color:#000;  margin:10px 0}
+strong.annotate{font-family:'Raleway',sans-serif; font-weight:bold; font-size:14px; padding-left:5px; display:block; margin-top:10px; border-bottom:1px solid #ccc; width:100%;  position:initial;  height:auto;  line-height:initial;  text-align:left;  color:#000;  margin:10px 0}
 
 input#marker_color_select, input#marker_text_color_select, input#marker_text_outline_select, input#marker_text_color, input#marker_text_shadow_color, input#marker_text_box_bg_color, input#marker_bg_color_select{border-radius:3px; line-height:25px; height:30px; font-size:14px; font-weight:bold; font-family:'Raleway',sans-serif; border:1px solid #000; padding-left:10px; width:80%; margin:10px}
 
@@ -314,13 +314,13 @@ input.marker_box_width_select {
 
 .marker_label{margin-top:12px; display:block; line-height:25px; height:30px; font-weight:bold; font-size:13px}
 
-.marker-res-type-issue{display:block; font-weight:bold; font-size:16px; font-family:'Raleway',sans-serif; border-bottom:1px solid #666; padding:5px}
+.annotate-res-type-issue{display:block; font-weight:bold; font-size:16px; font-family:'Raleway',sans-serif; border-bottom:1px solid #666; padding:5px}
 
-kbd.marker{padding:10px; background-color:#eee; border:1px solid #666; display:inline-block; border-radius:3px}
+kbd.annotate{padding:10px; background-color:#eee; border:1px solid #666; display:inline-block; border-radius:3px}
 
 .alert{padding:15px; border:3px solid #128715; width:96%; height:35px; display:none; font-family:'Ubuntu',sans-serif}
 
-.marker-tips{width:380px; position:fixed; top:155px; left:20px; background-color:#ffe; padding:5px; font-size:12px; border-style:solid; border-width:1px; border-color:#ccc}
+.annotate-tips{width:380px; position:fixed; top:155px; left:20px; background-color:#ffe; padding:5px; font-size:12px; border-style:solid; border-width:1px; border-color:#ccc}
 
 #marker_pin_mouse_position_div {
 	position: fixed;
@@ -334,9 +334,9 @@ kbd.marker{padding:10px; background-color:#eee; border:1px solid #666; display:i
 	padding: 10px;
 }
 
-.marker-pos-x, .marker-pos-y { font-size: 12px; display: block; line-height: initial;}
+.annotate-pos-x, .annotate-pos-y { font-size: 12px; display: block; line-height: initial;}
 
-/* Marker text note styles */
+/* annotate text note styles */
 .marker_text_note_marker {
 	position: absolute;
 	display:block;
@@ -395,7 +395,7 @@ kbd.marker{padding:10px; background-color:#eee; border:1px solid #666; display:i
 	font-size: 13px;
 }
 
-.marker-text-checkbox {
+.annotate-text-checkbox {
 	margin-left: 10px !important;
 	display: inline !important;
 	margin: 0 !important;
@@ -408,10 +408,18 @@ kbd.marker{padding:10px; background-color:#eee; border:1px solid #666; display:i
 	top: 4px;
 	right: 5px;
 	display: block;
+	border: 0;
 }
 
-.marker_window_resize_anchor:hover {
+.marker_window_resize_anchor:link {
+	border: 0;
+}
+
+.marker_window_resize_anchor:hover, .marker_window_resize_anchor:active, .marker_window_resize_anchor:visited {
 	outline: dotted 1px #000;
+	position: absolute;
+	border: 0;
+	color: none;
 }
 
 .marker_window_resize_panel_anchor {
@@ -521,11 +529,11 @@ a.change_op img, a.change_op_pin img{height:auto !important; width:auto !importa
 
 .input-label{margin-top:20px; font-size:14px; font-weight:bold; display:none; margin-left:8px}
 
-.marker-remove-rec-link{border:2px solid #790a0a; margin-top:15px}
+.annotate-remove-rec-link{border:2px solid #790a0a; margin-top:15px}
 
-#marker-group-h2{margin:0}
+#annotate-group-h2{margin:0}
 
-.marker-flag-selected{background-color:#e9e9e9}
+.annotate-flag-selected{background-color:#e9e9e9}
 
 .attribution a{ display: inline-block !important; border: 0 !important; padding: 0 !important;}
 
@@ -549,7 +557,7 @@ a.change_op img, a.change_op_pin img{height:auto !important; width:auto !importa
 	display: inline-block;
 }
 
-.marker-display-timestamp {
+.annotate-display-timestamp {
 	display: inline-block;
 	font-size: 12px;
 	margin-left: 28px;
@@ -601,9 +609,15 @@ span.ann-circle img {
 	vertical-align: initial !important;
 }
 
+#ann-alarm {
+	border: 0;
+
+}
+
 #ann-alarm:focus, #ann-alarm:hover {
 	outline: dotted 1px #000;
 	display: inline-block;
+	border: 0;
 }
 
 .ann-list-trash {
@@ -630,7 +644,7 @@ font-size: 12px;
     border: solid 1px #222;
 }
 
-/*  Marker Panel styles /*
-/*  Marker pin styles  */
-/*  Marker box styles  */
-/*  Marker results styles  */
+/*  annotate Panel styles /*
+/*  annotate pin styles  */
+/*  annotate box styles  */
+/*  annotate results styles  */
