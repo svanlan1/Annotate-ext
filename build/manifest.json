@@ -31,7 +31,6 @@
   ],
    "web_accessible_resources": [
     "index.html",
-    "index2.html",
     "css/annotate.css",
     "css/railway.css",
     "js/options.json",

@@ -264,7 +264,7 @@ function saveToPdf() {
 		var div = $('<div />').attr({
 			'id': 'annotate-print-dialog',
 			'class': 'annotate'
-		}).html('Your annotation has been saved to this session.  Results will not be permanently saved until you <a href="'+chrome.extension.getURL('../index2.html') + '" target="_blank">Sign in</a>').appendTo('body');
+		}).html('Your annotation has been saved to this session.  Results will not be permanently saved until you <a href="'+chrome.extension.getURL('../index.html') + '" target="_blank">Sign in</a>').appendTo('body');
 
 		var btn = $('<button />').click(function() {
 			$(modal).remove();
