@@ -190,36 +190,38 @@ function update_page_json() {
 		update_marker_page_obj(obj);
 	});
 
-	if(localStorage.getItem('userID') && localStorage.getItem('userID') !== "") {
-		if(!an_tech_sess_id || an_tech_sess_id === "") {
-			var url = window.location.href;
-		} else {
-			var url2 = window.location.href;
-			var x = url2.indexOf('?annotate=true');
-			if(x !== -1) {
-				var url = url2.substring(0,x);
+	if(jsel.length > 0) {
+		if(localStorage.getItem('userID') && localStorage.getItem('userID') !== "") {
+			if(!an_tech_sess_id || an_tech_sess_id === "") {
+				var url = window.location.href;
 			} else {
-				var url = url2;
-			}			
-		}	
+				var url2 = window.location.href;
+				var x = url2.indexOf('?annotate=true');
+				if(x !== -1) {
+					var url = url2.substring(0,x);
+				} else {
+					var url = url2;
+				}			
+			}	
 
-		var data = {'url': url, 'obj': jsel, 'page_title': document.title, 'userID': localStorage.getItem('userID'), 'session_id': sess_id, 'username': localStorage.getItem('firstName') + ' ' + localStorage.getItem('lastName')}
-		chrome.runtime.sendMessage({
-			greeting: 'save_annotations',
-			data: data
-		});		
-	} else {
-		if(!pageJson) {
-			pageJson = {};
-		}
-		jsel['url'] = window.location.href;
-		jsel[0]['url'] = window.location.href;
-		pageJson[sess_id] = jsel;
-		localStorage.setItem('pageJson', JSON.stringify(pageJson));
-		get_page_json();
-		//pageJson = localStorage.getItem('pageJson');
-	}	
-	sendUpdate();
+			var data = {'url': url, 'obj': jsel, 'page_title': document.title, 'userID': localStorage.getItem('userID'), 'session_id': sess_id, 'username': localStorage.getItem('firstName') + ' ' + localStorage.getItem('lastName')}
+			chrome.runtime.sendMessage({
+				greeting: 'save_annotations',
+				data: data
+			});		
+		} else {
+			if(!pageJson) {
+				pageJson = {};
+			}
+			jsel['url'] = window.location.href;
+			jsel[0]['url'] = window.location.href;
+			pageJson[sess_id] = jsel;
+			localStorage.setItem('pageJson', JSON.stringify(pageJson));
+			get_page_json();
+			//pageJson = localStorage.getItem('pageJson');
+		}	
+		sendUpdate();
+	}
 }
 
 function update_marker_page_obj(obj) {

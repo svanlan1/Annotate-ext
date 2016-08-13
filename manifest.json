@@ -1,7 +1,7 @@
 {
   "name": "Annotate",
   "short_name": "Easily annotate any page on the web.",
-  "version": "0.6.39",
+  "version": "0.6.4",
   "manifest_version": 2,
   "author": "Shea VanLaningham",
   "options_page": "index.html",
