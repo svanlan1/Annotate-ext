@@ -117,7 +117,7 @@ function create_marker_panel() {
     //Draw the Annotate panel heading
 	var h = $('<div />').attr({
 		'class': 'annotate annotate-panel-heading'
-	}).text('Annotate!').appendTo(div);
+	}).text('Annotate').appendTo(div);
 
 	var res_a = $('<a />').attr({
 		'href': 'javascript:void(0);',
@@ -464,7 +464,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 function check_params() {
 	var ps = getQueryParams(location.search);
 	for (var i in ps) {
-		if(i === 'annotate') {
+		if(i === 'annotate' || i.indexOf('annotate') > -1) {
 			chrome.runtime.sendMessage({
 				greeting: 'start_param'
 			});

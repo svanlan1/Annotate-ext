@@ -572,7 +572,7 @@ function get_ann_length(url) {
 
 function display_previous() {
 	var url = window.location.href;
-	var x = url.indexOf('?annotate=true');
+	var x = url.indexOf('annotate=true');
 	if(x !== -1) {
 		var substr = url.substring(0,x);
 	} else {

@@ -96,6 +96,7 @@ function login(data) {
 }
 
 function getCount(data, tabid) {
+	data.url = data.url.split('&annotate')[0];
 	$.ajax({
 	  url: "http://annotate.tech/get_annotations_new.php",
 	  type: "POST",
@@ -120,6 +121,7 @@ function getCount(data, tabid) {
 }
 
 function getPreviousAnnotations(data, tabid) {
+	data.url = data.url.split('&annotate')[0];
 	$.ajax({
 	  url: "http://annotate.tech/get_annotations_new.php",
 	  type: "POST",
@@ -164,27 +166,39 @@ function postNewAnnotation(data) {
 			type: "POST",
 			data: data,
 			success: function ( response ) {
-			chrome.windows.getCurrent(function(win)
-			{
-			    chrome.tabs.getAllInWindow(win.id, function(tabs)
-			    {
-			        var activeTab;
-			        $(tabs).each(function(i,v) {
-			        	if(v.active === true) {
-			        		activeTab = tabs[i]['id'];
-			        	}
-			        });
-			        chrome.tabs.sendRequest(activeTab, {greeting: "annotation_saved"}, function(response) {});
-				    chrome.notifications.create(warningId, {
-				      iconUrl: chrome.runtime.getURL('images/annotate_128.png'),
-				      title: 'Annotation saved!',
-				      type: 'basic',
-				      message: url + ' \nYour annotation has been saved to your account.',
-				      isClickable: true,
-				      priority: 1,
-				    }, function() {});			        
-			    });
-			});		
+				if(response.toLowerCase().indexOf('error') === -1) {
+				chrome.windows.getCurrent(function(win)
+				{
+				    chrome.tabs.getAllInWindow(win.id, function(tabs)
+				    {
+				        var activeTab;
+				        $(tabs).each(function(i,v) {
+				        	if(v.active === true) {
+				        		activeTab = tabs[i]['id'];
+				        	}
+				        });
+				        chrome.tabs.sendRequest(activeTab, {greeting: "annotation_saved"}, function(response) {});
+					    chrome.notifications.create(warningId, {
+					      iconUrl: chrome.runtime.getURL('images/annotate_128.png'),
+					      title: 'Annotation saved!',
+					      type: 'basic',
+					      message: url + ' \nYour annotation has been saved to your account.',
+					      isClickable: true,
+					      priority: 1,
+					    }, function() {});			        
+				    });
+				});					
+			} else {
+			    chrome.notifications.create(warningId, {
+			      iconUrl: chrome.runtime.getURL('images/annotate_128.png'),
+			      title: 'Ruh roh!',
+			      type: 'basic',
+			      message: url + ' \nHmm, something went wrong.  An email has been sent to the support team.',
+			      isClickable: true,
+			      priority: 1,
+			    }, function() {});				
+			}
+	
 
 			},
 			error: function ( error ) {
@@ -200,7 +214,6 @@ function getRecommendations() {
 		type: 'POST',
 		data: {userID: localStorage.getItem('userID')},
 		success: function ( response ) {
-			console.log(response);
 			localStorage.setItem('custom_preset', response);
 		},
 		error: function ( error ) {
